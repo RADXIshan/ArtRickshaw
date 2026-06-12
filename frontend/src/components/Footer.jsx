@@ -38,9 +38,13 @@ const Footer = () => {
         </div>
       </div>
       
-      <h1 className="text-[13vw] font-serif font-bold leading-none text-center opacity-90 tracking-tighter pb-4 md:pb-8 pointer-events-none mt-8 lg:mt-12">
-        ART RICKSHAW
-      </h1>
+      <div className="w-full flex justify-center pb-8 md:pb-12 mt-8 lg:mt-12 pointer-events-none px-6">
+        <img 
+          src={logoImg} 
+          alt="Art Rickshaw Logo" 
+          className="h-32 md:h-52 lg:h-72 w-auto object-contain opacity-95 brightness-0 invert" 
+        />
+      </div>
     </footer>
   );
 };
