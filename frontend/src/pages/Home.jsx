@@ -437,7 +437,7 @@ const Home = () => {
       <section ref={heroRef} className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-[#f4ece3]">
         
         {/* Hero Illustration Background — rickshaw in center, skyline at bottom */}
-        <div className="absolute top-[-60%] left-0 w-full h-[160%] pointer-events-none md:top-0 md:h-full">
+        <div className="absolute top-[-80%] left-0 w-full h-[180%] pointer-events-none md:top-0 md:h-full">
            <img 
              src={heroIllustrationImg} 
              className="hero-illustration w-full h-full object-cover object-center md:object-bottom opacity-40 mix-blend-multiply" 
@@ -636,6 +636,16 @@ const Home = () => {
                 <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
                   We don't teach you rules; we help you find your voice. Step away from the noise of the city and step into a space of pure, unfiltered flow.
                 </p>
+                {/* Vintage Kolkata Stamp (Desktop) */}
+                <div className="pt-6 select-none">
+                  <div className="relative group/stamp">
+                    <img 
+                      src={kolkataStampImg} 
+                      alt="Vintage Kolkata Stamp" 
+                      className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-48 lg:h-48 object-contain transform -rotate-12 lg:rotate-[-15deg] group-hover/stamp:rotate-[-5deg] group-hover/stamp:scale-105 transition-all duration-500 ease-out mix-blend-multiply pointer-events-none drop-shadow-sm filter contrast-[1.02]"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -724,8 +734,8 @@ const Home = () => {
                 );
               })}
 
-              {/* Vintage Kolkata Stamp */}
-              <div className="flex justify-end pt-12 md:pt-20 select-none mr-2 md:mr-6">
+              {/* Vintage Kolkata Stamp (Mobile Only) */}
+              <div className="flex lg:hidden justify-start pt-12 md:pt-20 select-none philosophy-header">
                 <div className="relative group/stamp">
                   <img 
                     src={kolkataStampImg} 
