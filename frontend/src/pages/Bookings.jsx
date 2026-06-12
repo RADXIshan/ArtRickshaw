@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Clock, MapPin, ArrowRight } from 'lucide-react';
 
 const ALL_BOOKINGS = [
   { id: 1, title: 'Corporate Team Building', category: 'private event', duration: '3-4 Hours', price: 'Contact Us', image: 'bg-emerald-200' },
@@ -27,23 +26,23 @@ const Bookings = () => {
   );
 
   return (
-    <div className="min-h-screen bg-bg-base pt-12 pb-24">
+    <div className="min-h-screen bg-bg-base pt-32 pb-24 overflow-hidden">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-7xl font-serif font-bold text-text-dark mb-6">Book an Experience</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">Reserve your spot in our workshops or book the entire studio for your next private event.</p>
+        <div className="mb-20">
+          <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">Reserve Your Spot</span>
+          <h1 className="text-6xl md:text-[8vw] font-serif font-black text-text-dark leading-none tracking-tighter">BOOK AN <br/> EXPERIENCE.</h1>
         </div>
 
         {/* Filter Bar */}
-        <div className="flex flex-wrap justify-center gap-4 mb-16">
+        <div className="flex flex-wrap gap-4 mb-20 border-b border-gray-200 pb-10">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveFilter(cat)}
-              className={`px-6 py-2 rounded-full capitalize font-medium transition-all duration-300 ${
+              className={`px-8 py-3 rounded-full uppercase tracking-widest text-sm font-bold transition-all duration-300 ${
                 activeFilter === cat 
-                  ? 'bg-secondary text-white shadow-lg' 
-                  : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+                  ? 'bg-primary text-white border border-primary' 
+                  : 'bg-transparent text-gray-500 hover:text-text-dark border border-gray-300 hover:border-text-dark'
               }`}
             >
               {cat}
@@ -52,7 +51,7 @@ const Bookings = () => {
         </div>
 
         {/* Animated Grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           <AnimatePresence>
             {filteredBookings.map((booking) => (
               <motion.div
@@ -62,33 +61,20 @@ const Bookings = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
-                className="group flex flex-col bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300"
+                className="group flex flex-col bg-transparent border border-gray-200 p-8 rounded-2xl hover:border-primary transition-all duration-500"
               >
-                <div className={`h-48 w-full ${booking.image} relative overflow-hidden`}>
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1 rounded-full text-sm font-bold text-text-dark">
-                    {booking.price}
+                <div className="grow flex flex-col">
+                  <div className="flex justify-between items-start mb-10">
+                    <span className="text-xs font-bold uppercase tracking-widest text-primary border border-primary/30 px-3 py-1 rounded-full">{booking.category}</span>
+                    <span className="text-sm font-serif italic text-gray-500">{booking.duration}</span>
                   </div>
-                </div>
-                <div className="p-8 grow flex flex-col">
-                  <span className="text-xs font-bold uppercase tracking-wider text-primary block mb-3">{booking.category}</span>
-                  <h3 className="text-2xl font-serif font-bold text-text-dark mb-4">{booking.title}</h3>
+                  <h3 className="text-3xl font-serif font-bold text-text-dark mb-6 pr-4">{booking.title}</h3>
                   
-                  <div className="flex items-center text-gray-500 mb-6 space-x-4">
-                    <div className="flex items-center space-x-1">
-                      <Clock size={16} />
-                      <span className="text-sm">{booking.duration}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <MapPin size={16} />
-                      <span className="text-sm">Hindustan Park Studio</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-auto">
-                    <button className="w-full flex items-center justify-center space-x-2 bg-gray-100 hover:bg-text-dark hover:text-white text-text-dark font-medium py-3 rounded-xl transition-colors group-hover:bg-text-dark group-hover:text-white">
-                      <span>Book Now</span>
-                      <ArrowRight size={18} />
-                    </button>
+                  <div className="mt-auto flex justify-between items-end">
+                     <span className="text-2xl font-bold text-text-dark">{booking.price}</span>
+                     <button className="text-text-dark hover:text-primary transition-colors uppercase tracking-widest text-sm font-bold flex items-center gap-2">
+                        Book <span className="text-xl leading-none">&rarr;</span>
+                     </button>
                   </div>
                 </div>
               </motion.div>

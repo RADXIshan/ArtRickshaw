@@ -2,41 +2,34 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-text-dark text-bg-base py-16 mt-20">
-      <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-12">
+    <footer className="fixed bottom-0 left-0 w-full h-[80vh] z-0 bg-primary text-white flex flex-col justify-end overflow-hidden">
+      <div className="absolute top-20 left-10 md:left-32 grid grid-cols-1 md:grid-cols-3 gap-20 w-full max-w-7xl">
         <div>
-          <h2 className="text-3xl font-serif font-bold text-primary mb-4">Art Rickshaw</h2>
-          <p className="text-gray-400 max-w-sm">
-            Experience the vibrant art culture of Kolkata. Join our workshops, classes, and private events.
-          </p>
-        </div>
-        
-        <div>
-          <h3 className="text-xl font-bold mb-4">Quick Links</h3>
-          <ul className="space-y-2">
-            <li><Link to="/activities" className="text-gray-400 hover:text-primary transition-colors">Our Activities</Link></li>
-            <li><Link to="/bookings" className="text-gray-400 hover:text-primary transition-colors">Bookings</Link></li>
-            <li><Link to="/about" className="text-gray-400 hover:text-primary transition-colors">About Us</Link></li>
-            <li><Link to="/contact" className="text-gray-400 hover:text-primary transition-colors">Contact</Link></li>
+          <h3 className="text-2xl font-bold mb-6">Quick Links</h3>
+          <ul className="space-y-4 text-xl">
+            <li><Link to="/activities" className="hover:text-black transition-colors">Activities</Link></li>
+            <li><Link to="/bookings" className="hover:text-black transition-colors">Bookings</Link></li>
+            <li><Link to="/#about" className="hover:text-black transition-colors">About Us</Link></li>
           </ul>
         </div>
-        
         <div>
-          <h3 className="text-xl font-bold mb-4">Visit Us</h3>
-          <p className="text-gray-400">
+          <h3 className="text-2xl font-bold mb-6">Visit Us</h3>
+          <p className="text-xl leading-relaxed">
             Hindustan Park, Gariahat<br />
             Kolkata, West Bengal<br />
             India
           </p>
-          <div className="mt-4 text-primary">
+        </div>
+        <div>
+          <h3 className="text-2xl font-bold mb-6">Contact</h3>
+          <a href="mailto:hello@artrickshaw.com" className="text-xl hover:text-black transition-colors underline">
             hello@artrickshaw.com
-          </div>
+          </a>
         </div>
       </div>
-      
-      <div className="container mx-auto px-6 md:px-12 mt-12 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
-        &copy; {new Date().getFullYear()} Art Rickshaw. All rights reserved.
-      </div>
+      <h1 className="text-[13vw] font-serif font-bold leading-none text-center opacity-90 tracking-tighter -mb-6 md:-mb-10 pointer-events-none">
+        ART RICKSHAW
+      </h1>
     </footer>
   );
 };
