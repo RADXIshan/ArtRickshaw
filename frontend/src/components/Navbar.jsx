@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Magnetic from './Magnetic';
 import bridgeImg from '../assets/images/bridge.png';
+import logoImg from '../assets/images/logo.png';
 
 const links = [
   { name: 'Home', path: '/' },
@@ -64,8 +65,8 @@ const Navbar = () => {
   return (
     <>
       <nav className="fixed top-0 left-0 w-full z-100 px-6 py-6 mix-blend-difference flex justify-between items-center pointer-events-none">
-        <Link to="/" className="text-2xl font-serif font-bold text-white pointer-events-auto">
-          Art Rickshaw
+        <Link to="/" className="pointer-events-auto flex items-center">
+          <img src={logoImg} alt="Art Rickshaw" className="h-8 md:h-10 w-auto invert" />
         </Link>
         <Magnetic>
           <button 

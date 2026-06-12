@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import rickshawPullerImg from '../assets/images/preloader_rickshaw_puller.png';
+import logoImg from '../assets/images/logo.png';
 
 const Preloader = ({ onComplete }) => {
   const containerRef = useRef(null);
@@ -90,12 +91,12 @@ const Preloader = ({ onComplete }) => {
       </div>
 
       <div className="relative z-10 flex flex-col items-center w-full max-w-2xl px-6">
-        <h1 
+        <img 
           ref={textRef} 
-          className="text-5xl md:text-7xl font-serif font-black tracking-tighter uppercase text-white opacity-0 translate-y-10 mb-20 text-center"
-        >
-          ART RICKSHAW
-        </h1>
+          src={logoImg}
+          alt="Art Rickshaw"
+          className="h-16 md:h-24 w-auto opacity-0 translate-y-10 mb-20 invert object-contain"
+        />
         
         {/* Progress Container */}
         <div className="w-full relative mt-10">
