@@ -27,7 +27,7 @@ const Footer = () => {
           </a>
         </div>
       </div>
-      <h1 className="text-[13vw] font-serif font-bold leading-none text-center opacity-90 tracking-tighter -mb-6 md:-mb-10 pointer-events-none">
+      <h1 className="text-[13vw] font-serif font-bold leading-none text-center opacity-90 tracking-tighter pb-4 md:pb-8 pointer-events-none">
         ART RICKSHAW
       </h1>
     </footer>

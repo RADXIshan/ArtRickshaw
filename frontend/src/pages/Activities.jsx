@@ -15,14 +15,14 @@ const Activities = () => {
   const [hoveredActivity, setHoveredActivity] = useState(null);
 
   return (
-    <div className="min-h-screen bg-bg-base relative overflow-hidden transition-colors duration-500">
+    <div className="min-h-screen bg-[#F5F5F0] relative overflow-hidden transition-colors duration-500">
       {/* Dynamic Background */}
       <div className="absolute inset-0 z-0 pointer-events-none transition-colors duration-700">
         <div className={`absolute inset-0 transition-opacity duration-500 ${hoveredActivity ? hoveredActivity.image : 'bg-transparent'} opacity-40`} />
       </div>
 
       <div className="container mx-auto px-6 md:px-12 relative z-10 pt-32 pb-40">
-        <h1 className="text-[12vw] font-serif font-black leading-none text-text-dark tracking-tighter opacity-[0.03] mb-10 pointer-events-none mix-blend-multiply">
+        <h1 className="text-[12vw] font-serif font-black leading-none text-black tracking-tighter mb-10 pointer-events-none">
           ACTIVITIES
         </h1>
 

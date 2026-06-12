@@ -94,15 +94,15 @@ const Home = () => {
     });
 
     // Horizontal Scroll for Activities
-    const horizontalAmount = horizontalScrollRef.current.scrollWidth - window.innerWidth;
+    const scrollContainer = horizontalScrollRef.current;
     
-    gsap.to(horizontalScrollRef.current, {
-      x: -horizontalAmount,
+    gsap.to(scrollContainer, {
+      x: () => -(scrollContainer.scrollWidth - window.innerWidth),
       ease: 'none',
       scrollTrigger: {
         trigger: horizontalSectionRef.current,
         start: 'top top',
-        end: `+=${horizontalAmount}`,
+        end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
         pin: true,
         scrub: 1,
         invalidateOnRefresh: true,
@@ -141,44 +141,20 @@ const Home = () => {
   return (
     <div ref={container} className="overflow-hidden bg-bg-base text-text-dark">
       {/* Hero Section */}
-      <section ref={heroRef} className="relative h-[120vh] flex items-center justify-center overflow-hidden bg-bg-base">
+      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden bg-bg-base">
         
         {/* Massive Background Typography */}
-        <div className="absolute top-1/4 left-0 w-full text-center z-0 opacity-5 pointer-events-none mix-blend-multiply">
-          <h1 className="text-[25vw] font-serif font-black leading-none tracking-tighter">KOLKATA</h1>
+        <div className="absolute top-[15%] left-0 w-full text-center z-0 opacity-5 pointer-events-none mix-blend-multiply">
+          <h1 className="text-[25vw] font-serif font-black leading-none tracking-tighter text-secondary">KOLKATA</h1>
         </div>
 
-        {/* Parallax Background Images */}
-        <div className="absolute inset-0 z-10 parallax-bg pointer-events-none flex justify-between px-10 items-start pt-32">
-           <img src="/src/assets/images/bridge.png" alt="Howrah Bridge" className="w-[40vw] max-w-[500px] object-contain opacity-50 filter grayscale mix-blend-multiply" />
-           <img src="/src/assets/images/victoria.png" alt="Victoria Memorial" className="w-[40vw] max-w-[500px] object-contain opacity-50 filter grayscale mt-40 mix-blend-multiply" />
-        </div>
-        
-        <div className="absolute inset-0 z-20 parallax-mid pointer-events-none flex justify-center items-end pb-32">
-           <img src="/src/assets/images/rickshaw.png" alt="Rickshaw" className="w-[50vw] max-w-[600px] object-contain drop-shadow-xl" />
-        </div>
-
-        <div className="absolute inset-0 z-30 parallax-front pointer-events-none flex justify-end items-end pb-10 pr-10">
-           <img src="/src/assets/images/taxi.png" alt="Yellow Taxi" className="w-[60vw] max-w-[800px] object-contain drop-shadow-2xl" />
-        </div>
-
-        <div className="relative z-40 text-center px-4 max-w-5xl mx-auto mt-[-10vh]">
+        <div className="relative z-40 text-center px-4 max-w-5xl mx-auto mt-[-15vh]">
           <h1 className="hero-text text-6xl md:text-8xl lg:text-[7rem] font-serif font-bold text-text-dark leading-tight mb-6 tracking-tighter uppercase">
             The <span className="text-primary italic">Creative</span> Engine
           </h1>
           <p className="hero-text text-xl md:text-3xl text-gray-500 font-sans mb-10 max-w-3xl mx-auto uppercase tracking-widest font-bold">
             Immerse yourself in the vibrant art culture of the city of joy.
           </p>
-        </div>
-
-        {/* Next Event Widget */}
-        <div className="hero-text absolute bottom-10 left-10 z-50 bg-white/50 backdrop-blur-md border border-gray-200 shadow-xl p-6 rounded-2xl w-[350px]">
-          <div className="text-primary font-bold tracking-widest uppercase text-sm mb-2">Next Masterclass</div>
-          <h3 className="text-2xl font-serif font-bold text-text-dark mb-4">Resin Art Immersion</h3>
-          <div className="flex justify-between text-gray-500 text-sm border-t border-gray-200 pt-4 font-medium">
-            <span>Oct 24, 2026</span>
-            <span>4:00 PM - 6:00 PM</span>
-          </div>
         </div>
       </section>
 
@@ -195,7 +171,7 @@ const Home = () => {
       </section>
 
       {/* Infinite Marquee Section */}
-      <section className="py-6 bg-primary text-white border-y border-gray-200">
+      <section className="py-6 bg-secondary text-white border-y-0">
         <div className="animate-marquee cursor-pointer" data-cursor="explore">
           <span className="text-5xl md:text-7xl font-serif font-bold mx-4 uppercase tracking-wider">
             Art Rickshaw ✦ Express Yourself ✦ Kolkata's Creative Hub ✦ Workshops ✦ Private Events ✦ 
@@ -207,13 +183,13 @@ const Home = () => {
       </section>
 
       {/* Horizontal Scroll Activities Section */}
-      <section ref={horizontalSectionRef} className="h-screen bg-bg-base relative overflow-hidden flex flex-col justify-center">
-        <div className="absolute top-10 md:top-20 left-10 md:left-20 z-10">
-          <h2 className="text-5xl md:text-7xl font-serif font-bold text-text-dark">Our Activities</h2>
-          <p className="text-xl text-gray-500 mt-4 max-w-md font-medium">Scroll to explore the different ways you can express your creativity.</p>
+      <section ref={horizontalSectionRef} className="h-screen bg-text-dark relative overflow-hidden flex flex-col justify-center">
+        <div className="absolute top-10 md:top-20 left-10 md:left-20 z-10 w-full pointer-events-none">
+          <h2 className="text-5xl md:text-7xl font-serif font-bold text-white">Our Activities</h2>
+          <p className="text-xl text-gray-400 mt-4 max-w-md font-medium">Scroll to explore the different ways you can express your creativity.</p>
         </div>
 
-        <div ref={horizontalScrollRef} className="flex h-1/2 md:h-[60vh] mt-24 items-center pl-[20vw] pr-[20vw]">
+        <div ref={horizontalScrollRef} className="flex h-[50vh] md:h-[60vh] items-center w-max pl-[20vw] pr-[20vw] mt-32">
           {activities.map((activity) => (
             <div 
               key={activity.id} 
@@ -231,16 +207,13 @@ const Home = () => {
           ))}
         </div>
       </section>
-      
-      {/* Spacer to allow scrolling past horizontal section */}
-      <div className="h-[10vh] bg-transparent"></div>
 
       {/* --- ABOUT SECTION --- */}
       <section id="about" className="pt-32 pb-24 bg-text-dark text-white">
         <div className="container mx-auto px-6 md:px-12">
           {/* Hero Content */}
           <div className="max-w-6xl mb-20">
-            <span className="text-primary font-bold tracking-widest uppercase text-sm mb-10 block">Our Story</span>
+            <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-10 block">Our Story</span>
             <h1 className="text-6xl md:text-[8vw] font-serif font-black text-white leading-none tracking-tighter mb-12">
               COLORING <br/> KOLKATA.
             </h1>
@@ -318,21 +291,21 @@ const Home = () => {
           <div className="w-full lg:w-1/2 lg:pt-10">
             <form className="space-y-12" onSubmit={(e) => e.preventDefault()}>
               <div className="relative z-0 w-full group">
-                <input type="text" name="name" id="name" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer transition-colors" placeholder=" " required />
-                <label htmlFor="name" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Full Name</label>
+                <input type="text" name="name" id="name" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer transition-colors" placeholder=" " required />
+                <label htmlFor="name" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Full Name</label>
               </div>
               
               <div className="relative z-0 w-full group">
-                <input type="email" name="email" id="email" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer transition-colors" placeholder=" " required />
-                <label htmlFor="email" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Email Address</label>
+                <input type="email" name="email" id="email" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer transition-colors" placeholder=" " required />
+                <label htmlFor="email" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Email Address</label>
               </div>
 
               <div className="relative z-0 w-full group">
-                <textarea name="message" id="message" rows="4" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer transition-colors resize-none" placeholder=" " required></textarea>
-                <label htmlFor="message" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Your Message</label>
+                <textarea name="message" id="message" rows="4" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer transition-colors resize-none" placeholder=" " required></textarea>
+                <label htmlFor="message" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Your Message</label>
               </div>
 
-              <button type="submit" className="text-white border-2 border-text-dark bg-text-dark hover:bg-transparent hover:text-text-dark focus:ring-4 focus:outline-none focus:ring-primary/50 font-bold uppercase tracking-widest rounded-full text-xl w-full sm:w-auto px-12 py-4 text-center transition-all duration-300" data-cursor="explore">Send Message</button>
+              <button type="submit" className="text-white border-2 border-secondary bg-secondary hover:bg-transparent hover:text-secondary focus:ring-4 focus:outline-none focus:ring-secondary/50 font-bold uppercase tracking-widest rounded-full text-xl w-full sm:w-auto px-12 py-4 text-center transition-all duration-300" data-cursor="explore">Send Message</button>
             </form>
           </div>
         </div>

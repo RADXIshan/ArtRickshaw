@@ -26,7 +26,7 @@ const Bookings = () => {
   );
 
   return (
-    <div className="min-h-screen bg-bg-base pt-32 pb-24 overflow-hidden">
+    <div className="min-h-screen bg-bg-base pt-20 pb-24 overflow-hidden">
       <div className="container mx-auto px-6 md:px-12">
         <div className="mb-20">
           <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">Reserve Your Spot</span>

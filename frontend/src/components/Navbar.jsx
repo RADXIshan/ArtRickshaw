@@ -29,7 +29,36 @@ const Navbar = () => {
 
   useEffect(() => {
     setIsOpen(false);
+    
+    // Check if there is a hash in the URL on mount or location change
+    if (location.hash) {
+      setTimeout(() => {
+        const id = location.hash.substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          window.scrollTo({
+            top: element.offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+    }
   }, [location]);
+
+  const handleLinkClick = (e, path) => {
+    setIsOpen(false);
+    if (path.startsWith('/#') && location.pathname === '/') {
+      e.preventDefault();
+      const id = path.substring(2);
+      const element = document.getElementById(id);
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop,
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
 
   return (
     <>
@@ -62,13 +91,13 @@ const Navbar = () => {
                 {links.map((link, i) => (
                   <div key={link.name} className="overflow-hidden">
                     <motion.div custom={i} variants={linkVariants} initial="initial" animate="animate" exit="exit">
-                      <a 
-                        href={link.path}
-                        onClick={() => setIsOpen(false)}
+                      <Link 
+                        to={link.path}
+                        onClick={(e) => handleLinkClick(e, link.path)}
                         className="text-6xl md:text-[8vw] font-serif font-bold text-white hover:text-primary transition-colors leading-none uppercase"
                       >
                         {link.name}
-                      </a>
+                      </Link>
                     </motion.div>
                   </div>
                 ))}
