@@ -13,7 +13,7 @@ const Preloader = ({ onComplete }) => {
   useEffect(() => {
     const tl = gsap.timeline({
       onComplete: () => {
-        // Fade container out slowly
+        // Fade container out slowly for an elegant exit
         gsap.to(containerRef.current, {
           opacity: 0,
           duration: 1.5,
@@ -28,7 +28,7 @@ const Preloader = ({ onComplete }) => {
     tl.to([textRef.current, percentageRef.current, rickshawRef.current], {
       opacity: 1,
       y: 0,
-      duration: 1,
+      duration: 1.2,
       ease: 'power4.out'
     })
     .to(dummy, {
@@ -45,15 +45,23 @@ const Preloader = ({ onComplete }) => {
       }
     }, "-=0.5")
     .to(rickshawRef.current, {
-      left: '100%',
+      left: '110%', // Move past 100% so it gracefully exits without squishing against the edge
       duration: 2.5,
       ease: 'power2.inOut'
     }, "<")
-    .to([textRef.current, percentageRef.current, rickshawRef.current, progressRef.current.parentElement], {
+    // Cinematic exit for the internal elements
+    .to(textRef.current, {
+      scale: 1.05,
       opacity: 0,
-      duration: 0.5,
+      filter: 'blur(10px)',
+      duration: 0.8,
       ease: 'power2.inOut'
-    }, "+=0.2");
+    }, "+=0.2")
+    .to([percentageRef.current, rickshawRef.current, progressRef.current.parentElement], {
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power2.inOut'
+    }, "<");
 
     return () => tl.kill();
   }, [onComplete]);
@@ -89,7 +97,7 @@ const Preloader = ({ onComplete }) => {
             <img 
               src={rickshawPullerImg} 
               alt="Rickshaw Puller" 
-              className="h-24 md:h-32 w-auto invert mix-blend-screen -scale-x-100 drop-shadow-xl"
+              className="h-24 md:h-32 w-auto invert mix-blend-screen -scale-x-100 drop-shadow-xl max-w-none shrink-0"
             />
           </div>
           

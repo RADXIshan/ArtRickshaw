@@ -104,14 +104,15 @@ const Home = () => {
       },
     });
 
-    // Weekly Specials Card Stacking
+    // Cinematic Weekly Specials Card Stacking
     const specialCards = gsap.utils.toArray('.special-card');
     specialCards.forEach((card, index) => {
       if (index === specialCards.length - 1) return;
       
       gsap.to(card, {
-        scale: 0.9,
-        opacity: 0.4,
+        scale: 0.92,
+        opacity: 0.6,
+        yPercent: -5,
         ease: 'none',
         scrollTrigger: {
           trigger: specialCards[index + 1],
@@ -271,7 +272,7 @@ const Home = () => {
   }, { scope: container });
 
   return (
-    <div ref={container} className="overflow-hidden bg-bg-base text-text-dark">
+    <div ref={container} className="overflow-clip bg-bg-base text-text-dark">
       {/* Hero Section */}
       <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden bg-bg-base">
         
@@ -346,33 +347,32 @@ const Home = () => {
       </section>
 
       {/* --- WEEKLY SPECIALS SECTION --- */}
-      <section className="specials-section bg-[#F5F5F0] relative border-t border-gray-200 py-32">
-        <div className="container mx-auto px-6 md:px-12">
-          <div className="mb-20 text-center md:text-left">
-             <span className="text-primary font-bold tracking-widest uppercase text-sm block mb-4">Discover Magic</span>
-             <h2 className="text-5xl md:text-7xl font-serif font-bold text-text-dark">WEEKLY SPECIALS</h2>
-          </div>
-          
-          <div className="relative pb-[10vh]">
-             {specials.map((special, i) => (
-                <div 
-                  key={special.id} 
-                  className="special-card sticky w-full h-[60vh] md:h-[70vh] rounded-4xl overflow-hidden shadow-2xl flex flex-col justify-end p-8 md:p-16 transform-gpu origin-top will-change-transform"
-                  style={{ 
-                    top: `calc(10vh + ${i * 40}px)`, 
-                    zIndex: i, 
-                    marginBottom: i === specials.length - 1 ? '0' : '50vh' 
-                  }}
-                >
-                   <img src={special.image} className="absolute inset-0 w-full h-full object-cover" alt={special.title} />
-                   <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent"></div>
-                   <div className="relative z-10 max-w-4xl">
-                      <h3 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight">{special.title}</h3>
-                      <p className="text-xl md:text-2xl text-gray-200 font-serif italic leading-relaxed">{special.desc}</p>
-                   </div>
-                </div>
-             ))}
-          </div>
+      <section className="specials-section bg-bg-base relative py-32">
+        <div className="container mx-auto px-6 md:px-12 text-center mb-20">
+             <span className="text-primary font-bold tracking-widest uppercase text-sm block mb-4">Curated Experiences</span>
+             <h2 className="text-5xl md:text-7xl font-serif font-black text-text-dark tracking-tighter uppercase">Weekly Specials</h2>
+        </div>
+        
+        <div className="relative flex flex-col items-center pb-[10vh]">
+           {specials.map((special, i) => (
+              <div 
+                key={special.id} 
+                className="special-card sticky w-full max-w-6xl h-[60vh] md:h-[75vh] rounded-4xl overflow-hidden shadow-2xl flex flex-col justify-end p-8 md:p-16 transform-gpu will-change-transform"
+                style={{ 
+                  top: `calc(15vh + ${i * 40}px)`, 
+                  zIndex: i, 
+                  marginBottom: i === specials.length - 1 ? '0' : '50vh' 
+                }}
+              >
+                 <img src={special.image} className="absolute inset-0 w-full h-full object-cover" alt={special.title} />
+                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent"></div>
+                 <div className="relative z-10 max-w-4xl">
+                    <span className="text-primary font-bold tracking-widest uppercase text-sm block mb-4">0{i + 1}</span>
+                    <h3 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight uppercase">{special.title}</h3>
+                    <p className="text-xl md:text-2xl text-gray-200 font-serif italic leading-relaxed">{special.desc}</p>
+                 </div>
+              </div>
+           ))}
         </div>
       </section>
 

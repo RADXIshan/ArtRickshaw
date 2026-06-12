@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import BookingModal from '../components/BookingModal';
 
 const ALL_ACTIVITIES = [
@@ -18,22 +18,7 @@ const Activities = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState(null);
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  
-  const springConfig = { damping: 25, stiffness: 200, mass: 0.5 };
-  const smoothX = useSpring(mouseX, springConfig);
-  const smoothY = useSpring(mouseY, springConfig);
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
 
   const handleActivityClick = (activity) => {
     setSelectedActivity(activity);
@@ -48,32 +33,7 @@ const Activities = () => {
           <div className={`absolute inset-0 transition-opacity duration-500 ${hoveredActivity ? hoveredActivity.bgColor : 'bg-transparent'} opacity-40`} />
         </div>
 
-        {/* Cursor-following Image */}
-        <motion.div
-          className="fixed pointer-events-none z-20 overflow-hidden rounded-2xl shadow-2xl hidden md:block will-change-transform"
-          style={{
-            left: 0,
-            top: 0,
-            width: '360px',
-            height: '260px',
-            x: smoothX,
-            y: smoothY,
-            translateX: '-50%',
-            translateY: '-50%',
-            opacity: hoveredActivity ? 1 : 0,
-            scale: hoveredActivity ? 1 : 0.8
-          }}
-          transition={{ opacity: { duration: 0.4 }, scale: { duration: 0.4 } }}
-        >
-          {ALL_ACTIVITIES.map((activity) => (
-            <img 
-              key={activity.id}
-              src={activity.image} 
-              alt={activity.title} 
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 will-change-opacity ${hoveredActivity?.id === activity.id ? 'opacity-100' : 'opacity-0'}`} 
-            />
-          ))}
-        </motion.div>
+
 
         <div className="container mx-auto px-6 md:px-12 relative z-10 pt-32 pb-40">
           <h1 className="text-[12vw] font-serif font-black leading-none text-black tracking-tighter mb-10 pointer-events-none">
@@ -90,13 +50,20 @@ const Activities = () => {
                 onClick={() => handleActivityClick(activity)}
                 data-cursor="explore"
               >
-                <div className="flex items-center gap-6 md:gap-12 relative z-10">
+                <div className="flex items-center gap-6 md:gap-12 relative z-10 w-full md:w-auto">
                   <span className="text-xl md:text-3xl text-gray-400 font-serif w-12 md:w-16 text-right group-hover:text-primary transition-colors">0{i + 1}</span>
-                  <h2 className="text-3xl md:text-7xl font-serif font-bold text-text-dark group-hover:translate-x-6 transition-transform duration-500">
+                  <h2 className="text-3xl md:text-7xl font-serif font-bold text-text-dark group-hover:translate-x-6 transition-transform duration-500 relative z-20">
                     {activity.title}
                   </h2>
                 </div>
-                <div className="hidden md:block relative z-10">
+
+                {/* Inline Image Reveal (Aligned with each activity) */}
+                <div className="hidden md:block absolute right-[25%] top-1/2 -translate-y-1/2 w-[340px] h-[240px] rounded-3xl overflow-hidden opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-12 transition-all duration-700 pointer-events-none shadow-2xl z-10">
+                   <img src={activity.image} alt={activity.title} className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000 ease-out" />
+                   <div className="absolute inset-0 bg-black/10 transition-opacity duration-500 group-hover:opacity-0"></div>
+                </div>
+
+                <div className="hidden md:block relative z-20 w-56 text-right">
                   <span className="text-lg uppercase tracking-widest text-primary font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     {activity.category}
                   </span>
