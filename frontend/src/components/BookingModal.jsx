@@ -46,7 +46,7 @@ const BookingModal = ({ isOpen, onClose, data }) => {
             className="relative bg-[#F5F5F0] w-full max-w-5xl rounded-4xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-[85vh] lg:max-h-[80vh] overflow-y-auto md:overflow-hidden"
           >
             {/* Image Section */}
-            <div className="w-full md:w-1/2 h-64 md:h-auto relative">
+            <div className="w-full md:w-1/2 h-44 sm:h-56 md:h-auto relative">
               <img src={data.image} alt={data.title} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent md:hidden" />
               <button 
@@ -62,7 +62,7 @@ const BookingModal = ({ isOpen, onClose, data }) => {
             {/* Content Section */}
             <div 
               data-lenis-prevent
-              className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center overflow-y-visible md:overflow-y-auto md:max-h-[85vh] lg:max-h-[80vh]"
+              className="w-full md:w-1/2 p-6 md:p-12 lg:p-16 flex flex-col justify-center overflow-y-visible md:overflow-y-auto md:max-h-[85vh] lg:max-h-[80vh]"
             >
               <button 
                 onClick={onClose}
@@ -73,18 +73,18 @@ const BookingModal = ({ isOpen, onClose, data }) => {
                 </svg>
               </button>
 
-              <span className="text-primary font-bold uppercase tracking-widest text-xs mb-4 block">
+              <span className="text-primary font-bold uppercase tracking-widest text-xs mb-2 md:mb-4 block">
                 {data.category}
               </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-black text-text-dark leading-none tracking-tight mb-6">
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-black text-text-dark leading-none tracking-tight mb-3 md:mb-6">
                 {data.title}
               </h2>
               
-              <p className="text-gray-600 text-lg mb-10 leading-relaxed font-light">
+              <p className="text-gray-600 text-base md:text-lg mb-5 md:mb-10 leading-relaxed font-light">
                 {data.description || "Join us for an immersive artistic experience. Unleash your creativity, learn new techniques, and take home your very own masterpiece."}
               </p>
 
-              <div className="flex items-center gap-8 mb-10">
+              <div className="flex items-center gap-8 mb-6 md:mb-10">
                 <div>
                   <p className="text-xs text-gray-400 uppercase tracking-widest mb-2 font-bold">Duration</p>
                   <p className="text-2xl font-serif font-bold text-text-dark">{data.duration || "2 Hours"}</p>
@@ -98,7 +98,7 @@ const BookingModal = ({ isOpen, onClose, data }) => {
 
               <button 
                 data-cursor="book"
-                className="w-full bg-text-dark text-[#F5F5F0] py-4 md:py-5 rounded-full uppercase tracking-widest font-bold text-sm hover:bg-primary transition-colors duration-300"
+                className="w-full bg-text-dark text-[#F5F5F0] py-3 md:py-5 rounded-full uppercase tracking-widest font-bold text-sm hover:bg-primary transition-colors duration-300"
               >
                 Proceed to Book
               </button>

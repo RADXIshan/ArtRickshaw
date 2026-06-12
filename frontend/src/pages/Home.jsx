@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { ArrowRight } from 'lucide-react';
+import BookingModal from '../components/BookingModal';
 import logoImg from '../assets/images/logo.png';
 import heroIllustrationImg from '../assets/images/hero_illustration.png';
 import howrahBridgeImg from '../assets/images/howrah_bridge.png';
@@ -14,19 +15,142 @@ import victoriaMemorialImg from '../assets/images/victoria_memorial-removebg-pre
 gsap.registerPlugin(ScrollTrigger);
 
 const activities = [
-  { id: 1, title: 'Resin Art', color: 'bg-primary' },
-  { id: 2, title: 'Fluid Art', color: 'bg-secondary' },
-  { id: 3, title: 'Terracotta Clay', color: 'bg-orange-400' },
-  { id: 4, title: 'Fine Arts', color: 'bg-stone-500' },
-  { id: 5, title: 'Canvas Arts', color: 'bg-teal-500' },
-  { id: 6, title: 'DIY Decor', color: 'bg-rose-400' },
-  { id: 7, title: 'Workshop on Demand', color: 'bg-indigo-400' },
+  { 
+    id: 1, 
+    title: 'Resin Art', 
+    color: 'bg-primary',
+    modalData: {
+      title: 'Ocean Resin Tray',
+      category: 'resin art',
+      image: 'https://images.unsplash.com/photo-1618022325802-7e5e732d97a1?auto=format&fit=crop&q=80&w=800',
+      description: 'Create a stunning ocean-themed resin tray, complete with lacing effects and miniature beach elements.',
+      price: '₹2500',
+      duration: '3 Hours'
+    }
+  },
+  { 
+    id: 2, 
+    title: 'Fluid Art', 
+    color: 'bg-secondary',
+    modalData: {
+      title: 'Abstract Fluid Canvas',
+      category: 'fluid art',
+      image: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=800',
+      description: 'Learn the techniques of acrylic pouring and fluid art to create an abstract masterpiece.',
+      price: '₹1800',
+      duration: '2 Hours'
+    }
+  },
+  { 
+    id: 3, 
+    title: 'Terracotta Clay', 
+    color: 'bg-orange-400',
+    modalData: {
+      title: 'Terracotta Pots',
+      category: 'terracotta clay segment',
+      image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80&w=800',
+      description: 'Hand-paint and decorate terracotta pots with traditional and contemporary motifs.',
+      price: '₹1200',
+      duration: '2 Hours'
+    }
+  },
+  { 
+    id: 4, 
+    title: 'Fine Arts', 
+    color: 'bg-stone-500',
+    modalData: {
+      title: 'Charcoal Sketching',
+      category: 'fine arts',
+      image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800',
+      description: 'Master the fundamentals of shading, light, and texture using charcoal mediums.',
+      price: '₹1500',
+      duration: '2.5 Hours'
+    }
+  },
+  { 
+    id: 5, 
+    title: 'Canvas Arts', 
+    color: 'bg-teal-500',
+    modalData: {
+      title: 'Acrylic Canvas',
+      category: 'canvas arts',
+      image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&q=80&w=800',
+      description: 'A guided acrylic painting session on canvas suitable for all skill levels.',
+      price: '₹1600',
+      duration: '3 Hours'
+    }
+  },
+  { 
+    id: 6, 
+    title: 'DIY Decor', 
+    color: 'bg-rose-400',
+    modalData: {
+      title: 'Macrame Wall Hanging',
+      category: 'diy decor arts',
+      image: 'https://images.unsplash.com/photo-1600172454136-f81d111728c4?auto=format&fit=crop&q=80&w=800',
+      description: 'Knot your way into a beautiful bohemian macrame wall hanging for your living space.',
+      price: '₹2200',
+      duration: '3.5 Hours'
+    }
+  },
+  { 
+    id: 7, 
+    title: 'Workshop on Demand', 
+    color: 'bg-indigo-400',
+    modalData: {
+      title: 'Corporate Workshop',
+      category: 'workshop on demand',
+      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800',
+      description: 'Tailored art workshops for corporate team building and stress relief.',
+      price: 'Contact Us',
+      duration: 'Flexible'
+    }
+  },
 ];
 
 const specials = [
-  { id: 1, title: 'Sunday Sundowner Sip & Paint', image: 'https://images.unsplash.com/photo-1574510008544-04104e705b0c?auto=format&fit=crop&q=80', desc: 'Unwind your weekend with a glass of wine, good music, and an immersive painting session. Perfect for friends and couples.' },
-  { id: 2, title: 'Midnight Pottery', image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80', desc: 'Experience the magic of the potter\'s wheel under the stars. A calm and therapeutic late-night session.' },
-  { id: 3, title: 'Weekend Art Bootcamp', image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80', desc: 'A rigorous but fun weekend bootcamp covering three distinct art mediums over two days.' },
+  { 
+    id: 1, 
+    title: 'Sunday Sundowner Sip & Paint', 
+    image: 'https://images.unsplash.com/photo-1574510008544-04104e705b0c?auto=format&fit=crop&q=80', 
+    desc: 'Unwind your weekend with a glass of wine, good music, and an immersive painting session. Perfect for friends and couples.',
+    modalData: {
+      title: 'Sunday Sundowner Sip & Paint',
+      category: 'weekly special',
+      image: 'https://images.unsplash.com/photo-1574510008544-04104e705b0c?auto=format&fit=crop&q=80&w=800',
+      description: 'Unwind your weekend with a glass of wine, good music, and an immersive painting session. Perfect for friends and couples.',
+      price: '₹1800',
+      duration: '3 Hours'
+    }
+  },
+  { 
+    id: 2, 
+    title: 'Midnight Pottery', 
+    image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80', 
+    desc: 'Experience the magic of the potter\'s wheel under the stars. A calm and therapeutic late-night session.',
+    modalData: {
+      title: 'Midnight Pottery',
+      category: 'weekly special',
+      image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80&w=800',
+      description: 'Experience the magic of the potter\'s wheel under the stars. A calm and therapeutic late-night session.',
+      price: '₹2000',
+      duration: '2 Hours'
+    }
+  },
+  { 
+    id: 3, 
+    title: 'Weekend Art Bootcamp', 
+    image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80', 
+    desc: 'A rigorous but fun weekend bootcamp covering three distinct art mediums over two days.',
+    modalData: {
+      title: 'Weekend Art Bootcamp',
+      category: 'weekly special',
+      image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80&w=800',
+      description: 'A rigorous but fun weekend bootcamp covering three distinct art mediums over two days.',
+      price: '₹3500',
+      duration: '2 Days'
+    }
+  },
 ];
 
 const pillars = [
@@ -59,6 +183,23 @@ const Home = () => {
   const [hoveredSpecial, setHoveredSpecial] = useState(0);
   const [activePillar, setActivePillar] = useState(0);
   const heroRef = useRef(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState(null);
+
+  const handleActivityClick = (activity) => {
+    setSelectedBooking(activity.modalData);
+    setIsModalOpen(true);
+  };
+
+  const handleSpecialClick = (idx, special) => {
+    if (hoveredSpecial === idx) {
+      setSelectedBooking(special.modalData);
+      setIsModalOpen(true);
+    } else {
+      setHoveredSpecial(idx);
+    }
+  };
 
   const horizontalSectionRef = useRef(null);
   const horizontalScrollRef = useRef(null);
@@ -295,7 +436,7 @@ const Home = () => {
       <section ref={heroRef} className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-[#f4ece3]">
         
         {/* Hero Illustration Background — rickshaw in center, skyline at bottom */}
-        <div className="absolute inset-0 w-full h-full pointer-events-none">
+        <div className="absolute inset-0 w-full h-full pointer-events-none -translate-y-10 md:translate-y-0">
            <img 
              src={heroIllustrationImg} 
              className="hero-illustration w-full h-full object-cover object-bottom opacity-40 mix-blend-multiply" 
@@ -304,19 +445,19 @@ const Home = () => {
         </div>
 
         {/* Centered Content */}
-        <div className="relative z-40 text-center px-4 max-w-5xl mx-auto flex flex-col items-center justify-center">
-          <div className="hero-text mb-6 flex flex-col items-center">
-            <h2 className="text-lg md:text-xl font-serif italic text-[#657777] mb-3 tracking-wide">Since 2016, Hindustan Park</h2>
+        <div className="relative z-40 text-center px-4 max-w-5xl mx-auto flex flex-col items-center justify-center -translate-y-10 md:translate-y-0">
+          <div className="hero-text mb-4 md:mb-6 flex flex-col items-center">
+            <h2 className="text-lg md:text-xl font-serif italic text-[#657777] mb-2 md:mb-3 tracking-wide">Since 2016, Hindustan Park</h2>
             <div className="w-6 h-[2px] bg-[#e65a44] rounded-full"></div>
           </div>
           
-          <div className="hero-text mb-10 mt-4">
+          <div className="hero-text mb-6 mt-2 md:mb-10 md:mt-4">
             <img src={logoImg} alt="Art Rickshaw" className="h-20 md:h-28 lg:h-40 w-auto mx-auto object-contain" />
           </div>
 
           <div className="hero-text flex flex-col items-center">
-            <h3 className="text-xl md:text-2xl font-serif text-[#657777] mb-3">Create. Learn. Belong.</h3>
-            <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-5"></div>
+            <h3 className="text-xl md:text-2xl font-serif text-[#657777] mb-2 md:mb-3">Create. Learn. Belong.</h3>
+            <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-4 md:mb-5"></div>
             <p className="text-sm md:text-base text-gray-600 font-sans max-w-md mx-auto font-medium leading-relaxed">
               Workshops, pottery, events and<br/>creative experiences in <span className="text-[#e65a44] italic font-bold">Kolkata</span>.
             </p>
@@ -338,7 +479,8 @@ const Home = () => {
             <div 
               key={activity.id} 
               data-cursor="explore"
-              className={`shrink-0 w-[80vw] md:w-[40vw] h-full mx-4 rounded-3xl p-10 flex flex-col justify-end ${activity.color} shadow-lg transform-gpu transition-transform duration-500 lg:hover:scale-[1.02] will-change-transform`}
+              onClick={() => handleActivityClick(activity)}
+              className={`shrink-0 w-[80vw] md:w-[40vw] h-full mx-4 rounded-3xl p-10 flex flex-col justify-end ${activity.color} shadow-lg transform-gpu transition-transform duration-500 lg:hover:scale-[1.02] will-change-transform cursor-pointer`}
             >
               <h3 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">{activity.title}</h3>
               <div className="flex justify-between items-center">
@@ -373,7 +515,7 @@ const Home = () => {
                 <div 
                   key={special.id} 
                   onMouseEnter={() => setHoveredSpecial(i)}
-                  onClick={() => setHoveredSpecial(i)}
+                  onClick={() => handleSpecialClick(i, special)}
                   data-cursor="book"
                   className={`special-hover-card relative rounded-3xl overflow-hidden cursor-pointer group transform-gpu ${isActive ? 'md:flex-3 flex-2' : 'md:flex-1 flex-1'}`}
                   style={{ transition: 'flex 700ms cubic-bezier(0.25,1,0.5,1)' }}
@@ -393,14 +535,17 @@ const Home = () => {
                         </div>
                         
                         <h3 className={`font-serif font-bold text-white mb-2 leading-tight uppercase transition-all duration-500 ${isActive ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl'} ${!isActive && 'md:whitespace-nowrap'}`}>
-                          {special.title}
+                           {special.title}
                         </h3>
                         
                         <div className={`overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive ? 'max-h-40 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
                           <p className="text-base md:text-xl text-gray-300 font-serif italic line-clamp-3">
                             {special.desc}
                           </p>
-                          <div className="mt-6 flex items-center gap-2 text-white font-bold tracking-widest uppercase text-xs hover:text-primary transition-colors w-fit">
+                          <div 
+                            onClick={(e) => { e.stopPropagation(); setSelectedBooking(special.modalData); setIsModalOpen(true); }}
+                            className="mt-6 flex items-center gap-2 text-white font-bold tracking-widest uppercase text-xs hover:text-primary transition-colors w-fit"
+                          >
                             <span>Book Now</span>
                             <ArrowRight className="w-4 h-4" />
                           </div>
@@ -409,7 +554,10 @@ const Home = () => {
                    </div>
                    
                    {/* Decorative Corner Icon */}
-                   <div className={`absolute top-6 right-6 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 transform-gpu ${isActive ? 'opacity-100 translate-y-0 bg-white text-black' : 'opacity-0 -translate-y-4 bg-white/20 text-white'}`}>
+                   <div 
+                     onClick={(e) => { e.stopPropagation(); setSelectedBooking(special.modalData); setIsModalOpen(true); }}
+                     className={`absolute top-6 right-6 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 transform-gpu ${isActive ? 'opacity-100 translate-y-0 bg-white text-black' : 'opacity-0 -translate-y-4 bg-white/20 text-white'}`}
+                   >
                      <ArrowRight className={`w-6 h-6 transition-transform duration-500 ${isActive ? '-rotate-45' : 'rotate-0'}`} />
                    </div>
                 </div>
@@ -685,6 +833,12 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <BookingModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        data={selectedBooking} 
+      />
     </div>
   );
 };
