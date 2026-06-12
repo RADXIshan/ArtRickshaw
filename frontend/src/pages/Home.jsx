@@ -529,7 +529,7 @@ const Home = () => {
         <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-20 items-start relative z-10">
           {/* Left Side: Massive Text */}
           <div className="w-full lg:w-1/2 contact-title-parallax">
-            <h1 className="text-[15vw] lg:text-[10vw] font-serif font-black text-text-dark leading-none tracking-tighter mb-10">
+            <h1 className="text-[12vw] md:text-[8vw] lg:text-[6vw] font-serif font-black text-text-dark leading-none tracking-tighter mb-10 wrap-break-word">
               LET'S <br/> CONNECT.
             </h1>
             <div className="space-y-6 text-xl text-gray-500 font-serif italic">
