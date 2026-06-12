@@ -382,8 +382,8 @@ const Home = () => {
           {/* Image & Text Split */}
           <div className="flex flex-col md:flex-row items-start gap-20 py-16">
             <div className="w-full md:w-1/2 about-img-container">
-              <div className="aspect-4/5 bg-[#f4ece3] rounded-2xl overflow-hidden relative about-img clip-path-reveal scale-125 will-change-transform">
-                 <img src={sketchedRickshawImg} alt="Sketched Rickshaw" className="about-img-parallax absolute top-[-10%] w-full h-[120%] object-contain object-center will-change-transform mix-blend-multiply" />
+              <div className="aspect-square bg-[#f4ece3] rounded-2xl overflow-hidden relative about-img clip-path-reveal scale-125 will-change-transform">
+                 <img src={sketchedRickshawImg} alt="Sketched Rickshaw" className="about-img-parallax absolute inset-0 w-full h-full object-contain object-center will-change-transform mix-blend-multiply" />
               </div>
             </div>
 

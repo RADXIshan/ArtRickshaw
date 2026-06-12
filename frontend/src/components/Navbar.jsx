@@ -110,7 +110,7 @@ const Navbar = () => {
                       <Link 
                         to={link.path}
                         onClick={(e) => handleLinkClick(e, link.path)}
-                        className="text-4xl md:text-5xl font-serif font-bold text-text-dark hover:text-primary transition-colors leading-none uppercase"
+                        className="text-5xl md:text-7xl font-serif font-black text-text-dark hover:text-primary transition-colors leading-none uppercase tracking-tighter"
                       >
                         {link.name}
                       </Link>
