@@ -39,7 +39,7 @@ const Bookings = () => {
         <div className="container mx-auto px-6 md:px-12">
           <div className="mb-12 md:mb-20">
             <span className="text-primary font-bold tracking-widest uppercase text-xs md:text-sm mb-3 md:mb-4 block">Reserve Your Spot</span>
-            <h1 className="text-5xl sm:text-6xl md:text-[8vw] lg:text-[7vw] font-serif font-black text-text-dark leading-none tracking-tighter">BOOK AN <br/> EXPERIENCE.</h1>
+            <h1 className="text-5xl sm:text-6xl md:text-[8vw] lg:text-[7vw] font-serif font-black text-text-dark leading-none tracking-tight">BOOK&nbsp;AN <br/> EXPERIENCE.</h1>
           </div>
 
           {/* Filter Bar */}
