@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -621,7 +621,7 @@ const Home = () => {
               { id: 1, name: 'Devangana', role: 'Founder & Artist', color: 'bg-primary', delay: '0' },
               { id: 2, name: 'Sidhant', role: 'Creative Director', color: 'bg-secondary', delay: '100' },
               { id: 3, name: 'Priya', role: 'Workshop Lead', color: 'bg-teal-500', delay: '200' },
-            ].map((member, i) => (
+            ].map((member) => (
               <div key={member.id} className="team-member group cursor-pointer" data-cursor="explore">
                 <div className={`w-full aspect-square rounded-3xl mb-6 relative overflow-hidden ${member.color}`}>
                   <div className="absolute inset-0 flex items-center justify-center opacity-40 lg:group-hover:opacity-80 transition-opacity duration-500">

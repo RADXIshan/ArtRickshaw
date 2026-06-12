@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 import BookingModal from '../components/BookingModal';
 
 const ALL_ACTIVITIES = [
