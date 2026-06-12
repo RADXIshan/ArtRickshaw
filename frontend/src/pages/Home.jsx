@@ -92,6 +92,7 @@ const Home = () => {
         scrollTrigger: {
           trigger: '.specials-section',
           start: 'top 80%',
+          toggleActions: 'play none none reset',
         }
       }
     );
@@ -107,6 +108,7 @@ const Home = () => {
         scrollTrigger: {
           trigger: '.specials-cards-container',
           start: 'top 80%',
+          toggleActions: 'play none none reset',
         }
       }
     );
@@ -114,57 +116,73 @@ const Home = () => {
 
 
     // About Image reveal (optimized)
-    gsap.to('.about-img', {
-      clipPath: 'inset(0% 0% 0% 0%)',
-      scale: 1,
-      duration: 1.5,
-      ease: 'power3.out',
-      force3D: true,
-      scrollTrigger: {
-        trigger: '.about-img-container',
-        start: 'top 80%'
+    gsap.fromTo('.about-img',
+      { clipPath: 'inset(100% 0 0 0)', scale: 1.25 },
+      {
+        clipPath: 'inset(0% 0% 0% 0%)',
+        scale: 1,
+        duration: 1.5,
+        ease: 'power3.out',
+        force3D: true,
+        scrollTrigger: {
+          trigger: '.about-img-container',
+          start: 'top 80%',
+          toggleActions: 'play none none reset',
+        }
       }
-    });
+    );
 
     // Philosophy Text Parallax
-    gsap.from('.philosophy-text', {
-      y: 50,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.2,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.philosophy-container',
-        start: 'top 75%',
+    gsap.fromTo('.philosophy-text',
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.philosophy-container',
+          start: 'top 75%',
+          toggleActions: 'play none none reset',
+        }
       }
-    });
+    );
 
 
     // Team Header Reveal
-    gsap.from('.team-header', {
-      y: 50,
-      opacity: 0,
-      stagger: 0.2,
-      duration: 1,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '#team',
-        start: 'top 75%',
+    gsap.fromTo('.team-header',
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        stagger: 0.2,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#team',
+          start: 'top 75%',
+          toggleActions: 'play none none reset',
+        }
       }
-    });
+    );
 
     // Team Members Stagger
-    gsap.from('.team-member', {
-      y: 100,
-      opacity: 0,
-      stagger: 0.15,
-      duration: 1.2,
-      ease: 'power4.out',
-      scrollTrigger: {
-        trigger: '#team',
-        start: 'top 80%',
+    gsap.fromTo('.team-member',
+      { y: 100, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        stagger: 0.15,
+        duration: 1.2,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: '#team',
+          start: 'top 80%',
+          toggleActions: 'play none none reset',
+        }
       }
-    });
+    );
     
     // Team Img Parallax inside cards
     gsap.utils.toArray('.team-img-parallax').forEach((img) => {
@@ -208,19 +226,23 @@ const Home = () => {
     });
 
     // Contact Form Elements Stagger
-    gsap.from('.form-element', {
-      y: 30,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '#contact form',
-        start: 'top 80%',
+    gsap.fromTo('.form-element',
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#contact form',
+          start: 'top 80%',
+          toggleActions: 'play none none reset',
+        }
       }
-    });
+    );
 
-    // Contact "LET'S CREATE." Parallax
+    // Contact "LET'S CONNECT." Parallax
     gsap.to('.contact-title-parallax', {
       y: -100,
       ease: 'none',
