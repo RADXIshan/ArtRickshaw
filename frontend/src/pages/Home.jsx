@@ -344,12 +344,12 @@ const Home = () => {
             <div 
               key={activity.id} 
               data-cursor="explore"
-              className={`shrink-0 w-[80vw] md:w-[40vw] h-full mx-4 rounded-3xl p-10 flex flex-col justify-end ${activity.color} shadow-lg transform transition-transform duration-500 md:hover:scale-[1.02]`}
+              className={`shrink-0 w-[80vw] md:w-[40vw] h-full mx-4 rounded-3xl p-10 flex flex-col justify-end ${activity.color} shadow-lg transform-gpu transition-transform duration-500 lg:hover:scale-[1.02] will-change-transform`}
             >
               <h3 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">{activity.title}</h3>
               <div className="flex justify-between items-center">
                 <span className="text-white/90 font-bold tracking-widest uppercase">Explore</span>
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
+                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
                   <ArrowRight className="text-white w-6 h-6" />
                 </div>
               </div>
@@ -378,10 +378,10 @@ const Home = () => {
                   key={special.id} 
                   onMouseEnter={() => setHoveredSpecial(i)}
                   onClick={() => setHoveredSpecial(i)}
-                  className={`special-hover-card relative rounded-3xl overflow-hidden cursor-pointer group ${isActive ? 'md:flex-3 flex-2' : 'md:flex-1 flex-1'}`}
+                  className={`special-hover-card relative rounded-3xl overflow-hidden cursor-pointer group transform-gpu ${isActive ? 'md:flex-3 flex-2' : 'md:flex-1 flex-1'}`}
                   style={{ transition: 'flex 700ms cubic-bezier(0.25,1,0.5,1)' }}
                 >
-                   <img src={special.image} className={`absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ${isActive ? 'scale-105' : 'scale-100'} group-hover:scale-110`} alt={special.title} />
+                   <img src={special.image} className={`absolute inset-0 w-full h-full object-cover transform-gpu will-change-transform transition-transform duration-1000 ${isActive ? 'scale-105' : 'scale-100'} lg:group-hover:scale-110`} alt={special.title} />
                    <div className={`absolute inset-0 bg-linear-to-t transition-all duration-500 ${isActive ? 'from-black/90 via-black/40 to-transparent' : 'from-black/80 via-black/60 to-black/30'}`}></div>
                    
                    <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
@@ -412,7 +412,7 @@ const Home = () => {
                    </div>
                    
                    {/* Decorative Corner Icon */}
-                   <div className={`absolute top-6 right-6 w-12 h-12 rounded-full backdrop-blur-md flex items-center justify-center transition-all duration-500 transform ${isActive ? 'opacity-100 translate-y-0 bg-white text-black' : 'opacity-0 -translate-y-4 bg-white/10 text-white'}`}>
+                   <div className={`absolute top-6 right-6 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 transform-gpu ${isActive ? 'opacity-100 translate-y-0 bg-white text-black' : 'opacity-0 -translate-y-4 bg-white/20 text-white'}`}>
                      <ArrowRight className={`w-6 h-6 transition-transform duration-500 ${isActive ? '-rotate-45' : 'rotate-0'}`} />
                    </div>
                 </div>
@@ -504,10 +504,10 @@ const Home = () => {
             ].map((member, i) => (
               <div key={member.id} className="team-member group cursor-pointer" data-cursor="explore">
                 <div className={`w-full aspect-square rounded-3xl mb-6 relative overflow-hidden ${member.color}`}>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-40 md:group-hover:opacity-80 transition-opacity duration-500">
+                  <div className="absolute inset-0 flex items-center justify-center opacity-40 lg:group-hover:opacity-80 transition-opacity duration-500">
                      <span className="text-[25vw] md:text-[15vw] font-black text-white">{member.name[0]}</span>
                   </div>
-                  <img src={taxiImg} alt="Team" className="team-img-parallax absolute top-[-20%] w-full h-[140%] object-cover opacity-0 md:group-hover:opacity-20 transition-opacity duration-500 will-change-transform" />
+                  <img src={taxiImg} alt="Team" className="team-img-parallax absolute top-[-20%] w-full h-[140%] object-cover opacity-0 lg:group-hover:opacity-20 transition-opacity duration-500 will-change-transform transform-gpu" />
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-text-dark">{member.name}</h3>
                 <p className="text-gray-500 font-sans uppercase tracking-widest text-sm font-bold mt-2">{member.role}</p>
@@ -528,7 +528,7 @@ const Home = () => {
           {/* Left Side: Massive Text */}
           <div className="w-full lg:w-1/2 contact-title-parallax">
             <h1 className="text-[15vw] lg:text-[10vw] font-serif font-black text-text-dark leading-none tracking-tighter mb-10">
-              LET'S <br/> CREATE.
+              LET'S <br/> CONNECT.
             </h1>
             <div className="space-y-6 text-xl text-gray-500 font-serif italic">
               <p>Hindustan Park, Gariahat<br/>Kolkata, West Bengal<br/>India - 700029</p>
