@@ -5,10 +5,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { ArrowRight } from 'lucide-react';
 import taxiImg from '../assets/images/taxi.png';
-import sketchedRickshawImg from '../assets/images/sketched rickshaw.png';
-import taxiSketchImg from '../assets/images/taxi_sketch_minimal.png';
 import logoImg from '../assets/images/logo.png';
 import heroIllustrationImg from '../assets/images/hero_illustration.png';
+import yellowTaxiImg from '../assets/images/yellow_taxi-removebg-preview.png';
+import waterColourRickshawImg from '../assets/images/water_colour_rickshaw-removebg-preview.png';
+import victoriaMemorialImg from '../assets/images/victoria_memorial-removebg-preview.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,10 +29,35 @@ const specials = [
   { id: 3, title: 'Weekend Art Bootcamp', image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80', desc: 'A rigorous but fun weekend bootcamp covering three distinct art mediums over two days.' },
 ];
 
+const pillars = [
+  {
+    id: '01',
+    title: 'Inclusive Expression',
+    tagline: 'Art is for Everyone',
+    description: "We believe that art is not just for the 'gifted'. It is a universal language, a form of therapy, and a way to connect. Whether you are holding a brush for the first time or the hundredth, your voice belongs here.",
+    colorClass: 'text-primary border-primary/20',
+  },
+  {
+    id: '02',
+    title: 'Creative Sanctuary',
+    tagline: 'Disconnect to Reconnect',
+    description: 'From traditional terracotta wheel throwing to modern fluid art and resin casting, our workshops are intentionally designed to help you quiet the mental chatter, slow down your pace, and discover a sense of deep focus.',
+    colorClass: 'text-secondary border-secondary/20',
+  },
+  {
+    id: '03',
+    title: 'The Beauty of Mistakes',
+    tagline: 'Process over Perfection',
+    description: 'We provide a space where mistakes are welcomed as happy accidents. Every paint splatter, color bleed, and slightly off-center pot tells a story of exploration. We celebrate the raw, imperfect beauty of creating.',
+    colorClass: 'text-orange-400 border-orange-400/20',
+  }
+];
+
 
 const Home = () => {
   const container = useRef(null);
   const [hoveredSpecial, setHoveredSpecial] = useState(0);
+  const [activePillar, setActivePillar] = useState(0);
   const heroRef = useRef(null);
 
   const horizontalSectionRef = useRef(null);
@@ -216,9 +242,9 @@ const Home = () => {
       });
     });
 
-    // About Image inner parallax
-    gsap.to('.about-img-parallax', {
-      yPercent: 15,
+    // Parallax for Philosophy Collage Elements
+    gsap.to('.philosophy-watercolor-rickshaw', {
+      yPercent: 8,
       ease: 'none',
       force3D: true,
       scrollTrigger: {
@@ -229,9 +255,22 @@ const Home = () => {
       }
     });
 
-    // Contact Background Parallax
-    gsap.to('.contact-bg-parallax', {
-      yPercent: 20,
+    gsap.to('.philosophy-yellow-taxi', {
+      yPercent: -15,
+      xPercent: 5,
+      ease: 'none',
+      force3D: true,
+      scrollTrigger: {
+        trigger: '.about-img-container',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      }
+    });
+
+    // Contact Victoria Memorial Parallax
+    gsap.to('.contact-victoria-parallax', {
+      yPercent: -12,
       ease: 'none',
       force3D: true,
       scrollTrigger: {
@@ -426,103 +465,131 @@ const Home = () => {
           {/* Asymmetric Grid Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
             
-            {/* Left Column: Sticky Illustration / Intro (Desktop sticky) */}
-            <div className="lg:col-span-5 lg:sticky lg:top-32 space-y-8 about-img-container">
-              <div className="aspect-square relative overflow-hidden about-img clip-path-reveal scale-125 group will-change-transform">
+            {/* Left Column: Sticky Image Showcase & Quote */}
+            <div className="hidden lg:block lg:col-span-5 lg:sticky lg:top-32 space-y-8 about-img-container">
+              <div className="aspect-3/4 md:aspect-4/5 lg:aspect-3/4 relative group/gallery about-img clip-path-reveal scale-125 will-change-transform flex items-center justify-center bg-transparent">
+                {/* Floating Local Illustrations with parallax compatibility and interactive styling */}
                 <img 
-                  src={sketchedRickshawImg} 
-                  alt="Sketched Rickshaw" 
-                  className="about-img-parallax absolute top-[-10%] left-0 w-full h-[120%] object-contain transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform mix-blend-multiply" 
+                  src={waterColourRickshawImg} 
+                  alt="Watercolor Rickshaw" 
+                  className={`philosophy-watercolor-rickshaw absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
+                    activePillar === 0 
+                      ? 'opacity-100 scale-100 rotate-0 z-20' 
+                      : 'opacity-0 scale-95 rotate-0 z-10'
+                  }`}
                 />
+                <img 
+                  src={yellowTaxiImg} 
+                  alt="Yellow Taxi" 
+                  className={`philosophy-yellow-taxi absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
+                    activePillar === 1 
+                      ? 'opacity-100 scale-100 rotate-0 z-20' 
+                      : 'opacity-0 scale-95 rotate-0 z-10'
+                  }`}
+                />
+                <img 
+                  src={victoriaMemorialImg} 
+                  alt="Victoria Memorial" 
+                  className={`philosophy-victoria absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
+                    activePillar === 2 
+                      ? 'opacity-100 scale-100 rotate-0 z-20' 
+                      : 'opacity-0 scale-95 rotate-0 z-10'
+                  }`}
+                />
+
                 {/* Est Badge */}
-                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-text-dark/5 shadow-xs text-xs font-bold tracking-widest uppercase text-[#e65a44]">
+                <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-text-dark/5 shadow-md text-xs font-bold tracking-widest uppercase text-[#e65a44] z-30 pointer-events-none">
                   Kolkata, Est. 2016
                 </div>
               </div>
 
-              <div className="space-y-4 philosophy-header">
-                <h3 className="text-2xl font-serif italic text-gray-700">
+              {/* Editorial Quote */}
+              <div className="space-y-4 philosophy-header pt-4 border-t border-text-dark/10">
+                <h3 className="text-xl font-serif italic text-gray-700">
                   "Art is a way of recognizing oneself."
                 </h3>
-                <p className="text-gray-500 max-w-sm leading-relaxed">
+                <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
                   We don't teach you rules; we help you find your voice. Step away from the noise of the city and step into a space of pure, unfiltered flow.
                 </p>
               </div>
             </div>
 
-            {/* Right Column: Three Philosophy Pillars */}
-            <div className="lg:col-span-7 space-y-8 philosophy-cards-container">
-              {[
-                {
-                  id: '01',
-                  title: 'Inclusive Expression',
-                  tagline: 'Art is for Everyone',
-                  description: "We believe that art is not just for the 'gifted'. It is a universal language, a form of therapy, and a way to connect. Whether you are holding a brush for the first time or the hundredth, your voice belongs here.",
-                  color: 'hover:border-primary/40',
-                  glow: 'from-primary/10 to-transparent',
-                  accent: 'text-primary'
-                },
-                {
-                  id: '02',
-                  title: 'Creative Sanctuary',
-                  tagline: 'Disconnect to Reconnect',
-                  description: 'From traditional terracotta wheel throwing to modern fluid art and resin casting, our workshops are intentionally designed to help you quiet the mental chatter, slow down your pace, and discover a sense of deep focus.',
-                  color: 'hover:border-secondary/40',
-                  glow: 'from-secondary/10 to-transparent',
-                  accent: 'text-secondary'
-                },
-                {
-                  id: '03',
-                  title: 'The Beauty of Mistakes',
-                  tagline: 'Process over Perfection',
-                  description: 'We provide a space where mistakes are welcomed as happy accidents. Every paint splatter, color bleed, and slightly off-center pot tells a story of exploration. We celebrate the raw, imperfect beauty of creating.',
-                  color: 'hover:border-orange-400/40',
-                  glow: 'from-orange-400/10 to-transparent',
-                  accent: 'text-orange-400'
-                }
-              ].map((pillar, idx) => {
+            {/* Right Column: Three Philosophy Pillars Accordion */}
+            <div className="lg:col-span-7 space-y-4 philosophy-cards-container">
+              {pillars.map((pillar, idx) => {
+                const isActive = activePillar === idx;
                 return (
                   <div 
                     key={pillar.id}
-                    className={`philosophy-card group relative bg-bg-base border border-text-dark/10 rounded-3xl p-8 md:p-12 overflow-hidden shadow-xs transition-all duration-500 ease-out hover:scale-[1.01] hover:shadow-xl ${pillar.color}`}
+                    onMouseEnter={() => setActivePillar(idx)}
+                    onClick={() => setActivePillar(idx)}
+                    className={`philosophy-card group border-t border-text-dark/10 py-6 md:py-8 transition-opacity duration-500 cursor-pointer ${
+                      !isActive ? 'opacity-40' : 'opacity-100'
+                    }`}
                   >
-                    {/* Hover Glow Blob */}
-                    <div className={`absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-linear-to-tr ${pillar.glow} blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}></div>
-                    
-                    {/* Grainy overlay for texture inside card */}
-                    <div className="absolute inset-0 opacity-[0.03] bg-repeat pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
-
-                    {/* Card Content Layout */}
-                    <div className="relative z-10 flex flex-col md:flex-row md:items-start gap-6 md:gap-10">
-                      
-                      {/* Left side: Number */}
-                      <div className="flex md:flex-col items-center md:items-start justify-between md:justify-start">
-                        <span className={`text-4xl md:text-5xl font-serif font-black transition-colors duration-500 ${pillar.accent}`}>
+                    <div className="flex items-start justify-between gap-6">
+                      <div className="flex items-start gap-6 md:gap-10">
+                        {/* Index Number */}
+                        <span className={`text-xl md:text-2xl font-serif font-semibold transition-colors duration-500 ${
+                          isActive ? pillar.colorClass.split(' ')[0] : 'text-gray-400'
+                        }`}>
                           {pillar.id}
                         </span>
+
+                        {/* Title & Tagline & Description */}
+                        <div className="space-y-2">
+                          <div>
+                            <span className="text-xs font-bold tracking-widest uppercase text-gray-400 block mb-1">
+                              {pillar.tagline}
+                            </span>
+                            <h3 className={`text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-text-dark transition-colors duration-300 ${
+                              isActive ? pillar.colorClass.split(' ')[0] : ''
+                            }`}>
+                              {pillar.title}
+                            </h3>
+                          </div>
+
+                          {/* Expandable Description */}
+                          <div 
+                            className={`grid transition-all duration-500 ease-in-out ${
+                              isActive ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
+                            }`}
+                          >
+                            <div className="overflow-hidden">
+                              <p className="text-gray-600 text-base md:text-lg leading-relaxed font-sans font-medium max-w-xl pb-1">
+                                {pillar.description}
+                              </p>
+
+                              {/* Mobile-only illustration inside the card */}
+                              <div className="lg:hidden w-full flex justify-center py-6">
+                                <img 
+                                  src={
+                                    idx === 0 
+                                      ? waterColourRickshawImg 
+                                      : idx === 1 
+                                        ? yellowTaxiImg 
+                                        : victoriaMemorialImg
+                                  } 
+                                  alt={pillar.title} 
+                                  className="w-[80%] max-w-[280px] h-auto object-contain mix-blend-multiply"
+                                />
+                              </div>
+
+                              <div className="mt-6 flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-text-dark w-fit">
+                                <span>Explore experiences</span>
+                                <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
 
-                      {/* Right side: Texts */}
-                      <div className="flex-1 space-y-4">
-                        <div>
-                          <span className="text-xs font-bold tracking-widest uppercase text-gray-400 block mb-1">
-                            {pillar.tagline}
-                          </span>
-                          <h3 className="text-2xl md:text-3xl font-serif font-bold text-text-dark group-hover:text-primary transition-colors duration-300">
-                            {pillar.title}
-                          </h3>
-                        </div>
-                        
-                        <p className="text-gray-500 text-lg leading-relaxed font-sans font-medium">
-                          {pillar.description}
-                        </p>
-
-                        <div className="pt-2 flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-gray-400 group-hover:text-text-dark transition-colors duration-300 w-fit">
-                          <span>Explore experiences</span>
-                          <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
-                        </div>
+                      {/* Arrow Indicator */}
+                      <div className={`w-10 h-10 rounded-full border border-text-dark/10 flex items-center justify-center transition-all duration-500 shrink-0 ${
+                        isActive ? 'bg-text-dark text-white border-text-dark -rotate-45' : 'text-text-dark/40 group-hover:text-text-dark rotate-0'
+                      }`}>
+                        <ArrowRight className="w-5 h-5" />
                       </div>
-
                     </div>
                   </div>
                 );
@@ -573,8 +640,12 @@ const Home = () => {
       {/* --- CONTACT SECTION --- */}
       <section id="contact" className="py-32 relative overflow-hidden border-t border-text-dark/10 bg-[#f4ece3]">
         {/* Background Sketch */}
-        <div className="absolute inset-0 z-0">
-           <img src={taxiSketchImg} className="contact-bg-parallax absolute top-[-10%] left-1/2 -translate-x-1/2 w-[80%] h-[120%] object-contain opacity-[0.08] mix-blend-multiply will-change-transform" alt="Background" />
+        <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center">
+           <img 
+             src={victoriaMemorialImg} 
+             className="contact-victoria-parallax w-[90%] md:w-[70%] lg:w-[50%] h-[80%] object-contain opacity-[0.22] mix-blend-multiply will-change-transform" 
+             alt="Victoria Memorial Centered Background" 
+           />
         </div>
         
         <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-20 items-start relative z-10">
@@ -583,10 +654,31 @@ const Home = () => {
             <h1 className="text-[12vw] md:text-[8vw] lg:text-[6vw] font-serif font-black text-text-dark leading-none tracking-tighter mb-10 wrap-break-word">
               LET'S <br/> CONNECT.
             </h1>
-            <div className="space-y-6 text-xl text-gray-500 font-serif italic">
+            <div className="space-y-6 text-xl text-gray-500 font-serif italic mb-8">
               <p>Hindustan Park, Gariahat<br/>Kolkata, West Bengal<br/>India - 700029</p>
               <p><a href="mailto:hello@artrickshaw.com" className="hover:text-primary transition-colors underline">hello@artrickshaw.com</a></p>
               <p>+91 98300 98300</p>
+            </div>
+             {/* Social Links */}
+            <div className="flex gap-4 items-center">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-text-dark/20 flex items-center justify-center text-text-dark hover:bg-[#e65a44] hover:text-white hover:border-[#e65a44] transition-all duration-300 transform hover:scale-105" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-text-dark/20 flex items-center justify-center text-text-dark hover:bg-[#e65a44] hover:text-white hover:border-[#e65a44] transition-all duration-300 transform hover:scale-105" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                </svg>
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-text-dark/20 flex items-center justify-center text-text-dark hover:bg-[#e65a44] hover:text-white hover:border-[#e65a44] transition-all duration-300 transform hover:scale-105" aria-label="YouTube">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                </svg>
+              </a>
             </div>
           </div>
 

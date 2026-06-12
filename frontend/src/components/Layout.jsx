@@ -9,7 +9,7 @@ const Layout = () => {
   return (
     <>
       <Navbar />
-      <div className="bg-bg-base relative z-10 mb-[80vh] lg:mb-[70vh] overflow-hidden">
+      <div className="bg-bg-base relative z-10 mb-[100vh] lg:mb-[90vh] overflow-hidden">
         <main className={`min-h-screen ${!isHome ? 'pt-24' : ''}`}>
           <Outlet />
         </main>
