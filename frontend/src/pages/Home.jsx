@@ -7,6 +7,8 @@ import { ArrowRight } from 'lucide-react';
 import taxiImg from '../assets/images/taxi.png';
 import rickshawImg from '../assets/images/rickshaw.png';
 import bridgeImg from '../assets/images/bridge.png';
+import heroBridgeImg from '../assets/images/hero_bridge.png';
+import taxiSketchImg from '../assets/images/taxi_sketch.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -180,6 +182,7 @@ const Home = () => {
       gsap.to(img, {
         yPercent: 15,
         ease: 'none',
+        force3D: true,
         scrollTrigger: {
           trigger: img.parentElement,
           start: 'top bottom',
@@ -193,6 +196,7 @@ const Home = () => {
     gsap.to('.about-img-parallax', {
       yPercent: 15,
       ease: 'none',
+      force3D: true,
       scrollTrigger: {
         trigger: '.about-img-container',
         start: 'top bottom',
@@ -205,6 +209,7 @@ const Home = () => {
     gsap.to('.contact-bg-parallax', {
       yPercent: 20,
       ease: 'none',
+      force3D: true,
       scrollTrigger: {
         trigger: '#contact',
         start: 'top bottom',
@@ -230,6 +235,7 @@ const Home = () => {
     gsap.to('.contact-title-parallax', {
       y: -100,
       ease: 'none',
+      force3D: true,
       scrollTrigger: {
         trigger: '#contact',
         start: 'top bottom',
@@ -245,12 +251,13 @@ const Home = () => {
       {/* Hero Section */}
       <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden bg-bg-base">
         
-        {/* Massive Background Typography */}
-        <div className="absolute top-[15%] left-0 w-full text-center z-0 opacity-5 pointer-events-none mix-blend-multiply">
-          <h1 className="text-[25vw] font-serif font-black leading-none tracking-tighter text-secondary">KOLKATA</h1>
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0 opacity-80 pointer-events-none mix-blend-multiply flex items-center justify-center">
+           <img src={heroBridgeImg} className="w-full h-full object-cover object-center" alt="Kolkata Sketch" />
+           <div className="absolute inset-0 bg-bg-base/40"></div>
         </div>
 
-        <div className="relative z-40 text-center px-4 max-w-5xl mx-auto mt-[-15vh]">
+        <div className="relative z-40 text-center px-4 max-w-5xl mx-auto mt-[5vh]">
           <h1 className="hero-text text-6xl md:text-8xl lg:text-[7rem] font-serif font-bold text-text-dark leading-tight mb-6 tracking-tighter uppercase">
             The <span className="text-primary italic">Creative</span> Engine
           </h1>
@@ -263,8 +270,8 @@ const Home = () => {
       {/* Intro Section */}
       <section ref={introRef} className="py-40 md:py-52 px-6 bg-bg-base relative z-10 border-t border-gray-200 overflow-hidden">
         {/* Background Image */}
-        <div className="absolute inset-0 z-0 opacity-[0.15] pointer-events-none">
-           <img src={taxiImg} className="w-full h-full object-cover grayscale mix-blend-multiply" alt="Kolkata Taxi" />
+        <div className="absolute inset-0 z-0 opacity-[0.25] pointer-events-none">
+           <img src={taxiSketchImg} className="w-full h-full object-cover mix-blend-multiply" alt="Kolkata Taxi Sketch" />
         </div>
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <h2 className="text-5xl md:text-7xl font-serif font-bold mb-12 text-text-dark uppercase tracking-tighter">
@@ -355,8 +362,9 @@ const Home = () => {
           {/* Image & Text Split */}
           <div className="flex flex-col md:flex-row items-start gap-20 py-32">
             <div className="w-full md:w-1/2 about-img-container">
-              <div className="aspect-4/5 bg-gray-200 rounded-2xl overflow-hidden relative about-img clip-path-reveal scale-125 shadow-2xl">
-                 <img src={rickshawImg} alt="Studio" className="about-img-parallax absolute top-[-20%] w-full h-[140%] object-cover object-center brightness-75 contrast-125 opacity-90" />
+              <div className="aspect-4/5 bg-gray-200 rounded-2xl overflow-hidden relative about-img clip-path-reveal scale-125 shadow-2xl will-change-transform">
+                 <img src={rickshawImg} alt="Studio" className="about-img-parallax absolute top-[-20%] w-full h-[140%] object-cover object-center will-change-transform" />
+                 <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
               </div>
             </div>
 
@@ -396,10 +404,10 @@ const Home = () => {
             ].map((member, i) => (
               <div key={member.id} className="team-member group cursor-pointer" data-cursor="explore">
                 <div className={`w-full aspect-square rounded-3xl mb-6 relative overflow-hidden ${member.color}`}>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-60 md:group-hover:opacity-100 transition-opacity duration-500 mix-blend-overlay">
+                  <div className="absolute inset-0 flex items-center justify-center opacity-40 md:group-hover:opacity-80 transition-opacity duration-500">
                      <span className="text-[25vw] md:text-[15vw] font-black text-white">{member.name[0]}</span>
                   </div>
-                  <img src={taxiImg} alt="Team" className="team-img-parallax absolute top-[-20%] w-full h-[140%] object-cover mix-blend-multiply opacity-0 md:group-hover:opacity-40 transition-opacity duration-500 grayscale" />
+                  <img src={taxiImg} alt="Team" className="team-img-parallax absolute top-[-20%] w-full h-[140%] object-cover opacity-0 md:group-hover:opacity-20 transition-opacity duration-500 will-change-transform" />
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-text-dark">{member.name}</h3>
                 <p className="text-gray-500 font-sans uppercase tracking-widest text-sm font-bold mt-2">{member.role}</p>
@@ -412,8 +420,8 @@ const Home = () => {
       {/* --- CONTACT SECTION --- */}
       <section id="contact" className="py-32 relative overflow-hidden border-t border-gray-200">
         {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-           <img src={bridgeImg} className="contact-bg-parallax absolute top-[-20%] w-full h-[140%] object-cover opacity-5 filter grayscale" alt="Background" />
+        <div className="absolute inset-0 z-0 bg-bg-base">
+           <img src={bridgeImg} className="contact-bg-parallax absolute top-[-20%] w-full h-[140%] object-cover opacity-10 will-change-transform" alt="Background" />
         </div>
         
         <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-20 items-start relative z-10">
