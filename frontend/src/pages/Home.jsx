@@ -4,6 +4,9 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { ArrowRight } from 'lucide-react';
+import taxiImg from '../assets/images/taxi.png';
+import rickshawImg from '../assets/images/rickshaw.png';
+import bridgeImg from '../assets/images/bridge.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,38 +40,18 @@ const Home = () => {
   const horizontalScrollRef = useRef(null);
 
   useGSAP(() => {
-    // Hero Parallax
-    gsap.to('.parallax-bg', {
-      yPercent: 30,
+    // Pin Hero so next section overlaps it and fade it out
+    gsap.to(heroRef.current, {
+      opacity: 0,
       ease: 'none',
       scrollTrigger: {
         trigger: heroRef.current,
         start: 'top top',
         end: 'bottom top',
         scrub: true,
-      },
-    });
-
-    gsap.to('.parallax-mid', {
-      yPercent: 15,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
-
-    gsap.to('.parallax-front', {
-      yPercent: -10,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
+        pin: true,
+        pinSpacing: false,
+      }
     });
 
     // Fade up text on load
@@ -80,6 +63,8 @@ const Home = () => {
       ease: 'power4.out',
       delay: 0.2,
     });
+
+
 
     // Intro Text Reveal
     gsap.to(introRef.current.querySelectorAll('.word-reveal'), {
@@ -104,7 +89,8 @@ const Home = () => {
         start: 'top top',
         end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
         pin: true,
-        scrub: 1,
+        anticipatePin: 1,
+        scrub: true,
         invalidateOnRefresh: true,
       },
     });
@@ -159,8 +145,12 @@ const Home = () => {
       </section>
 
       {/* Intro Section */}
-      <section ref={introRef} className="py-40 px-6 bg-transparent relative z-10 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto text-center">
+      <section ref={introRef} className="py-40 md:py-52 px-6 bg-bg-base relative z-10 border-t border-gray-200 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0 opacity-[0.15] pointer-events-none">
+           <img src={taxiImg} className="w-full h-full object-cover grayscale mix-blend-multiply" alt="Kolkata Taxi" />
+        </div>
+        <div className="max-w-5xl mx-auto text-center relative z-10">
           <h2 className="text-5xl md:text-7xl font-serif font-bold mb-12 text-text-dark uppercase tracking-tighter">
             <WordSplitter text="More than just an art studio." />
           </h2>
@@ -184,12 +174,12 @@ const Home = () => {
 
       {/* Horizontal Scroll Activities Section */}
       <section ref={horizontalSectionRef} className="h-screen bg-text-dark relative overflow-hidden flex flex-col justify-center">
-        <div className="absolute top-10 md:top-20 left-10 md:left-20 z-10 w-full pointer-events-none">
+        <div className="w-full px-10 md:px-20 mb-8 pointer-events-none">
           <h2 className="text-5xl md:text-7xl font-serif font-bold text-white">Our Activities</h2>
           <p className="text-xl text-gray-400 mt-4 max-w-md font-medium">Scroll to explore the different ways you can express your creativity.</p>
         </div>
 
-        <div ref={horizontalScrollRef} className="flex h-[50vh] md:h-[60vh] items-center w-max pl-[20vw] pr-[20vw] mt-32">
+        <div ref={horizontalScrollRef} className="flex h-[50vh] md:h-[60vh] items-center w-max pl-[10vw] pr-[20vw]">
           {activities.map((activity) => (
             <div 
               key={activity.id} 
@@ -250,7 +240,7 @@ const Home = () => {
           <div className="flex flex-col md:flex-row items-start gap-20 py-32">
             <div className="w-full md:w-1/2 about-img-container">
               <div className="aspect-4/5 bg-gray-200 rounded-2xl overflow-hidden relative about-img clip-path-reveal scale-125 shadow-2xl">
-                 <img src="/src/assets/images/rickshaw.png" alt="Studio" className="w-full h-full object-cover object-center mix-blend-multiply opacity-80" />
+                 <img src={rickshawImg} alt="Studio" className="w-full h-full object-cover object-center mix-blend-multiply opacity-80" />
               </div>
             </div>
 
@@ -271,7 +261,7 @@ const Home = () => {
       <section id="contact" className="py-32 relative overflow-hidden border-t border-gray-200">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-           <img src="/src/assets/images/bridge.png" className="w-full h-full object-cover opacity-5 filter grayscale" alt="Background" />
+           <img src={bridgeImg} className="w-full h-full object-cover opacity-5 filter grayscale" alt="Background" />
         </div>
         
         <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-20 items-start relative z-10">
@@ -291,21 +281,21 @@ const Home = () => {
           <div className="w-full lg:w-1/2 lg:pt-10">
             <form className="space-y-12" onSubmit={(e) => e.preventDefault()}>
               <div className="relative z-0 w-full group">
-                <input type="text" name="name" id="name" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer transition-colors" placeholder=" " required />
-                <label htmlFor="name" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Full Name</label>
+                <input type="text" name="name" id="name" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer transition-colors" placeholder=" " required />
+                <label htmlFor="name" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Full Name</label>
               </div>
               
               <div className="relative z-0 w-full group">
-                <input type="email" name="email" id="email" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer transition-colors" placeholder=" " required />
-                <label htmlFor="email" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Email Address</label>
+                <input type="email" name="email" id="email" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer transition-colors" placeholder=" " required />
+                <label htmlFor="email" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Email Address</label>
               </div>
 
               <div className="relative z-0 w-full group">
-                <textarea name="message" id="message" rows="4" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer transition-colors resize-none" placeholder=" " required></textarea>
-                <label htmlFor="message" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Your Message</label>
+                <textarea name="message" id="message" rows="4" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer transition-colors resize-none" placeholder=" " required></textarea>
+                <label htmlFor="message" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Your Message</label>
               </div>
 
-              <button type="submit" className="text-white border-2 border-secondary bg-secondary hover:bg-transparent hover:text-secondary focus:ring-4 focus:outline-none focus:ring-secondary/50 font-bold uppercase tracking-widest rounded-full text-xl w-full sm:w-auto px-12 py-4 text-center transition-all duration-300" data-cursor="explore">Send Message</button>
+              <button type="submit" className="text-white border-2 border-text-dark bg-text-dark hover:bg-transparent hover:text-text-dark focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold uppercase tracking-widest rounded-full text-xl w-full sm:w-auto px-12 py-4 text-center transition-all duration-300" data-cursor="explore">Send Message</button>
             </form>
           </div>
         </div>

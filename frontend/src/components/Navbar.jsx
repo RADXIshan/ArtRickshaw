@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Magnetic from './Magnetic';
+import bridgeImg from '../assets/images/bridge.png';
 
 const links = [
   { name: 'Home', path: '/' },
@@ -115,7 +116,7 @@ const Navbar = () => {
 
             {/* Right Side: Massive Image Reveal */}
             <div className="hidden md:block w-1/3 h-full bg-primary relative overflow-hidden">
-               <img src="/src/assets/images/bridge.png" className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-50 filter grayscale scale-110" alt="Menu Art" />
+               <img src={bridgeImg} className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-50 filter grayscale scale-110" alt="Menu Art" />
             </div>
           </motion.div>
         )}
