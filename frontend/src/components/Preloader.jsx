@@ -95,7 +95,7 @@ const Preloader = ({ onComplete }) => {
           ref={textRef} 
           src={logoImg}
           alt="Art Rickshaw"
-          className="h-16 md:h-24 w-auto opacity-0 translate-y-10 mb-20 invert object-contain"
+          className="h-24 md:h-32 lg:h-40 w-auto opacity-0 translate-y-10 mb-20 invert object-contain"
         />
         
         {/* Progress Container */}

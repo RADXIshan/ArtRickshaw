@@ -9,6 +9,7 @@ import rickshawImg from '../assets/images/rickshaw.png';
 import bridgeImg from '../assets/images/bridge.png';
 import heroBridgeImg from '../assets/images/hero_bridge.png';
 import taxiSketchImg from '../assets/images/taxi_sketch.png';
+import logoImg from '../assets/images/logo.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -294,10 +295,11 @@ const Home = () => {
            <div className="absolute inset-0 bg-bg-base/40"></div>
         </div>
 
-        <div className="relative z-40 text-center px-4 max-w-5xl mx-auto mt-[5vh]">
-          <h1 className="hero-text text-6xl md:text-8xl lg:text-[7rem] font-serif font-bold text-text-dark leading-tight mb-6 tracking-tighter uppercase">
-            The <span className="text-primary italic">Creative</span> Engine
+        <div className="relative z-40 text-center px-4 max-w-5xl mx-auto mt-[5vh] flex flex-col items-center">
+          <h1 className="hero-text text-xl md:text-2xl lg:text-3xl font-sans font-bold text-gray-500 tracking-widest uppercase mb-4 md:mb-6">
+            Welcome to
           </h1>
+          <img src={logoImg} alt="Art Rickshaw" className="hero-text h-24 md:h-40 lg:h-56 w-auto mb-10 object-contain" />
           <p className="hero-text text-xl md:text-3xl text-gray-500 font-sans mb-10 max-w-3xl mx-auto uppercase tracking-widest font-bold">
             Immerse yourself in the vibrant art culture of the city of joy.
           </p>
