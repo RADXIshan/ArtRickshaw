@@ -132,8 +132,8 @@ const Home = () => {
       }
     );
 
-    // Philosophy Text Parallax
-    gsap.fromTo('.philosophy-text',
+    // Philosophy Header Reveal
+    gsap.fromTo('.philosophy-header',
       { y: 50, opacity: 0 },
       {
         y: 0,
@@ -142,8 +142,25 @@ const Home = () => {
         stagger: 0.2,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: '.philosophy-container',
-          start: 'top 75%',
+          trigger: '#about',
+          start: 'top 80%',
+          toggleActions: 'play none none reset',
+        }
+      }
+    );
+
+    // Philosophy Cards Stagger Reveal
+    gsap.fromTo('.philosophy-card',
+      { y: 80, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: '.philosophy-cards-container',
+          start: 'top 80%',
           toggleActions: 'play none none reset',
         }
       }
@@ -384,39 +401,131 @@ const Home = () => {
       </section>
 
       {/* --- ABOUT SECTION --- */}
-      <section id="about" className="pt-32 pb-8 bg-[#f4ece3] text-text-dark">
+      <section id="about" className="py-24 md:py-36 bg-[#f4ece3] text-text-dark relative overflow-hidden">
+        {/* Subtle decorative background blur */}
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-72 h-72 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl pointer-events-none"></div>
+
         <div className="container mx-auto px-6 md:px-12">
-          {/* Header — matches MEET THE CREATIVES style */}
-          <div className="flex flex-col md:flex-row justify-between items-end mb-20">
-            <div>
-              <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-6 block">Our Story</span>
-              <h2 className="text-5xl md:text-7xl font-serif font-black text-text-dark leading-none tracking-tighter">
-                OUR <br/> PHILOSOPHY.
+          {/* Header */}
+          <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-text-dark/10 pb-8">
+            <div className="philosophy-header">
+              <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-4 block">Our Story</span>
+              <h2 className="text-5xl md:text-8xl font-serif font-black text-text-dark leading-none tracking-tighter uppercase">
+                OUR <br className="hidden md:block" /> PHILOSOPHY.
               </h2>
             </div>
-            <p className="text-xl text-gray-500 max-w-md mt-6 md:mt-0 font-serif italic">
-              Founded with a passion for bringing people together through creativity, Art Rickshaw is more than just a studio.
+            <p className="text-xl text-gray-500 max-w-md mt-6 md:mt-0 font-serif italic philosophy-header">
+              Founded with a passion for bringing people together through creativity, Art Rickshaw is a sanctuary where you learn, create, and belong.
             </p>
           </div>
 
+          {/* Asymmetric Grid Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+            
+            {/* Left Column: Sticky Illustration / Intro (Desktop sticky) */}
+            <div className="lg:col-span-5 lg:sticky lg:top-32 space-y-8 about-img-container">
+              <div className="aspect-square relative overflow-hidden about-img clip-path-reveal scale-125 group will-change-transform">
+                <img 
+                  src={sketchedRickshawImg} 
+                  alt="Sketched Rickshaw" 
+                  className="about-img-parallax absolute top-[-10%] left-0 w-full h-[120%] object-contain transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform mix-blend-multiply" 
+                />
+                {/* Est Badge */}
+                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-text-dark/5 shadow-xs text-xs font-bold tracking-widest uppercase text-[#e65a44]">
+                  Kolkata, Est. 2016
+                </div>
+              </div>
 
-
-          {/* Image & Text Split */}
-          <div className="flex flex-col md:flex-row items-start gap-20 py-16">
-            <div className="w-full md:w-1/2 about-img-container">
-              <div className="aspect-square bg-[#f4ece3] rounded-2xl overflow-hidden relative about-img clip-path-reveal scale-125 will-change-transform">
-                 <img src={sketchedRickshawImg} alt="Sketched Rickshaw" className="about-img-parallax absolute inset-0 w-full h-full object-contain object-center will-change-transform mix-blend-multiply" />
+              <div className="space-y-4 philosophy-header">
+                <h3 className="text-2xl font-serif italic text-gray-700">
+                  "Art is a way of recognizing oneself."
+                </h3>
+                <p className="text-gray-500 max-w-sm leading-relaxed">
+                  We don't teach you rules; we help you find your voice. Step away from the noise of the city and step into a space of pure, unfiltered flow.
+                </p>
               </div>
             </div>
 
-            <div className="w-full md:w-1/2 md:pt-20 philosophy-container">
-              <p className="philosophy-text text-2xl text-gray-500 mb-8 leading-relaxed font-serif italic">
-                We believe that art is not just for the 'gifted'. It is a language, a form of therapy, and a way to connect. We provide a space where mistakes are welcomed as happy accidents.
-              </p>
-              <p className="philosophy-text text-lg text-gray-500 leading-relaxed font-sans uppercase tracking-widest font-medium">
-                From traditional terracotta to modern fluid arts, our workshops are designed to help you disconnect from the hustle of the city and reconnect with your inner self.
-              </p>
+            {/* Right Column: Three Philosophy Pillars */}
+            <div className="lg:col-span-7 space-y-8 philosophy-cards-container">
+              {[
+                {
+                  id: '01',
+                  title: 'Inclusive Expression',
+                  tagline: 'Art is for Everyone',
+                  description: "We believe that art is not just for the 'gifted'. It is a universal language, a form of therapy, and a way to connect. Whether you are holding a brush for the first time or the hundredth, your voice belongs here.",
+                  color: 'hover:border-primary/40',
+                  glow: 'from-primary/10 to-transparent',
+                  accent: 'text-primary'
+                },
+                {
+                  id: '02',
+                  title: 'Creative Sanctuary',
+                  tagline: 'Disconnect to Reconnect',
+                  description: 'From traditional terracotta wheel throwing to modern fluid art and resin casting, our workshops are intentionally designed to help you quiet the mental chatter, slow down your pace, and discover a sense of deep focus.',
+                  color: 'hover:border-secondary/40',
+                  glow: 'from-secondary/10 to-transparent',
+                  accent: 'text-secondary'
+                },
+                {
+                  id: '03',
+                  title: 'The Beauty of Mistakes',
+                  tagline: 'Process over Perfection',
+                  description: 'We provide a space where mistakes are welcomed as happy accidents. Every paint splatter, color bleed, and slightly off-center pot tells a story of exploration. We celebrate the raw, imperfect beauty of creating.',
+                  color: 'hover:border-orange-400/40',
+                  glow: 'from-orange-400/10 to-transparent',
+                  accent: 'text-orange-400'
+                }
+              ].map((pillar, idx) => {
+                return (
+                  <div 
+                    key={pillar.id}
+                    className={`philosophy-card group relative bg-bg-base border border-text-dark/10 rounded-3xl p-8 md:p-12 overflow-hidden shadow-xs transition-all duration-500 ease-out hover:scale-[1.01] hover:shadow-xl ${pillar.color}`}
+                  >
+                    {/* Hover Glow Blob */}
+                    <div className={`absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-linear-to-tr ${pillar.glow} blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}></div>
+                    
+                    {/* Grainy overlay for texture inside card */}
+                    <div className="absolute inset-0 opacity-[0.03] bg-repeat pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
+
+                    {/* Card Content Layout */}
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-start gap-6 md:gap-10">
+                      
+                      {/* Left side: Number */}
+                      <div className="flex md:flex-col items-center md:items-start justify-between md:justify-start">
+                        <span className={`text-4xl md:text-5xl font-serif font-black transition-colors duration-500 ${pillar.accent}`}>
+                          {pillar.id}
+                        </span>
+                      </div>
+
+                      {/* Right side: Texts */}
+                      <div className="flex-1 space-y-4">
+                        <div>
+                          <span className="text-xs font-bold tracking-widest uppercase text-gray-400 block mb-1">
+                            {pillar.tagline}
+                          </span>
+                          <h3 className="text-2xl md:text-3xl font-serif font-bold text-text-dark group-hover:text-primary transition-colors duration-300">
+                            {pillar.title}
+                          </h3>
+                        </div>
+                        
+                        <p className="text-gray-500 text-lg leading-relaxed font-sans font-medium">
+                          {pillar.description}
+                        </p>
+
+                        <div className="pt-2 flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-gray-400 group-hover:text-text-dark transition-colors duration-300 w-fit">
+                          <span>Explore experiences</span>
+                          <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                );
+              })}
             </div>
+
           </div>
         </div>
       </section>
