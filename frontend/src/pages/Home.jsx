@@ -551,10 +551,14 @@ const Home = () => {
                                 />
                               </div>
 
-                              <div className="mt-6 flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-text-dark w-fit">
+                              <Link 
+                                to="/bookings"
+                                onClick={(e) => e.stopPropagation()}
+                                className="mt-6 flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-text-dark w-fit hover:text-primary transition-colors cursor-pointer relative z-30"
+                              >
                                 <span>Explore experiences</span>
                                 <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
-                              </div>
+                              </Link>
                             </div>
                           </div>
                         </div>

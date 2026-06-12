@@ -1,9 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logoImg from '../assets/images/logo.png';
 
 const Footer = () => {
   const [activeModal, setActiveModal] = useState(null);
+
+  useEffect(() => {
+    if (activeModal) {
+      document.body.style.overflow = 'hidden';
+      window.lenis?.stop();
+    } else {
+      document.body.style.overflow = '';
+      window.lenis?.start();
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      window.lenis?.start();
+    };
+  }, [activeModal]);
 
   return (
     <footer className="relative lg:fixed lg:bottom-0 lg:left-0 w-full min-h-fit lg:h-[90vh] z-0 bg-primary text-white flex flex-col justify-between overflow-hidden py-12 lg:py-8">
@@ -100,10 +115,11 @@ const Footer = () => {
       {/* Modal Popup System */}
       {activeModal && (
         <div 
-          className="fixed inset-0 z-9999 flex items-center justify-center bg-black/60 backdrop-blur-md px-4 py-6"
+          className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 backdrop-blur-lg px-4 py-6"
           onClick={() => setActiveModal(null)}
         >
           <div 
+            data-lenis-prevent
             className="bg-bg-base border border-text-dark/10 rounded-4xl max-w-2xl w-full max-h-[80vh] overflow-hidden flex flex-col p-8 md:p-12 shadow-2xl relative text-text-dark cursor-default"
             onClick={(e) => e.stopPropagation()}
           >
@@ -126,7 +142,10 @@ const Footer = () => {
             </h2>
 
             {/* Modal Content */}
-            <div className="overflow-y-auto pr-2 space-y-6 text-base md:text-lg leading-relaxed font-sans font-medium text-gray-600">
+            <div 
+              data-lenis-prevent
+              className="flex-1 min-h-0 overflow-y-auto pr-2 space-y-6 text-base md:text-lg leading-relaxed font-sans font-medium text-gray-600"
+            >
               {activeModal === 'privacy' && (
                 <>
                   <p>Welcome to Art Rickshaw. Your privacy is critically important to us. This policy describes how we collect, use, and handle your information when you use our website and studio services.</p>

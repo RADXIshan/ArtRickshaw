@@ -1,6 +1,22 @@
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const BookingModal = ({ isOpen, onClose, data }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      window.lenis?.stop();
+    } else {
+      document.body.style.overflow = '';
+      window.lenis?.start();
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      window.lenis?.start();
+    };
+  }, [isOpen]);
+
   if (!data) return null;
 
   return (
@@ -10,11 +26,11 @@ const BookingModal = ({ isOpen, onClose, data }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6"
         >
           {/* Backdrop */}
           <div 
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-lg"
             onClick={onClose}
           />
           
@@ -24,7 +40,8 @@ const BookingModal = ({ isOpen, onClose, data }) => {
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: 20, opacity: 0, scale: 0.95 }}
             transition={{ type: 'spring', duration: 0.5, bounce: 0.3 }}
-            className="relative bg-[#F5F5F0] w-full max-w-5xl rounded-4xl overflow-hidden shadow-2xl flex flex-col md:flex-row"
+            data-lenis-prevent
+            className="relative bg-[#F5F5F0] w-full max-w-5xl rounded-4xl overflow-y-auto max-h-[90vh] md:max-h-none md:overflow-hidden shadow-2xl flex flex-col md:flex-row"
           >
             {/* Image Section */}
             <div className="w-full md:w-1/2 h-64 md:h-auto relative">
