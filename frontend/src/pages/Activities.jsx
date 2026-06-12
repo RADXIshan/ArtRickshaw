@@ -27,8 +27,16 @@ const Activities = () => {
     <>
       <div className="min-h-screen bg-[#F5F5F0] relative overflow-hidden transition-colors duration-500">
         {/* Dynamic Background */}
-        <div className="absolute inset-0 z-0 pointer-events-none transition-colors duration-700">
-          <div className={`absolute inset-0 transition-opacity duration-500 ${hoveredActivity ? hoveredActivity.bgColor : 'bg-transparent'} opacity-40`} />
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          {ALL_ACTIVITIES.map((activity) => (
+            <div
+              key={activity.id}
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${activity.bgColor} opacity-40 pointer-events-none`}
+              style={{
+                opacity: hoveredActivity?.id === activity.id ? 0.4 : 0,
+              }}
+            />
+          ))}
         </div>
 
         <div className="container mx-auto px-6 md:px-12 relative z-10 pt-32 pb-40">
@@ -65,14 +73,14 @@ const Activities = () => {
                   >
                     <div className="flex items-center gap-4 md:gap-12 relative z-10 w-full md:w-auto">
                       <span className="text-lg md:text-3xl text-gray-400 font-serif w-8 md:w-16 text-right group-hover:text-primary transition-colors">0{i + 1}</span>
-                      <h2 className="text-2xl md:text-7xl font-serif font-bold text-text-dark group-hover:translate-x-6 transition-transform duration-500 relative z-20">
+                      <h2 className="text-2xl md:text-7xl font-serif font-bold text-text-dark group-hover:translate-x-6 transition-transform duration-500 will-change-transform relative z-20">
                         {activity.title}
                       </h2>
                     </div>
 
                     {/* Inline Image Reveal (Desktop Only) */}
-                    <div className="hidden md:block absolute right-[25%] top-1/2 -translate-y-1/2 w-[340px] h-[240px] rounded-3xl overflow-hidden opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-12 transition-all duration-700 pointer-events-none shadow-2xl z-10">
-                       <img src={activity.image} alt={activity.title} className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000 ease-out" />
+                    <div className="hidden md:block absolute right-[25%] top-1/2 -translate-y-1/2 w-[340px] h-[240px] rounded-3xl overflow-hidden opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-12 transition-[transform,opacity] duration-700 ease-out will-change-[transform,opacity] pointer-events-none shadow-2xl z-10">
+                       <img src={activity.image} alt={activity.title} className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000 ease-out will-change-transform" />
                        <div className="absolute inset-0 bg-black/10 transition-opacity duration-500 group-hover:opacity-0"></div>
                     </div>
 
@@ -92,11 +100,11 @@ const Activities = () => {
 
                   {/* Dropdown Content (Mobile/Tablet Only) */}
                   <div 
-                    className={`md:hidden grid transition-all duration-500 ease-in-out ${
-                      isExpanded ? 'grid-rows-[1fr] opacity-100 pb-8' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
+                    className={`md:hidden grid transition-[grid-template-rows,opacity] duration-500 ease-in-out ${
+                      isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
                     }`}
                   >
-                    <div className="overflow-hidden px-12 space-y-4">
+                    <div className="overflow-hidden px-12 pb-8 space-y-4">
                       {/* Activity Image */}
                       <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-md">
                         <img src={activity.image} alt={activity.title} className="w-full h-full object-cover" />

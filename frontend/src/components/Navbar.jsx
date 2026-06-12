@@ -123,7 +123,7 @@ const Navbar = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { delay: 1 } }}
                 exit={{ opacity: 0 }}
-                className="absolute bottom-10 text-gray-500 font-medium font-serif italic"
+                className="absolute bottom-16 md:bottom-10 text-gray-500 font-medium font-serif italic text-center px-4"
               >
                 Let's create something beautiful together.
               </motion.div>
