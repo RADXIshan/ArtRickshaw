@@ -22,6 +22,12 @@ const activities = [
   { id: 7, title: 'Workshop on Demand', color: 'bg-indigo-400' },
 ];
 
+const specials = [
+  { id: 1, title: 'Sunday Sundowner Sip & Paint', image: 'https://images.unsplash.com/photo-1574510008544-04104e705b0c?auto=format&fit=crop&q=80', desc: 'Unwind your weekend with a glass of wine, good music, and an immersive painting session. Perfect for friends and couples.' },
+  { id: 2, title: 'Midnight Pottery', image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80', desc: 'Experience the magic of the potter\'s wheel under the stars. A calm and therapeutic late-night session.' },
+  { id: 3, title: 'Weekend Art Bootcamp', image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80', desc: 'A rigorous but fun weekend bootcamp covering three distinct art mediums over two days.' },
+];
+
 const WordSplitter = ({ text, className }) => {
   return (
     <span className={className}>
@@ -96,6 +102,24 @@ const Home = () => {
         scrub: true,
         invalidateOnRefresh: true,
       },
+    });
+
+    // Weekly Specials Card Stacking
+    const specialCards = gsap.utils.toArray('.special-card');
+    specialCards.forEach((card, index) => {
+      if (index === specialCards.length - 1) return;
+      
+      gsap.to(card, {
+        scale: 0.9,
+        opacity: 0.4,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: specialCards[index + 1],
+          start: 'top bottom',
+          end: 'top top',
+          scrub: true,
+        }
+      });
     });
 
     // About Stats Counters
@@ -318,6 +342,37 @@ const Home = () => {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* --- WEEKLY SPECIALS SECTION --- */}
+      <section className="specials-section bg-[#F5F5F0] relative border-t border-gray-200 py-32">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="mb-20 text-center md:text-left">
+             <span className="text-primary font-bold tracking-widest uppercase text-sm block mb-4">Discover Magic</span>
+             <h2 className="text-5xl md:text-7xl font-serif font-bold text-text-dark">WEEKLY SPECIALS</h2>
+          </div>
+          
+          <div className="relative pb-[10vh]">
+             {specials.map((special, i) => (
+                <div 
+                  key={special.id} 
+                  className="special-card sticky w-full h-[60vh] md:h-[70vh] rounded-4xl overflow-hidden shadow-2xl flex flex-col justify-end p-8 md:p-16 transform-gpu origin-top will-change-transform"
+                  style={{ 
+                    top: `calc(10vh + ${i * 40}px)`, 
+                    zIndex: i, 
+                    marginBottom: i === specials.length - 1 ? '0' : '50vh' 
+                  }}
+                >
+                   <img src={special.image} className="absolute inset-0 w-full h-full object-cover" alt={special.title} />
+                   <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent"></div>
+                   <div className="relative z-10 max-w-4xl">
+                      <h3 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight">{special.title}</h3>
+                      <p className="text-xl md:text-2xl text-gray-200 font-serif italic leading-relaxed">{special.desc}</p>
+                   </div>
+                </div>
+             ))}
+          </div>
         </div>
       </section>
 

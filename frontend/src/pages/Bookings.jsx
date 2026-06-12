@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import BookingModal from '../components/BookingModal';
 
 const ALL_BOOKINGS = [
-  { id: 1, title: 'Corporate Team Building', category: 'private event', duration: '3-4 Hours', price: 'Contact Us', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80', description: 'Foster creativity and collaboration within your team through our engaging, hands-on group art sessions.', bgColor: 'bg-emerald-200' },
-  { id: 2, title: 'Beginner Canvas Painting', category: 'regular classes', duration: '2 Hours', price: '₹1500', image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80', description: 'Step-by-step guidance for beginners to create beautiful canvas paintings. No prior experience required!', bgColor: 'bg-blue-200' },
-  { id: 3, title: 'Resin Clock Making', category: 'activity', duration: '2.5 Hours', price: '₹2200', image: 'https://images.unsplash.com/photo-1583847268964-b28ce8f31586?auto=format&fit=crop&q=80', description: 'Design and create your own functional resin wall clock with custom colors and embellishments.', bgColor: 'bg-indigo-200' },
-  { id: 4, title: 'Sunday Sundowner Sip & Paint', category: 'weekly special', duration: '3 Hours', price: '₹1800', image: 'https://images.unsplash.com/photo-1574510008544-04104e705b0c?auto=format&fit=crop&q=80', description: 'Unwind your weekend with a glass of wine, good music, and an immersive painting session.', bgColor: 'bg-orange-200' },
-  { id: 5, title: 'Birthday Art Party', category: 'private event', duration: '4 Hours', price: 'Contact Us', image: 'https://images.unsplash.com/photo-1530103862676-de8892bc952f?auto=format&fit=crop&q=80', description: 'Celebrate your special day with an artistic twist! Fun activities, decorations, and creative joy for all guests.', bgColor: 'bg-pink-200' },
-  { id: 6, title: 'Advanced Pottery Wheel', category: 'regular classes', duration: '8 Sessions', price: '₹8000', image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80', description: 'Master the potter\'s wheel in this comprehensive 8-session course. Learn centering, pulling, and shaping.', bgColor: 'bg-stone-300' },
+  { id: 1, title: 'Corporate Team Building', category: 'private event', duration: '3-4 Hours', price: 'Contact Us', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800', description: 'Foster creativity and collaboration within your team through our engaging, hands-on group art sessions.', bgColor: 'bg-emerald-200' },
+  { id: 2, title: 'Beginner Canvas Painting', category: 'regular classes', duration: '2 Hours', price: '₹1500', image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80&w=800', description: 'Step-by-step guidance for beginners to create beautiful canvas paintings. No prior experience required!', bgColor: 'bg-blue-200' },
+  { id: 3, title: 'Resin Clock Making', category: 'activity', duration: '2.5 Hours', price: '₹2200', image: 'https://images.unsplash.com/photo-1583847268964-b28ce8f31586?auto=format&fit=crop&q=80&w=800', description: 'Design and create your own functional resin wall clock with custom colors and embellishments.', bgColor: 'bg-indigo-200' },
+  { id: 4, title: 'Sunday Sundowner Sip & Paint', category: 'weekly special', duration: '3 Hours', price: '₹1800', image: 'https://images.unsplash.com/photo-1574510008544-04104e705b0c?auto=format&fit=crop&q=80&w=800', description: 'Unwind your weekend with a glass of wine, good music, and an immersive painting session.', bgColor: 'bg-orange-200' },
+  { id: 5, title: 'Birthday Art Party', category: 'private event', duration: '4 Hours', price: 'Contact Us', image: 'https://images.unsplash.com/photo-1530103862676-de8892bc952f?auto=format&fit=crop&q=80&w=800', description: 'Celebrate your special day with an artistic twist! Fun activities, decorations, and creative joy for all guests.', bgColor: 'bg-pink-200' },
+  { id: 6, title: 'Advanced Pottery Wheel', category: 'regular classes', duration: '8 Sessions', price: '₹8000', image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80&w=800', description: 'Master the potter\'s wheel in this comprehensive 8-session course. Learn centering, pulling, and shaping.', bgColor: 'bg-stone-300' },
 ];
 
 const CATEGORIES = [
@@ -78,6 +78,8 @@ const Bookings = () => {
                     <img 
                       src={booking.image} 
                       alt={booking.title} 
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute top-4 left-4 z-20">

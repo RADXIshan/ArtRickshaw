@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import BookingModal from '../components/BookingModal';
 
 const ALL_ACTIVITIES = [
@@ -15,18 +15,25 @@ const ALL_ACTIVITIES = [
 
 const Activities = () => {
   const [hoveredActivity, setHoveredActivity] = useState(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState(null);
 
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const springConfig = { damping: 25, stiffness: 200, mass: 0.5 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
+
   useEffect(() => {
     const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [mouseX, mouseY]);
 
   const handleActivityClick = (activity) => {
     setSelectedActivity(activity);
@@ -42,30 +49,31 @@ const Activities = () => {
         </div>
 
         {/* Cursor-following Image */}
-        <AnimatePresence>
-          {hoveredActivity && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-              className="fixed pointer-events-none z-20 overflow-hidden rounded-2xl shadow-2xl hidden md:block"
-              style={{
-                left: mousePos.x,
-                top: mousePos.y,
-                width: '320px',
-                height: '240px',
-                transform: 'translate(-50%, -50%)',
-              }}
-            >
-              <img 
-                src={hoveredActivity.image} 
-                alt={hoveredActivity.title} 
-                className="w-full h-full object-cover" 
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <motion.div
+          className="fixed pointer-events-none z-20 overflow-hidden rounded-2xl shadow-2xl hidden md:block will-change-transform"
+          style={{
+            left: 0,
+            top: 0,
+            width: '360px',
+            height: '260px',
+            x: smoothX,
+            y: smoothY,
+            translateX: '-50%',
+            translateY: '-50%',
+            opacity: hoveredActivity ? 1 : 0,
+            scale: hoveredActivity ? 1 : 0.8
+          }}
+          transition={{ opacity: { duration: 0.4 }, scale: { duration: 0.4 } }}
+        >
+          {ALL_ACTIVITIES.map((activity) => (
+            <img 
+              key={activity.id}
+              src={activity.image} 
+              alt={activity.title} 
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 will-change-opacity ${hoveredActivity?.id === activity.id ? 'opacity-100' : 'opacity-0'}`} 
+            />
+          ))}
+        </motion.div>
 
         <div className="container mx-auto px-6 md:px-12 relative z-10 pt-32 pb-40">
           <h1 className="text-[12vw] font-serif font-black leading-none text-black tracking-tighter mb-10 pointer-events-none">
