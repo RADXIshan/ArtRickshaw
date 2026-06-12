@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const BookingModal = ({ isOpen, onClose, data }) => {
@@ -19,14 +20,15 @@ const BookingModal = ({ isOpen, onClose, data }) => {
 
   if (!data) return null;
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6"
+          data-lenis-prevent
+          className="fixed inset-0 z-99999 flex items-center justify-center p-4 sm:p-6"
         >
           {/* Backdrop */}
           <div 
@@ -41,7 +43,7 @@ const BookingModal = ({ isOpen, onClose, data }) => {
             exit={{ y: 20, opacity: 0, scale: 0.95 }}
             transition={{ type: 'spring', duration: 0.5, bounce: 0.3 }}
             data-lenis-prevent
-            className="relative bg-[#F5F5F0] w-full max-w-5xl rounded-4xl overflow-y-auto max-h-[90vh] md:max-h-none md:overflow-hidden shadow-2xl flex flex-col md:flex-row"
+            className="relative bg-[#F5F5F0] w-full max-w-5xl rounded-4xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-[85vh] lg:max-h-[80vh] overflow-y-auto md:overflow-hidden"
           >
             {/* Image Section */}
             <div className="w-full md:w-1/2 h-64 md:h-auto relative">
@@ -58,7 +60,10 @@ const BookingModal = ({ isOpen, onClose, data }) => {
             </div>
 
             {/* Content Section */}
-            <div className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+            <div 
+              data-lenis-prevent
+              className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center overflow-y-visible md:overflow-y-auto md:max-h-[85vh] lg:max-h-[80vh]"
+            >
               <button 
                 onClick={onClose}
                 className="hidden md:block absolute top-6 right-6 text-gray-400 hover:text-black transition-colors"
@@ -101,7 +106,8 @@ const BookingModal = ({ isOpen, onClose, data }) => {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 

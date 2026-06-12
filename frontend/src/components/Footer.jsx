@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import logoImg from '../assets/images/logo.png';
 
@@ -113,9 +114,9 @@ const Footer = () => {
       </div>
 
       {/* Modal Popup System */}
-      {activeModal && (
+      {activeModal && createPortal(
         <div 
-          className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 backdrop-blur-lg px-4 py-6"
+          className="fixed inset-0 z-99999 flex items-center justify-center bg-black/60 backdrop-blur-lg px-4 py-6"
           onClick={() => setActiveModal(null)}
         >
           <div 
@@ -195,7 +196,8 @@ const Footer = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </footer>
   );
