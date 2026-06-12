@@ -311,8 +311,9 @@ const Home = () => {
 
       {/* Horizontal Scroll Activities Section */}
       <section ref={horizontalSectionRef} className="h-screen bg-[#f4ece3] relative overflow-hidden flex flex-col justify-center pt-24 pb-8 z-10">
-        <div className="w-full px-10 md:px-20 mb-8 pointer-events-none text-center">
-          <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-6 block">What We Do</span>
+        <div className="w-full px-10 md:px-20 mb-8 pointer-events-none text-center flex flex-col items-center">
+          <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-3 block">What We Do</span>
+          <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-6"></div>
           <h2 className="text-5xl md:text-7xl font-serif font-black text-text-dark leading-none tracking-tighter">OUR ACTIVITIES</h2>
           <p className="text-xl text-gray-500 mt-6 max-w-md mx-auto font-serif italic">Scroll to explore the different ways you can express your creativity.</p>
         </div>
@@ -341,8 +342,9 @@ const Home = () => {
 
       {/* --- WEEKLY SPECIALS SECTION --- */}
       <section className="specials-section bg-secondary text-white relative py-32 border-y border-white/10">
-        <div className="container mx-auto px-6 md:px-12 mb-16 md:mb-24 specials-header">
-           <span className="text-primary font-bold tracking-widest uppercase text-sm block mb-4">Curated Experiences</span>
+        <div className="container mx-auto px-6 md:px-12 mb-16 md:mb-24 specials-header flex flex-col items-start">
+           <span className="text-pink-300 font-bold tracking-widest uppercase text-sm block mb-3">Curated Experiences</span>
+           <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-4"></div>
            <h2 className="text-5xl md:text-7xl font-serif font-black text-white tracking-tighter uppercase">Weekly Specials</h2>
            <p className="text-xl text-gray-300 font-serif italic mt-6 max-w-xl">
              Exclusive, limited-capacity events designed to spark your creativity and connect you with like-minded individuals.
@@ -410,7 +412,8 @@ const Home = () => {
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-text-dark/10 pb-8">
             <div className="philosophy-header">
-              <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-4 block">Our Story</span>
+              <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-3 block">Our Story</span>
+              <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-4"></div>
               <h2 className="text-5xl md:text-8xl font-serif font-black text-text-dark leading-none tracking-tighter uppercase">
                 OUR <br className="hidden md:block" /> PHILOSOPHY.
               </h2>
@@ -534,9 +537,10 @@ const Home = () => {
       <section id="team" className="py-32 bg-[#f0ddd5] relative z-10 border-t border-text-dark/10">
         <div className="container mx-auto px-6 md:px-12">
           <div className="flex flex-col md:flex-row justify-between items-end mb-20">
-            <div>
-              <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-6 block">The People</span>
-              <h2 className="text-5xl md:text-7xl font-serif font-black text-text-dark leading-none tracking-tighter team-header">
+            <div className="team-header">
+              <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-3 block">The People</span>
+              <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-4"></div>
+              <h2 className="text-5xl md:text-7xl font-serif font-black text-text-dark leading-none tracking-tighter uppercase">
                 MEET THE <br/> CREATIVES.
               </h2>
             </div>
