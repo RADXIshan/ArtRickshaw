@@ -11,6 +11,10 @@ const Preloader = ({ onComplete }) => {
   const rickshawRef = useRef(null);
 
   useEffect(() => {
+    // Block scrolling while preloader is active
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
     const tl = gsap.timeline({
       onComplete: () => {
         // Fade container out slowly for an elegant exit
@@ -63,14 +67,20 @@ const Preloader = ({ onComplete }) => {
       ease: 'power2.inOut'
     }, "<");
 
-    return () => tl.kill();
+    return () => {
+      tl.kill();
+      // Restore scrolling when preloader unmounts
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
   }, [onComplete]);
 
   return (
     <div 
       ref={containerRef} 
-      className="fixed inset-0 z-99999 bg-neutral-950 flex flex-col items-center justify-center pointer-events-none overflow-hidden"
+      className="fixed inset-0 z-99999 bg-linear-to-b from-[#050505] to-[#1a1a1a] flex flex-col items-center justify-center pointer-events-none overflow-hidden"
     >
+      <div className="absolute inset-0 opacity-[0.15] mix-blend-screen pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
       {/* Massive Background Percentage */}
       <div 
         ref={percentageRef}

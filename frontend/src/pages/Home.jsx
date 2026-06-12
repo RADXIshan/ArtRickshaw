@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -42,6 +42,7 @@ const WordSplitter = ({ text, className }) => {
 
 const Home = () => {
   const container = useRef(null);
+  const [hoveredSpecial, setHoveredSpecial] = useState(0);
   const heroRef = useRef(null);
   const introRef = useRef(null);
   const horizontalSectionRef = useRef(null);
@@ -104,24 +105,35 @@ const Home = () => {
       },
     });
 
-    // Cinematic Weekly Specials Card Stacking
-    const specialCards = gsap.utils.toArray('.special-card');
-    specialCards.forEach((card, index) => {
-      if (index === specialCards.length - 1) return;
-      
-      gsap.to(card, {
-        scale: 0.92,
-        opacity: 0.6,
-        yPercent: -5,
-        ease: 'none',
+    // Weekly Specials Title Reveal
+    gsap.fromTo('.specials-header',
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: 'power3.out',
         scrollTrigger: {
-          trigger: specialCards[index + 1],
-          start: 'top bottom',
-          end: 'top top',
-          scrub: true,
+          trigger: '.specials-section',
+          start: 'top 80%',
         }
-      });
-    });
+      }
+    );
+    
+    gsap.fromTo('.special-hover-card',
+      { y: 100, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        stagger: 0.15,
+        duration: 1,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: '.specials-cards-container',
+          start: 'top 80%',
+        }
+      }
+    );
 
     // About Stats Counters
     const counters = gsap.utils.toArray('.stat-counter');
@@ -347,32 +359,65 @@ const Home = () => {
       </section>
 
       {/* --- WEEKLY SPECIALS SECTION --- */}
-      <section className="specials-section bg-bg-base relative py-32">
-        <div className="container mx-auto px-6 md:px-12 text-center mb-20">
+      <section className="specials-section bg-[#0a0a0a] text-white relative py-32 border-y border-white/5">
+        <div className="container mx-auto px-6 md:px-12 mb-16 md:mb-24 flex flex-col md:flex-row justify-between items-end specials-header">
+           <div className="max-w-2xl">
              <span className="text-primary font-bold tracking-widest uppercase text-sm block mb-4">Curated Experiences</span>
-             <h2 className="text-5xl md:text-7xl font-serif font-black text-text-dark tracking-tighter uppercase">Weekly Specials</h2>
+             <h2 className="text-5xl md:text-7xl font-serif font-black text-white tracking-tighter uppercase">Weekly Specials</h2>
+           </div>
+           <p className="text-xl text-gray-400 font-serif italic mt-6 md:mt-0 max-w-md">
+             Exclusive, limited-capacity events designed to spark your creativity and connect you with like-minded individuals.
+           </p>
         </div>
         
-        <div className="relative flex flex-col items-center pb-[10vh]">
-           {specials.map((special, i) => (
-              <div 
-                key={special.id} 
-                className="special-card sticky w-full max-w-6xl h-[60vh] md:h-[75vh] rounded-4xl overflow-hidden shadow-2xl flex flex-col justify-end p-8 md:p-16 transform-gpu will-change-transform"
-                style={{ 
-                  top: `calc(15vh + ${i * 40}px)`, 
-                  zIndex: i, 
-                  marginBottom: i === specials.length - 1 ? '0' : '50vh' 
-                }}
-              >
-                 <img src={special.image} className="absolute inset-0 w-full h-full object-cover" alt={special.title} />
-                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent"></div>
-                 <div className="relative z-10 max-w-4xl">
-                    <span className="text-primary font-bold tracking-widest uppercase text-sm block mb-4">0{i + 1}</span>
-                    <h3 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight uppercase">{special.title}</h3>
-                    <p className="text-xl md:text-2xl text-gray-200 font-serif italic leading-relaxed">{special.desc}</p>
-                 </div>
-              </div>
-           ))}
+        <div className="specials-cards-container flex flex-col md:flex-row h-[120vh] md:h-[75vh] w-full px-4 md:px-12 gap-4 max-w-full mx-auto">
+           {specials.map((special, i) => {
+              const isActive = hoveredSpecial === i;
+              return (
+                <div 
+                  key={special.id} 
+                  onMouseEnter={() => setHoveredSpecial(i)}
+                  onClick={() => setHoveredSpecial(i)}
+                  className={`special-hover-card relative rounded-3xl overflow-hidden cursor-pointer group ${isActive ? 'md:flex-3 flex-2' : 'md:flex-1 flex-1'}`}
+                  style={{ transition: 'flex 700ms cubic-bezier(0.25,1,0.5,1)' }}
+                >
+                   <img src={special.image} className={`absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ${isActive ? 'scale-105' : 'scale-100'} group-hover:scale-110`} alt={special.title} />
+                   <div className={`absolute inset-0 bg-linear-to-t transition-all duration-500 ${isActive ? 'from-black/90 via-black/40 to-transparent' : 'from-black/80 via-black/60 to-black/30'}`}></div>
+                   
+                   <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
+                      <div className={`transform transition-all duration-700 ${isActive ? 'translate-y-0' : 'translate-y-0 md:translate-y-8'}`}>
+                        <div className="flex items-center gap-4 mb-4">
+                          <span className={`w-10 h-10 shrink-0 rounded-full border flex items-center justify-center font-bold text-sm transition-colors duration-500 ${isActive ? 'border-primary text-primary' : 'border-white/30 text-white'}`}>
+                            0{i + 1}
+                          </span>
+                          <span className={`font-bold tracking-widest uppercase text-xs transition-opacity duration-500 ${isActive ? 'opacity-100 text-primary' : 'opacity-0'}`}>
+                            Featured Event
+                          </span>
+                        </div>
+                        
+                        <h3 className={`font-serif font-bold text-white mb-2 leading-tight uppercase transition-all duration-500 ${isActive ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl'} ${!isActive && 'md:whitespace-nowrap'}`}>
+                          {special.title}
+                        </h3>
+                        
+                        <div className={`overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive ? 'max-h-40 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
+                          <p className="text-base md:text-xl text-gray-300 font-serif italic line-clamp-3">
+                            {special.desc}
+                          </p>
+                          <div className="mt-6 flex items-center gap-2 text-white font-bold tracking-widest uppercase text-xs hover:text-primary transition-colors w-fit">
+                            <span>Book Now</span>
+                            <ArrowRight className="w-4 h-4" />
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+                   
+                   {/* Decorative Corner Icon */}
+                   <div className={`absolute top-6 right-6 w-12 h-12 rounded-full backdrop-blur-md flex items-center justify-center transition-all duration-500 transform ${isActive ? 'opacity-100 translate-y-0 bg-white text-black' : 'opacity-0 -translate-y-4 bg-white/10 text-white'}`}>
+                     <ArrowRight className={`w-6 h-6 transition-transform duration-500 ${isActive ? '-rotate-45' : 'rotate-0'}`} />
+                   </div>
+                </div>
+              );
+           })}
         </div>
       </section>
 
