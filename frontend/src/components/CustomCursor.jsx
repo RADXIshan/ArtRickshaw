@@ -35,15 +35,13 @@ const CustomCursor = () => {
 
     const cursor = cursorRef.current;
     if (!cursor) return;
-    
+    const xTo = gsap.quickTo(cursor, 'x', { duration: 0.15, ease: 'power2.out' });
+    const yTo = gsap.quickTo(cursor, 'y', { duration: 0.15, ease: 'power2.out' });
+
     // Move cursor
     const onMouseMove = (e) => {
-      gsap.to(cursor, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.1,
-        ease: 'power2.out',
-      });
+      xTo(e.clientX);
+      yTo(e.clientY);
     };
 
     // Detect hovers

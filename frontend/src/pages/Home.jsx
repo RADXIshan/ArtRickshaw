@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, memo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -113,12 +113,12 @@ const specials = [
   { 
     id: 1, 
     title: 'Sunday Sundowner Sip & Paint', 
-    image: 'https://images.unsplash.com/photo-1574510008544-04104e705b0c?auto=format&fit=crop&q=80', 
+    image: 'https://images.unsplash.com/photo-1574510008544-04104e705b0c?auto=format&fit=crop&w=800&q=80', 
     desc: 'Unwind your weekend with a glass of wine, good music, and an immersive painting session. Perfect for friends and couples.',
     modalData: {
       title: 'Sunday Sundowner Sip & Paint',
       category: 'weekly special',
-      image: 'https://images.unsplash.com/photo-1574510008544-04104e705b0c?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1574510008544-04104e705b0c?auto=format&fit=crop&w=800&q=80',
       description: 'Unwind your weekend with a glass of wine, good music, and an immersive painting session. Perfect for friends and couples.',
       price: '₹1800',
       duration: '3 Hours'
@@ -127,12 +127,12 @@ const specials = [
   { 
     id: 2, 
     title: 'Midnight Pottery', 
-    image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80', 
+    image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=800&q=80', 
     desc: 'Experience the magic of the potter\'s wheel under the stars. A calm and therapeutic late-night session.',
     modalData: {
       title: 'Midnight Pottery',
       category: 'weekly special',
-      image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=800&q=80',
       description: 'Experience the magic of the potter\'s wheel under the stars. A calm and therapeutic late-night session.',
       price: '₹2000',
       duration: '2 Hours'
@@ -141,12 +141,12 @@ const specials = [
   { 
     id: 3, 
     title: 'Weekend Art Bootcamp', 
-    image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80', 
+    image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=800&q=80', 
     desc: 'A rigorous but fun weekend bootcamp covering three distinct art mediums over two days.',
     modalData: {
       title: 'Weekend Art Bootcamp',
       category: 'weekly special',
-      image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=800&q=80',
       description: 'A rigorous but fun weekend bootcamp covering three distinct art mediums over two days.',
       price: '₹3500',
       duration: '2 Days'
@@ -178,29 +178,305 @@ const pillars = [
   }
 ];
 
+const WeeklySpecialsSection = memo(({ openBooking }) => {
+  const [hoveredSpecial, setHoveredSpecial] = useState(0);
+
+  const handleSpecialClick = useCallback((idx, special) => {
+    if (hoveredSpecial === idx) {
+      openBooking(special.modalData);
+    } else {
+      setHoveredSpecial(idx);
+    }
+  }, [hoveredSpecial, openBooking]);
+
+  return (
+    <section className="specials-section bg-secondary text-white relative py-32 border-y border-white/10">
+      <div className="container mx-auto px-6 md:px-12 mb-16 md:mb-24 specials-header flex flex-col items-start">
+         <span className="text-pink-300 font-bold tracking-widest uppercase text-sm block mb-3">Curated Experiences</span>
+         <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-4"></div>
+         <h2 className="text-5xl md:text-7xl font-serif font-black text-white tracking-tighter uppercase">Weekly Specials</h2>
+         <p className="text-xl text-gray-300 font-serif italic mt-6 max-w-xl">
+           Exclusive, limited-capacity events designed to spark your creativity and connect you with like-minded individuals.
+         </p>
+      </div>
+      
+      <div className="specials-cards-container flex flex-col md:flex-row h-[120vh] md:h-[75vh] w-full px-4 md:px-12 gap-4 max-w-full mx-auto">
+         {specials.map((special, i) => {
+            const isActive = hoveredSpecial === i;
+            return (
+              <div 
+                key={special.id} 
+                onMouseEnter={() => setHoveredSpecial(i)}
+                onClick={() => handleSpecialClick(i, special)}
+                data-cursor="book"
+                className={`special-hover-card relative rounded-3xl overflow-hidden cursor-pointer group transform-gpu ${isActive ? 'md:flex-3 flex-2' : 'md:flex-1 flex-1'}`}
+                style={{ transition: 'flex 700ms cubic-bezier(0.25,1,0.5,1)' }}
+              >
+                 <img 
+                   src={special.image} 
+                   decoding="async" 
+                   className={`absolute inset-0 w-full h-full object-cover transform-gpu will-change-transform transition-transform duration-1000 ${isActive ? 'scale-105' : 'scale-100'} lg:group-hover:scale-110`} 
+                   alt={special.title} 
+                 />
+                 <div className={`absolute inset-0 bg-linear-to-t transition-all duration-500 ${isActive ? 'from-black/90 via-black/40 to-transparent' : 'from-black/80 via-black/60 to-black/30'}`}></div>
+                 
+                 <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
+                    <div className={`transform transition-all duration-700 ${isActive ? 'translate-y-0' : 'translate-y-0 md:translate-y-8'}`}>
+                      <div className="flex items-center gap-4 mb-4">
+                        <span className={`w-10 h-10 shrink-0 rounded-full border flex items-center justify-center font-bold text-sm transition-colors duration-500 ${isActive ? 'border-primary text-primary' : 'border-white/30 text-white'}`}>
+                          0{i + 1}
+                        </span>
+                        <span className={`font-bold tracking-widest uppercase text-xs transition-opacity duration-500 ${isActive ? 'opacity-100 text-primary' : 'opacity-0'}`}>
+                          Featured Event
+                        </span>
+                      </div>
+                      
+                      <h3 className={`font-serif font-bold text-white mb-2 leading-tight uppercase transition-all duration-500 ${isActive ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl'} ${!isActive && 'md:whitespace-nowrap'}`}>
+                         {special.title}
+                      </h3>
+                      
+                      <div className={`overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive ? 'max-h-40 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
+                        <p className="text-base md:text-xl text-gray-300 font-serif italic line-clamp-3">
+                          {special.desc}
+                        </p>
+                        <div 
+                          onClick={(e) => { e.stopPropagation(); openBooking(special.modalData); }}
+                          className="mt-6 flex items-center gap-2 text-white font-bold tracking-widest uppercase text-xs hover:text-primary transition-colors w-fit font-sans"
+                        >
+                          <span>Book Now</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                 </div>
+                 
+                 {/* Decorative Corner Icon */}
+                 <div 
+                   onClick={(e) => { e.stopPropagation(); openBooking(special.modalData); }}
+                   className={`absolute top-6 right-6 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 transform-gpu ${isActive ? 'opacity-100 translate-y-0 bg-white text-black' : 'opacity-0 -translate-y-4 bg-white/20 text-white'}`}
+                 >
+                   <ArrowRight className={`w-6 h-6 transition-transform duration-500 ${isActive ? '-rotate-45' : 'rotate-0'}`} />
+                 </div>
+              </div>
+            );
+         })}
+      </div>
+    </section>
+  );
+});
+
+WeeklySpecialsSection.displayName = 'WeeklySpecialsSection';
+
+const PhilosophySection = memo(() => {
+  const [activePillar, setActivePillar] = useState(0);
+
+  const handlePillarHover = useCallback((idx) => {
+    setActivePillar(idx);
+  }, []);
+
+  return (
+    <section id="about" className="py-24 md:py-36 bg-[#f4ece3] text-text-dark relative overflow-hidden">
+      {/* Subtle decorative background blur */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-72 h-72 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="container mx-auto px-6 md:px-12">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 border-b border-text-dark/10 pb-8">
+          <div className="philosophy-header">
+            <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-3 block">Our Story</span>
+            <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-4"></div>
+            <h2 className="text-4xl sm:text-5xl md:text-8xl font-serif font-black text-text-dark leading-none tracking-tighter uppercase">
+              OUR <br className="hidden md:block" /> PHILOSOPHY.
+            </h2>
+          </div>
+          <p className="text-lg md:text-xl text-gray-500 max-w-md mt-6 md:mt-0 font-serif italic philosophy-header">
+            Founded with a passion for bringing people together through creativity, Art Rickshaw is a sanctuary where you learn, create, and belong.
+          </p>
+        </div>
+
+        {/* Asymmetric Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+          
+          {/* Left Column Wrapper */}
+          <div className="hidden lg:block lg:col-span-6">
+            {/* Sticky Image Showcase & Quote */}
+            <div className="lg:sticky lg:top-32 space-y-8 about-img-container">
+              <div className="aspect-3/4 md:aspect-4/5 lg:aspect-3/4 relative group/gallery about-img clip-path-reveal scale-125 lg:scale-[1.35] will-change-transform flex items-center justify-center bg-transparent">
+                {/* Floating Local Illustrations with parallax compatibility and interactive styling */}
+                <img 
+                  src={waterColourRickshawImg} 
+                  alt="Watercolor Rickshaw" 
+                  decoding="async"
+                  className={`philosophy-watercolor-rickshaw absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] lg:w-[95%] lg:h-[95%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
+                    activePillar === 0 
+                      ? 'opacity-100 scale-100 rotate-0 z-20' 
+                      : 'opacity-0 scale-95 rotate-0 z-10'
+                  }`}
+                />
+                <img 
+                  src={yellowTaxiImg} 
+                  alt="Yellow Taxi" 
+                  decoding="async"
+                  className={`philosophy-yellow-taxi absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-[75%] lg:w-[80%] lg:h-[80%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
+                    activePillar === 1 
+                      ? 'opacity-100 scale-100 rotate-0 z-20' 
+                      : 'opacity-0 scale-95 rotate-0 z-10'
+                  }`}
+                />
+                <img 
+                  src={victoriaMemorialImg} 
+                  alt="Victoria Memorial" 
+                  decoding="async"
+                  className={`philosophy-victoria absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] lg:w-[90%] lg:h-[90%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
+                    activePillar === 2 
+                      ? 'opacity-100 scale-100 rotate-0 z-20' 
+                      : 'opacity-0 scale-95 rotate-0 z-10'
+                  }`}
+                />
+
+                {/* Est Badge */}
+                <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-text-dark/5 shadow-md text-xs font-bold tracking-widest uppercase text-[#e65a44] z-30 pointer-events-none">
+                  Kolkata, Est. 2016
+                </div>
+              </div>
+
+              {/* Editorial Quote */}
+              <div className="space-y-4 philosophy-header pt-4 border-t border-text-dark/10">
+                <h3 className="text-xl font-serif italic text-gray-700">
+                  "Art is a way of recognizing oneself."
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
+                  We don't teach you rules; we help you find your voice. Step away from the noise of the city and step into a space of pure, unfiltered flow.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Three Philosophy Pillars Accordion */}
+          <div className="lg:col-span-6 flex flex-col justify-between philosophy-cards-container">
+            <div className="space-y-4">
+              {pillars.map((pillar, idx) => {
+                const isActive = activePillar === idx;
+                return (
+                  <div 
+                    key={pillar.id}
+                    onMouseEnter={() => handlePillarHover(idx)}
+                    onClick={() => handlePillarHover(idx)}
+                    className={`philosophy-card group border-t border-text-dark/10 py-6 md:py-8 transition-opacity duration-500 cursor-pointer ${
+                      !isActive ? 'opacity-40' : 'opacity-100'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-6">
+                      <div className="flex items-start gap-6 md:gap-10">
+                        {/* Index Number */}
+                        <span className={`text-xl md:text-2xl font-serif font-semibold transition-colors duration-500 ${
+                          isActive ? pillar.colorClass.split(' ')[0] : 'text-gray-400'
+                        }`}>
+                          {pillar.id}
+                        </span>
+
+                        {/* Title & Tagline & Description */}
+                        <div className="space-y-2">
+                          <div>
+                            <span className="text-xs font-bold tracking-widest uppercase text-gray-400 block mb-1">
+                              {pillar.tagline}
+                            </span>
+                            <h3 className={`text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-text-dark transition-colors duration-300 ${
+                              isActive ? pillar.colorClass.split(' ')[0] : ''
+                            }`}>
+                              {pillar.title}
+                            </h3>
+                          </div>
+
+                          {/* Expandable Description */}
+                          <div 
+                            className={`grid transition-all duration-500 ease-in-out ${
+                              isActive ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
+                            }`}
+                          >
+                            <div className="overflow-hidden">
+                              <p className="text-gray-600 text-base md:text-lg leading-relaxed font-sans font-medium max-w-xl pb-1">
+                                {pillar.description}
+                              </p>
+
+                              {/* Mobile-only illustration inside the card */}
+                              <div className="lg:hidden w-full flex justify-center py-6">
+                                <img 
+                                  src={
+                                    idx === 0 
+                                      ? waterColourRickshawImg 
+                                      : idx === 1 
+                                        ? yellowTaxiImg 
+                                        : victoriaMemorialImg
+                                  }  
+                                  alt={pillar.title} 
+                                  decoding="async"
+                                  className="w-[85%] max-w-[310px] h-auto object-contain mix-blend-multiply"
+                                />
+                              </div>
+
+                              <Link 
+                                to="/bookings"
+                                onClick={(e) => e.stopPropagation()}
+                                className="mt-6 flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-text-dark w-fit hover:text-primary transition-colors cursor-pointer relative z-30 font-sans"
+                              >
+                                <span>Explore experiences</span>
+                                <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Arrow Indicator */}
+                      <div className={`w-10 h-10 rounded-full border border-text-dark/10 flex items-center justify-center transition-all duration-500 shrink-0 ${
+                        isActive ? 'bg-text-dark text-white border-text-dark -rotate-45' : 'text-text-dark/40 group-hover:text-text-dark rotate-0'
+                      }`}>
+                        <ArrowRight className="w-5 h-5" />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Vintage Kolkata Stamp */}
+            <div className="flex justify-end pt-12 md:pt-20 select-none mr-2 md:mr-6 philosophy-header">
+              <div className="relative group/stamp">
+                <img 
+                  src={kolkataStampImg} 
+                  alt="Vintage Kolkata Stamp" 
+                  decoding="async"
+                  className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-48 lg:h-48 object-contain transform -rotate-12 lg:rotate-[-15deg] group-hover/stamp:rotate-[-5deg] group-hover/stamp:scale-105 transition-all duration-500 ease-out mix-blend-multiply pointer-events-none drop-shadow-sm filter contrast-[1.02]"
+                />
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+});
+
+PhilosophySection.displayName = 'PhilosophySection';
 
 const Home = () => {
   const container = useRef(null);
-  const [hoveredSpecial, setHoveredSpecial] = useState(0);
-  const [activePillar, setActivePillar] = useState(0);
   const heroRef = useRef(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
 
-  const handleActivityClick = (activity) => {
+  const handleActivityClick = useCallback((activity) => {
     setSelectedBooking(activity.modalData);
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const handleSpecialClick = (idx, special) => {
-    if (hoveredSpecial === idx) {
-      setSelectedBooking(special.modalData);
-      setIsModalOpen(true);
-    } else {
-      setHoveredSpecial(idx);
-    }
-  };
+  const handleOpenBooking = useCallback((modalData) => {
+    setSelectedBooking(modalData);
+    setIsModalOpen(true);
+  }, []);
 
   const horizontalSectionRef = useRef(null);
   const horizontalScrollRef = useRef(null);
@@ -442,6 +718,7 @@ const Home = () => {
              src={heroIllustrationImg} 
              className="hero-illustration w-full h-full object-cover object-center md:object-bottom opacity-40 mix-blend-multiply" 
              alt="Kolkata Illustration" 
+             decoding="async"
            />
         </div>
 
@@ -485,7 +762,7 @@ const Home = () => {
             >
               <h3 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">{activity.title}</h3>
               <div className="flex justify-between items-center">
-                <span className="text-white/90 font-bold tracking-widest uppercase">Explore</span>
+                <span className="text-white/90 font-bold tracking-widest uppercase font-sans">Explore</span>
                 <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
                   <ArrowRight className="text-white w-6 h-6" />
                 </div>
@@ -499,251 +776,10 @@ const Home = () => {
       <div className="h-32 bg-[#f4ece3] relative z-10"></div>
 
       {/* --- WEEKLY SPECIALS SECTION --- */}
-      <section className="specials-section bg-secondary text-white relative py-32 border-y border-white/10">
-        <div className="container mx-auto px-6 md:px-12 mb-16 md:mb-24 specials-header flex flex-col items-start">
-           <span className="text-pink-300 font-bold tracking-widest uppercase text-sm block mb-3">Curated Experiences</span>
-           <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-4"></div>
-           <h2 className="text-5xl md:text-7xl font-serif font-black text-white tracking-tighter uppercase">Weekly Specials</h2>
-           <p className="text-xl text-gray-300 font-serif italic mt-6 max-w-xl">
-             Exclusive, limited-capacity events designed to spark your creativity and connect you with like-minded individuals.
-           </p>
-        </div>
-        
-        <div className="specials-cards-container flex flex-col md:flex-row h-[120vh] md:h-[75vh] w-full px-4 md:px-12 gap-4 max-w-full mx-auto">
-           {specials.map((special, i) => {
-              const isActive = hoveredSpecial === i;
-              return (
-                <div 
-                  key={special.id} 
-                  onMouseEnter={() => setHoveredSpecial(i)}
-                  onClick={() => handleSpecialClick(i, special)}
-                  data-cursor="book"
-                  className={`special-hover-card relative rounded-3xl overflow-hidden cursor-pointer group transform-gpu ${isActive ? 'md:flex-3 flex-2' : 'md:flex-1 flex-1'}`}
-                  style={{ transition: 'flex 700ms cubic-bezier(0.25,1,0.5,1)' }}
-                >
-                   <img src={special.image} className={`absolute inset-0 w-full h-full object-cover transform-gpu will-change-transform transition-transform duration-1000 ${isActive ? 'scale-105' : 'scale-100'} lg:group-hover:scale-110`} alt={special.title} />
-                   <div className={`absolute inset-0 bg-linear-to-t transition-all duration-500 ${isActive ? 'from-black/90 via-black/40 to-transparent' : 'from-black/80 via-black/60 to-black/30'}`}></div>
-                   
-                   <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
-                      <div className={`transform transition-all duration-700 ${isActive ? 'translate-y-0' : 'translate-y-0 md:translate-y-8'}`}>
-                        <div className="flex items-center gap-4 mb-4">
-                          <span className={`w-10 h-10 shrink-0 rounded-full border flex items-center justify-center font-bold text-sm transition-colors duration-500 ${isActive ? 'border-primary text-primary' : 'border-white/30 text-white'}`}>
-                            0{i + 1}
-                          </span>
-                          <span className={`font-bold tracking-widest uppercase text-xs transition-opacity duration-500 ${isActive ? 'opacity-100 text-primary' : 'opacity-0'}`}>
-                            Featured Event
-                          </span>
-                        </div>
-                        
-                        <h3 className={`font-serif font-bold text-white mb-2 leading-tight uppercase transition-all duration-500 ${isActive ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl'} ${!isActive && 'md:whitespace-nowrap'}`}>
-                           {special.title}
-                        </h3>
-                        
-                        <div className={`overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${isActive ? 'max-h-40 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
-                          <p className="text-base md:text-xl text-gray-300 font-serif italic line-clamp-3">
-                            {special.desc}
-                          </p>
-                          <div 
-                            onClick={(e) => { e.stopPropagation(); setSelectedBooking(special.modalData); setIsModalOpen(true); }}
-                            className="mt-6 flex items-center gap-2 text-white font-bold tracking-widest uppercase text-xs hover:text-primary transition-colors w-fit"
-                          >
-                            <span>Book Now</span>
-                            <ArrowRight className="w-4 h-4" />
-                          </div>
-                        </div>
-                      </div>
-                   </div>
-                   
-                   {/* Decorative Corner Icon */}
-                   <div 
-                     onClick={(e) => { e.stopPropagation(); setSelectedBooking(special.modalData); setIsModalOpen(true); }}
-                     className={`absolute top-6 right-6 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 transform-gpu ${isActive ? 'opacity-100 translate-y-0 bg-white text-black' : 'opacity-0 -translate-y-4 bg-white/20 text-white'}`}
-                   >
-                     <ArrowRight className={`w-6 h-6 transition-transform duration-500 ${isActive ? '-rotate-45' : 'rotate-0'}`} />
-                   </div>
-                </div>
-              );
-           })}
-        </div>
-      </section>
+      <WeeklySpecialsSection openBooking={handleOpenBooking} />
 
-      {/* --- ABOUT SECTION --- */}
-      <section id="about" className="py-24 md:py-36 bg-[#f4ece3] text-text-dark relative overflow-hidden">
-        {/* Subtle decorative background blur */}
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-72 h-72 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div className="container mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 border-b border-text-dark/10 pb-8">
-            <div className="philosophy-header">
-              <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-3 block">Our Story</span>
-              <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-4"></div>
-              <h2 className="text-4xl sm:text-5xl md:text-8xl font-serif font-black text-text-dark leading-none tracking-tighter uppercase">
-                OUR <br className="hidden md:block" /> PHILOSOPHY.
-              </h2>
-            </div>
-            <p className="text-lg md:text-xl text-gray-500 max-w-md mt-6 md:mt-0 font-serif italic philosophy-header">
-              Founded with a passion for bringing people together through creativity, Art Rickshaw is a sanctuary where you learn, create, and belong.
-            </p>
-          </div>
-
-          {/* Asymmetric Grid Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-            
-            {/* Left Column Wrapper */}
-            <div className="hidden lg:block lg:col-span-6">
-              {/* Sticky Image Showcase & Quote */}
-              <div className="lg:sticky lg:top-32 space-y-8 about-img-container">
-                <div className="aspect-3/4 md:aspect-4/5 lg:aspect-3/4 relative group/gallery about-img clip-path-reveal scale-125 lg:scale-[1.35] will-change-transform flex items-center justify-center bg-transparent">
-                  {/* Floating Local Illustrations with parallax compatibility and interactive styling */}
-                  <img 
-                    src={waterColourRickshawImg} 
-                    alt="Watercolor Rickshaw" 
-                    className={`philosophy-watercolor-rickshaw absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] lg:w-[95%] lg:h-[95%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
-                      activePillar === 0 
-                        ? 'opacity-100 scale-100 rotate-0 z-20' 
-                        : 'opacity-0 scale-95 rotate-0 z-10'
-                    }`}
-                  />
-                  <img 
-                    src={yellowTaxiImg} 
-                    alt="Yellow Taxi" 
-                    className={`philosophy-yellow-taxi absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-[75%] lg:w-[80%] lg:h-[80%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
-                      activePillar === 1 
-                        ? 'opacity-100 scale-100 rotate-0 z-20' 
-                        : 'opacity-0 scale-95 rotate-0 z-10'
-                    }`}
-                  />
-                  <img 
-                    src={victoriaMemorialImg} 
-                    alt="Victoria Memorial" 
-                    className={`philosophy-victoria absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] lg:w-[90%] lg:h-[90%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
-                      activePillar === 2 
-                        ? 'opacity-100 scale-100 rotate-0 z-20' 
-                        : 'opacity-0 scale-95 rotate-0 z-10'
-                    }`}
-                  />
-
-                  {/* Est Badge */}
-                  <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-text-dark/5 shadow-md text-xs font-bold tracking-widest uppercase text-[#e65a44] z-30 pointer-events-none">
-                    Kolkata, Est. 2016
-                  </div>
-                </div>
-
-                {/* Editorial Quote */}
-                <div className="space-y-4 philosophy-header pt-4 border-t border-text-dark/10">
-                  <h3 className="text-xl font-serif italic text-gray-700">
-                    "Art is a way of recognizing oneself."
-                  </h3>
-                  <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
-                    We don't teach you rules; we help you find your voice. Step away from the noise of the city and step into a space of pure, unfiltered flow.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Three Philosophy Pillars Accordion */}
-            <div className="lg:col-span-6 flex flex-col justify-between philosophy-cards-container">
-              <div className="space-y-4">
-                {pillars.map((pillar, idx) => {
-                  const isActive = activePillar === idx;
-                  return (
-                    <div 
-                      key={pillar.id}
-                      onMouseEnter={() => setActivePillar(idx)}
-                      onClick={() => setActivePillar(idx)}
-                      className={`philosophy-card group border-t border-text-dark/10 py-6 md:py-8 transition-opacity duration-500 cursor-pointer ${
-                        !isActive ? 'opacity-40' : 'opacity-100'
-                      }`}
-                    >
-                      <div className="flex items-start justify-between gap-6">
-                        <div className="flex items-start gap-6 md:gap-10">
-                          {/* Index Number */}
-                          <span className={`text-xl md:text-2xl font-serif font-semibold transition-colors duration-500 ${
-                            isActive ? pillar.colorClass.split(' ')[0] : 'text-gray-400'
-                          }`}>
-                            {pillar.id}
-                          </span>
-
-                          {/* Title & Tagline & Description */}
-                          <div className="space-y-2">
-                            <div>
-                              <span className="text-xs font-bold tracking-widest uppercase text-gray-400 block mb-1">
-                                {pillar.tagline}
-                              </span>
-                              <h3 className={`text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-text-dark transition-colors duration-300 ${
-                                isActive ? pillar.colorClass.split(' ')[0] : ''
-                              }`}>
-                                {pillar.title}
-                              </h3>
-                            </div>
-
-                            {/* Expandable Description */}
-                            <div 
-                              className={`grid transition-all duration-500 ease-in-out ${
-                                isActive ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
-                              }`}
-                            >
-                              <div className="overflow-hidden">
-                                <p className="text-gray-600 text-base md:text-lg leading-relaxed font-sans font-medium max-w-xl pb-1">
-                                  {pillar.description}
-                                </p>
-
-                                {/* Mobile-only illustration inside the card */}
-                                <div className="lg:hidden w-full flex justify-center py-6">
-                                  <img 
-                                    src={
-                                      idx === 0 
-                                        ? waterColourRickshawImg 
-                                        : idx === 1 
-                                          ? yellowTaxiImg 
-                                          : victoriaMemorialImg
-                                    }  
-                                    alt={pillar.title} 
-                                    className="w-[85%] max-w-[310px] h-auto object-contain mix-blend-multiply"
-                                  />
-                                </div>
-
-                                <Link 
-                                  to="/bookings"
-                                  onClick={(e) => e.stopPropagation()}
-                                  className="mt-6 flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-text-dark w-fit hover:text-primary transition-colors cursor-pointer relative z-30"
-                                >
-                                  <span>Explore experiences</span>
-                                  <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Arrow Indicator */}
-                        <div className={`w-10 h-10 rounded-full border border-text-dark/10 flex items-center justify-center transition-all duration-500 shrink-0 ${
-                          isActive ? 'bg-text-dark text-white border-text-dark -rotate-45' : 'text-text-dark/40 group-hover:text-text-dark rotate-0'
-                        }`}>
-                          <ArrowRight className="w-5 h-5" />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Vintage Kolkata Stamp */}
-              <div className="flex justify-end pt-12 md:pt-20 select-none mr-2 md:mr-6 philosophy-header">
-                <div className="relative group/stamp">
-                  <img 
-                    src={kolkataStampImg} 
-                    alt="Vintage Kolkata Stamp" 
-                    className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-48 lg:h-48 object-contain transform -rotate-12 lg:rotate-[-15deg] group-hover/stamp:rotate-[-5deg] group-hover/stamp:scale-105 transition-all duration-500 ease-out mix-blend-multiply pointer-events-none drop-shadow-sm filter contrast-[1.02]"
-                  />
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
+      {/* --- ABOUT PHILOSOPHY SECTION --- */}
+      <PhilosophySection />
 
       {/* --- TEAM SECTION --- */}
       <section id="team" className="py-20 md:py-32 bg-[#f0ddd5] relative z-10 border-t border-text-dark/10">
@@ -772,7 +808,7 @@ const Home = () => {
                   <div className="absolute inset-0 flex items-center justify-center opacity-40 lg:group-hover:opacity-80 transition-opacity duration-500">
                      <span className="text-[25vw] md:text-[15vw] font-black text-white">{member.name[0]}</span>
                   </div>
-                  <img src={yellowTaxiImg} alt="Team" className="team-img-parallax absolute top-[-20%] w-full h-[140%] object-cover opacity-0 lg:group-hover:opacity-20 transition-opacity duration-500 will-change-transform transform-gpu" />
+                  <img src={yellowTaxiImg} alt="Team" decoding="async" className="team-img-parallax absolute top-[-20%] w-full h-[140%] object-cover opacity-0 lg:group-hover:opacity-20 transition-opacity duration-500 will-change-transform transform-gpu" />
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-text-dark">{member.name}</h3>
                 <p className="text-gray-500 font-sans uppercase tracking-widest text-sm font-bold mt-2">{member.role}</p>
@@ -790,6 +826,7 @@ const Home = () => {
              src={howrahBridgeImg} 
              className="contact-howrah-bridge-parallax w-[90%] md:w-[70%] lg:w-[50%] h-[80%] object-contain opacity-[0.22] mix-blend-multiply will-change-transform" 
              alt="Howrah Bridge Centered Background" 
+             decoding="async"
            />
         </div>
         

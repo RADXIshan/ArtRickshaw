@@ -23,7 +23,6 @@ const PageTransition = ({ children }) => {
 
   return (
     <>
-      {/* Exiting Overlay: Sweeps up from bottom */}
       <motion.div
         className="fixed bottom-0 left-0 w-full z-9999 flex items-center justify-center overflow-hidden"
         initial={{ height: '0vh' }}
@@ -35,6 +34,7 @@ const PageTransition = ({ children }) => {
         <img 
           src={rickshawPullerImg} 
           alt="Art Rickshaw" 
+          decoding="async"
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-20 md:h-32 w-auto invert mix-blend-screen opacity-30 drop-shadow-2xl z-10"
         />
       </motion.div>
@@ -52,6 +52,7 @@ const PageTransition = ({ children }) => {
         <img 
           src={rickshawPullerImg} 
           alt="Art Rickshaw" 
+          decoding="async"
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-20 md:h-32 w-auto invert mix-blend-screen opacity-30 drop-shadow-2xl z-10"
         />
       </motion.div>
