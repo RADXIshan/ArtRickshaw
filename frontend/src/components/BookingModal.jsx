@@ -74,7 +74,10 @@ const BookingModal = ({ isOpen, onClose, data }) => {
                 </div>
               </div>
 
-              <button className="w-full bg-text-dark text-[#F5F5F0] py-4 md:py-5 rounded-full uppercase tracking-widest font-bold text-sm hover:bg-primary transition-colors duration-300">
+              <button 
+                data-cursor="book"
+                className="w-full bg-text-dark text-[#F5F5F0] py-4 md:py-5 rounded-full uppercase tracking-widest font-bold text-sm hover:bg-primary transition-colors duration-300"
+              >
                 Proceed to Book
               </button>
             </div>

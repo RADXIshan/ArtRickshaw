@@ -3,7 +3,7 @@ import gsap from 'gsap';
 
 const CustomCursor = () => {
   const cursorRef = useRef(null);
-  const [cursorType, setCursorType] = useState('default'); // 'default', 'hovering', 'explore'
+  const [cursorType, setCursorType] = useState('default'); // 'default', 'hovering', 'explore', 'book', 'send'
 
   useEffect(() => {
     const cursor = cursorRef.current;
@@ -22,9 +22,12 @@ const CustomCursor = () => {
     const handleMouseOver = (e) => {
       const target = e.target;
       
-      // Check if it's an 'explore' area
-      if (target.closest('[data-cursor="explore"]')) {
-        setCursorType('explore');
+      const cursorTarget = target.closest('[data-cursor]');
+      
+      // Check if it's a custom cursor area
+      if (cursorTarget) {
+        const type = cursorTarget.getAttribute('data-cursor');
+        setCursorType(type || 'explore');
       }
       // Check if it's a clickable element
       else if (
@@ -49,11 +52,19 @@ const CustomCursor = () => {
     };
   }, []);
 
+  const hasText = cursorType === 'explore' || cursorType === 'book' || cursorType === 'send';
+
   return (
     <div
       ref={cursorRef}
       className={`custom-cursor ${cursorType !== 'default' ? cursorType : ''}`}
-    />
+    >
+      {hasText && (
+        <span className="text-[12px] font-bold uppercase tracking-[1px] text-white select-none pointer-events-none">
+          {cursorType}
+        </span>
+      )}
+    </div>
   );
 };
 

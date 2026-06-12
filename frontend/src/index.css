@@ -76,7 +76,9 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer {
   mix-blend-mode: difference;
 }
 
-.custom-cursor.explore {
+.custom-cursor.explore,
+.custom-cursor.book,
+.custom-cursor.send {
   width: 100px;
   height: 100px;
   background-color: var(--color-primary);
@@ -90,9 +92,6 @@ a, button, [role="button"], input, select, textarea, .cursor-pointer {
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 1px;
-}
-.custom-cursor.explore::after {
-  content: "EXPLORE";
 }
 
 /* Lenis */

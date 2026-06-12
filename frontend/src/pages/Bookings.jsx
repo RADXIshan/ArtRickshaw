@@ -71,6 +71,7 @@ const Bookings = () => {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.4 }}
                   onClick={() => handleBookingClick(booking)}
+                  data-cursor="book"
                   className="group flex flex-col bg-white border border-gray-200 rounded-4xl overflow-hidden hover:border-primary transition-all duration-500 cursor-pointer shadow-sm hover:shadow-xl"
                 >
                   <div className="w-full h-56 overflow-hidden relative">

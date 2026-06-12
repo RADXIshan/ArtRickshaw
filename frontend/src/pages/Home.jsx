@@ -4,9 +4,9 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { ArrowRight } from 'lucide-react';
-import taxiImg from '../assets/images/taxi.png';
 import logoImg from '../assets/images/logo.png';
 import heroIllustrationImg from '../assets/images/hero_illustration.png';
+import howrahBridgeImg from '../assets/images/howrah_bridge.png';
 import yellowTaxiImg from '../assets/images/yellow_taxi-removebg-preview.png';
 import waterColourRickshawImg from '../assets/images/water_colour_rickshaw-removebg-preview.png';
 import victoriaMemorialImg from '../assets/images/victoria_memorial-removebg-preview.png';
@@ -242,34 +242,10 @@ const Home = () => {
       });
     });
 
-    // Parallax for Philosophy Collage Elements
-    gsap.to('.philosophy-watercolor-rickshaw', {
-      yPercent: 8,
-      ease: 'none',
-      force3D: true,
-      scrollTrigger: {
-        trigger: '.about-img-container',
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
-      }
-    });
 
-    gsap.to('.philosophy-yellow-taxi', {
-      yPercent: -15,
-      xPercent: 5,
-      ease: 'none',
-      force3D: true,
-      scrollTrigger: {
-        trigger: '.about-img-container',
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
-      }
-    });
 
-    // Contact Victoria Memorial Parallax
-    gsap.to('.contact-victoria-parallax', {
+    // Contact Howrah Bridge Parallax
+    gsap.to('.contact-howrah-bridge-parallax', {
       yPercent: -12,
       ease: 'none',
       force3D: true,
@@ -398,6 +374,7 @@ const Home = () => {
                   key={special.id} 
                   onMouseEnter={() => setHoveredSpecial(i)}
                   onClick={() => setHoveredSpecial(i)}
+                  data-cursor="book"
                   className={`special-hover-card relative rounded-3xl overflow-hidden cursor-pointer group transform-gpu ${isActive ? 'md:flex-3 flex-2' : 'md:flex-1 flex-1'}`}
                   style={{ transition: 'flex 700ms cubic-bezier(0.25,1,0.5,1)' }}
                 >
@@ -569,7 +546,7 @@ const Home = () => {
                                       : idx === 1 
                                         ? yellowTaxiImg 
                                         : victoriaMemorialImg
-                                  } 
+                                  }  
                                   alt={pillar.title} 
                                   className="w-[80%] max-w-[280px] h-auto object-contain mix-blend-multiply"
                                 />
@@ -627,7 +604,7 @@ const Home = () => {
                   <div className="absolute inset-0 flex items-center justify-center opacity-40 lg:group-hover:opacity-80 transition-opacity duration-500">
                      <span className="text-[25vw] md:text-[15vw] font-black text-white">{member.name[0]}</span>
                   </div>
-                  <img src={taxiImg} alt="Team" className="team-img-parallax absolute top-[-20%] w-full h-[140%] object-cover opacity-0 lg:group-hover:opacity-20 transition-opacity duration-500 will-change-transform transform-gpu" />
+                  <img src={yellowTaxiImg} alt="Team" className="team-img-parallax absolute top-[-20%] w-full h-[140%] object-cover opacity-0 lg:group-hover:opacity-20 transition-opacity duration-500 will-change-transform transform-gpu" />
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-text-dark">{member.name}</h3>
                 <p className="text-gray-500 font-sans uppercase tracking-widest text-sm font-bold mt-2">{member.role}</p>
@@ -642,9 +619,9 @@ const Home = () => {
         {/* Background Sketch */}
         <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center">
            <img 
-             src={victoriaMemorialImg} 
-             className="contact-victoria-parallax w-[90%] md:w-[70%] lg:w-[50%] h-[80%] object-contain opacity-[0.22] mix-blend-multiply will-change-transform" 
-             alt="Victoria Memorial Centered Background" 
+             src={howrahBridgeImg} 
+             className="contact-howrah-bridge-parallax w-[90%] md:w-[70%] lg:w-[50%] h-[80%] object-contain opacity-[0.22] mix-blend-multiply will-change-transform" 
+             alt="Howrah Bridge Centered Background" 
            />
         </div>
         
@@ -700,7 +677,7 @@ const Home = () => {
                 <label htmlFor="message" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Your Message</label>
               </div>
 
-              <button type="submit" className="form-element text-white border-2 border-text-dark bg-text-dark hover:bg-transparent hover:text-text-dark focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold uppercase tracking-widest rounded-full text-xl w-full sm:w-auto px-12 py-4 text-center transition-all duration-300" data-cursor="explore">Send Message</button>
+              <button type="submit" className="form-element text-white border-2 border-text-dark bg-text-dark hover:bg-transparent hover:text-text-dark focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold uppercase tracking-widest rounded-full text-xl w-full sm:w-auto px-12 py-4 text-center transition-all duration-300" data-cursor="send">Send Message</button>
             </form>
           </div>
         </div>
