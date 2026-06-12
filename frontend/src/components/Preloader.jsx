@@ -95,20 +95,20 @@ const Preloader = ({ onComplete }) => {
           ref={textRef} 
           src={logoImg}
           alt="Art Rickshaw"
-          className="h-24 md:h-32 lg:h-40 w-auto opacity-0 translate-y-10 mb-20 invert object-contain"
+          className="h-16 sm:h-24 md:h-32 lg:h-40 w-auto opacity-0 translate-y-10 mb-10 sm:mb-20 invert object-contain"
         />
         
         {/* Progress Container */}
-        <div className="w-full relative mt-10">
+        <div className="w-full relative mt-6 sm:mt-10">
           {/* Rickshaw Puller */}
           <div 
             ref={rickshawRef} 
-            className="absolute bottom-full left-0 translate-x-[-80%] opacity-0 translate-y-5 pb-2"
+            className="absolute bottom-full left-0 translate-x-[-85%] opacity-0 translate-y-5 pb-2"
           >
             <img 
               src={rickshawPullerImg} 
               alt="Rickshaw Puller" 
-              className="h-24 md:h-32 w-auto invert mix-blend-screen -scale-x-100 drop-shadow-xl max-w-none shrink-0"
+              className="h-16 sm:h-24 md:h-32 w-auto invert mix-blend-screen -scale-x-100 drop-shadow-xl max-w-none shrink-0"
             />
           </div>
           

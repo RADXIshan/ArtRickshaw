@@ -4,9 +4,37 @@ import gsap from 'gsap';
 const CustomCursor = () => {
   const cursorRef = useRef(null);
   const [cursorType, setCursorType] = useState('default'); // 'default', 'hovering', 'explore', 'book', 'send'
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    setIsDesktop(mediaQuery.matches);
+
+    const handleResize = (e) => {
+      setIsDesktop(e.matches);
+    };
+
+    // Support both older and modern listeners
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleResize);
+    } else {
+      mediaQuery.addListener(handleResize);
+    }
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', handleResize);
+      } else {
+        mediaQuery.removeListener(handleResize);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop) return;
+
     const cursor = cursorRef.current;
+    if (!cursor) return;
     
     // Move cursor
     const onMouseMove = (e) => {
@@ -50,7 +78,9 @@ const CustomCursor = () => {
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
     };
-  }, []);
+  }, [isDesktop]);
+
+  if (!isDesktop) return null;
 
   const hasText = cursorType === 'explore' || cursorType === 'book' || cursorType === 'send';
 

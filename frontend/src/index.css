@@ -46,52 +46,54 @@
   }
 }
 
-/* Custom Cursor */
-body {
-  cursor: none;
-}
-a, button, [role="button"], input, select, textarea, .cursor-pointer {
-  cursor: none;
-}
+/* Custom Cursor (only on laptops and larger screens, e.g. lg: 1024px and up) */
+@media (min-width: 1024px) {
+  body {
+    cursor: none;
+  }
+  a, button, [role="button"], input, select, textarea, .cursor-pointer {
+    cursor: none;
+  }
 
-.custom-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: var(--color-primary);
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
-  mix-blend-mode: difference;
-}
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+    mix-blend-mode: difference;
+  }
 
-.custom-cursor.hovering {
-  width: 60px;
-  height: 60px;
-  background-color: white;
-  mix-blend-mode: difference;
-}
+  .custom-cursor.hovering {
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    mix-blend-mode: difference;
+  }
 
-.custom-cursor.explore,
-.custom-cursor.book,
-.custom-cursor.send {
-  width: 100px;
-  height: 100px;
-  background-color: var(--color-primary);
-  mix-blend-mode: normal;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-family: var(--font-sans);
-  font-weight: bold;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  .custom-cursor.explore,
+  .custom-cursor.book,
+  .custom-cursor.send {
+    width: 100px;
+    height: 100px;
+    background-color: var(--color-primary);
+    mix-blend-mode: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: var(--font-sans);
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
 }
 
 /* Lenis */

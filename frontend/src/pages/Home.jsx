@@ -425,16 +425,15 @@ const Home = () => {
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="container mx-auto px-6 md:px-12">
-          {/* Header */}
-          <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-text-dark/10 pb-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 border-b border-text-dark/10 pb-8">
             <div className="philosophy-header">
               <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-3 block">Our Story</span>
               <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-4"></div>
-              <h2 className="text-5xl md:text-8xl font-serif font-black text-text-dark leading-none tracking-tighter uppercase">
+              <h2 className="text-4xl sm:text-5xl md:text-8xl font-serif font-black text-text-dark leading-none tracking-tighter uppercase">
                 OUR <br className="hidden md:block" /> PHILOSOPHY.
               </h2>
             </div>
-            <p className="text-xl text-gray-500 max-w-md mt-6 md:mt-0 font-serif italic philosophy-header">
+            <p className="text-lg md:text-xl text-gray-500 max-w-md mt-6 md:mt-0 font-serif italic philosophy-header">
               Founded with a passion for bringing people together through creativity, Art Rickshaw is a sanctuary where you learn, create, and belong.
             </p>
           </div>
@@ -578,17 +577,17 @@ const Home = () => {
       </section>
 
       {/* --- TEAM SECTION --- */}
-      <section id="team" className="py-32 bg-[#f0ddd5] relative z-10 border-t border-text-dark/10">
+      <section id="team" className="py-20 md:py-32 bg-[#f0ddd5] relative z-10 border-t border-text-dark/10">
         <div className="container mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-20">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20">
             <div className="team-header">
               <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-3 block">The People</span>
               <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-4"></div>
-              <h2 className="text-5xl md:text-7xl font-serif font-black text-text-dark leading-none tracking-tighter uppercase">
+              <h2 className="text-4xl sm:text-5xl md:text-7xl font-serif font-black text-text-dark leading-none tracking-tighter uppercase">
                 MEET THE <br/> CREATIVES.
               </h2>
             </div>
-            <p className="text-xl text-gray-500 max-w-md mt-6 md:mt-0 font-serif italic team-header">
+            <p className="text-lg md:text-xl text-gray-500 max-w-md mt-6 md:mt-0 font-serif italic team-header">
               The artists, makers, and dreamers who bring Art Rickshaw to life every single day.
             </p>
           </div>

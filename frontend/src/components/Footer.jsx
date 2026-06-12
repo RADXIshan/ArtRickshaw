@@ -6,7 +6,7 @@ const Footer = () => {
   const [activeModal, setActiveModal] = useState(null);
 
   return (
-    <footer className="fixed bottom-0 left-0 w-full h-screen lg:h-[90vh] z-0 bg-primary text-white flex flex-col justify-between overflow-hidden py-4 md:py-6 lg:py-8">
+    <footer className="relative lg:fixed lg:bottom-0 lg:left-0 w-full min-h-fit lg:h-[90vh] z-0 bg-primary text-white flex flex-col justify-between overflow-hidden py-12 lg:py-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-16 w-full max-w-7xl mx-auto px-6 md:px-12 z-10 mt-0">
         <div>
           <h3 className="text-xl md:text-2xl font-bold mb-4">Quick Links</h3>
