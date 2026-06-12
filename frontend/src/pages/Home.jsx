@@ -590,13 +590,13 @@ const Home = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
             
             {/* Left Column: Sticky Image Showcase & Quote */}
-            <div className="hidden lg:block lg:col-span-5 lg:sticky lg:top-32 space-y-8 about-img-container">
-              <div className="aspect-3/4 md:aspect-4/5 lg:aspect-3/4 relative group/gallery about-img clip-path-reveal scale-125 will-change-transform flex items-center justify-center bg-transparent">
+            <div className="hidden lg:block lg:col-span-6 lg:sticky lg:top-32 space-y-8 about-img-container">
+              <div className="aspect-3/4 md:aspect-4/5 lg:aspect-3/4 relative group/gallery about-img clip-path-reveal scale-125 lg:scale-[1.35] will-change-transform flex items-center justify-center bg-transparent">
                 {/* Floating Local Illustrations with parallax compatibility and interactive styling */}
                 <img 
                   src={waterColourRickshawImg} 
                   alt="Watercolor Rickshaw" 
-                  className={`philosophy-watercolor-rickshaw absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
+                  className={`philosophy-watercolor-rickshaw absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] lg:w-[95%] lg:h-[95%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
                     activePillar === 0 
                       ? 'opacity-100 scale-100 rotate-0 z-20' 
                       : 'opacity-0 scale-95 rotate-0 z-10'
@@ -605,7 +605,7 @@ const Home = () => {
                 <img 
                   src={yellowTaxiImg} 
                   alt="Yellow Taxi" 
-                  className={`philosophy-yellow-taxi absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
+                  className={`philosophy-yellow-taxi absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-[75%] lg:w-[80%] lg:h-[80%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
                     activePillar === 1 
                       ? 'opacity-100 scale-100 rotate-0 z-20' 
                       : 'opacity-0 scale-95 rotate-0 z-10'
@@ -614,7 +614,7 @@ const Home = () => {
                 <img 
                   src={victoriaMemorialImg} 
                   alt="Victoria Memorial" 
-                  className={`philosophy-victoria absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
+                  className={`philosophy-victoria absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] lg:w-[90%] lg:h-[90%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
                     activePillar === 2 
                       ? 'opacity-100 scale-100 rotate-0 z-20' 
                       : 'opacity-0 scale-95 rotate-0 z-10'
@@ -639,7 +639,7 @@ const Home = () => {
             </div>
 
             {/* Right Column: Three Philosophy Pillars Accordion */}
-            <div className="lg:col-span-7 space-y-4 philosophy-cards-container">
+            <div className="lg:col-span-6 space-y-4 philosophy-cards-container">
               {pillars.map((pillar, idx) => {
                 const isActive = activePillar === idx;
                 return (
@@ -695,7 +695,7 @@ const Home = () => {
                                         : victoriaMemorialImg
                                   }  
                                   alt={pillar.title} 
-                                  className="w-[80%] max-w-[280px] h-auto object-contain mix-blend-multiply"
+                                  className="w-[85%] max-w-[310px] h-auto object-contain mix-blend-multiply"
                                 />
                               </div>
 
