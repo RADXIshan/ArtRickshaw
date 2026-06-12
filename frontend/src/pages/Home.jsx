@@ -588,154 +588,149 @@ const Home = () => {
           </div>
 
           {/* Asymmetric Grid Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
             
-            {/* Left Column: Sticky Image Showcase & Quote */}
-            <div className="hidden lg:block lg:col-span-6 lg:sticky lg:top-32 space-y-8 about-img-container">
-              <div className="aspect-3/4 md:aspect-4/5 lg:aspect-3/4 relative group/gallery about-img clip-path-reveal scale-125 lg:scale-[1.35] will-change-transform flex items-center justify-center bg-transparent">
-                {/* Floating Local Illustrations with parallax compatibility and interactive styling */}
-                <img 
-                  src={waterColourRickshawImg} 
-                  alt="Watercolor Rickshaw" 
-                  className={`philosophy-watercolor-rickshaw absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] lg:w-[95%] lg:h-[95%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
-                    activePillar === 0 
-                      ? 'opacity-100 scale-100 rotate-0 z-20' 
-                      : 'opacity-0 scale-95 rotate-0 z-10'
-                  }`}
-                />
-                <img 
-                  src={yellowTaxiImg} 
-                  alt="Yellow Taxi" 
-                  className={`philosophy-yellow-taxi absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-[75%] lg:w-[80%] lg:h-[80%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
-                    activePillar === 1 
-                      ? 'opacity-100 scale-100 rotate-0 z-20' 
-                      : 'opacity-0 scale-95 rotate-0 z-10'
-                  }`}
-                />
-                <img 
-                  src={victoriaMemorialImg} 
-                  alt="Victoria Memorial" 
-                  className={`philosophy-victoria absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] lg:w-[90%] lg:h-[90%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
-                    activePillar === 2 
-                      ? 'opacity-100 scale-100 rotate-0 z-20' 
-                      : 'opacity-0 scale-95 rotate-0 z-10'
-                  }`}
-                />
+            {/* Left Column Wrapper */}
+            <div className="hidden lg:block lg:col-span-6">
+              {/* Sticky Image Showcase & Quote */}
+              <div className="lg:sticky lg:top-32 space-y-8 about-img-container">
+                <div className="aspect-3/4 md:aspect-4/5 lg:aspect-3/4 relative group/gallery about-img clip-path-reveal scale-125 lg:scale-[1.35] will-change-transform flex items-center justify-center bg-transparent">
+                  {/* Floating Local Illustrations with parallax compatibility and interactive styling */}
+                  <img 
+                    src={waterColourRickshawImg} 
+                    alt="Watercolor Rickshaw" 
+                    className={`philosophy-watercolor-rickshaw absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] lg:w-[95%] lg:h-[95%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
+                      activePillar === 0 
+                        ? 'opacity-100 scale-100 rotate-0 z-20' 
+                        : 'opacity-0 scale-95 rotate-0 z-10'
+                    }`}
+                  />
+                  <img 
+                    src={yellowTaxiImg} 
+                    alt="Yellow Taxi" 
+                    className={`philosophy-yellow-taxi absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-[75%] lg:w-[80%] lg:h-[80%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
+                      activePillar === 1 
+                        ? 'opacity-100 scale-100 rotate-0 z-20' 
+                        : 'opacity-0 scale-95 rotate-0 z-10'
+                    }`}
+                  />
+                  <img 
+                    src={victoriaMemorialImg} 
+                    alt="Victoria Memorial" 
+                    className={`philosophy-victoria absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] lg:w-[90%] lg:h-[90%] object-contain transition-all duration-700 ease-out will-change-transform mix-blend-multiply pointer-events-none ${
+                      activePillar === 2 
+                        ? 'opacity-100 scale-100 rotate-0 z-20' 
+                        : 'opacity-0 scale-95 rotate-0 z-10'
+                    }`}
+                  />
 
-                {/* Est Badge */}
-                <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-text-dark/5 shadow-md text-xs font-bold tracking-widest uppercase text-[#e65a44] z-30 pointer-events-none">
-                  Kolkata, Est. 2016
-                </div>
-              </div>
-
-              {/* Editorial Quote */}
-              <div className="space-y-4 philosophy-header pt-4 border-t border-text-dark/10">
-                <h3 className="text-xl font-serif italic text-gray-700">
-                  "Art is a way of recognizing oneself."
-                </h3>
-                <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
-                  We don't teach you rules; we help you find your voice. Step away from the noise of the city and step into a space of pure, unfiltered flow.
-                </p>
-                {/* Vintage Kolkata Stamp (Desktop) */}
-                <div className="pt-6 select-none">
-                  <div className="relative group/stamp">
-                    <img 
-                      src={kolkataStampImg} 
-                      alt="Vintage Kolkata Stamp" 
-                      className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-48 lg:h-48 object-contain transform -rotate-12 lg:rotate-[-15deg] group-hover/stamp:rotate-[-5deg] group-hover/stamp:scale-105 transition-all duration-500 ease-out mix-blend-multiply pointer-events-none drop-shadow-sm filter contrast-[1.02]"
-                    />
+                  {/* Est Badge */}
+                  <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-text-dark/5 shadow-md text-xs font-bold tracking-widest uppercase text-[#e65a44] z-30 pointer-events-none">
+                    Kolkata, Est. 2016
                   </div>
+                </div>
+
+                {/* Editorial Quote */}
+                <div className="space-y-4 philosophy-header pt-4 border-t border-text-dark/10">
+                  <h3 className="text-xl font-serif italic text-gray-700">
+                    "Art is a way of recognizing oneself."
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
+                    We don't teach you rules; we help you find your voice. Step away from the noise of the city and step into a space of pure, unfiltered flow.
+                  </p>
                 </div>
               </div>
             </div>
 
             {/* Right Column: Three Philosophy Pillars Accordion */}
-            <div className="lg:col-span-6 space-y-4 philosophy-cards-container">
-              {pillars.map((pillar, idx) => {
-                const isActive = activePillar === idx;
-                return (
-                  <div 
-                    key={pillar.id}
-                    onMouseEnter={() => setActivePillar(idx)}
-                    onClick={() => setActivePillar(idx)}
-                    className={`philosophy-card group border-t border-text-dark/10 py-6 md:py-8 transition-opacity duration-500 cursor-pointer ${
-                      !isActive ? 'opacity-40' : 'opacity-100'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-6">
-                      <div className="flex items-start gap-6 md:gap-10">
-                        {/* Index Number */}
-                        <span className={`text-xl md:text-2xl font-serif font-semibold transition-colors duration-500 ${
-                          isActive ? pillar.colorClass.split(' ')[0] : 'text-gray-400'
-                        }`}>
-                          {pillar.id}
-                        </span>
+            <div className="lg:col-span-6 flex flex-col justify-between philosophy-cards-container">
+              <div className="space-y-4">
+                {pillars.map((pillar, idx) => {
+                  const isActive = activePillar === idx;
+                  return (
+                    <div 
+                      key={pillar.id}
+                      onMouseEnter={() => setActivePillar(idx)}
+                      onClick={() => setActivePillar(idx)}
+                      className={`philosophy-card group border-t border-text-dark/10 py-6 md:py-8 transition-opacity duration-500 cursor-pointer ${
+                        !isActive ? 'opacity-40' : 'opacity-100'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-6">
+                        <div className="flex items-start gap-6 md:gap-10">
+                          {/* Index Number */}
+                          <span className={`text-xl md:text-2xl font-serif font-semibold transition-colors duration-500 ${
+                            isActive ? pillar.colorClass.split(' ')[0] : 'text-gray-400'
+                          }`}>
+                            {pillar.id}
+                          </span>
 
-                        {/* Title & Tagline & Description */}
-                        <div className="space-y-2">
-                          <div>
-                            <span className="text-xs font-bold tracking-widest uppercase text-gray-400 block mb-1">
-                              {pillar.tagline}
-                            </span>
-                            <h3 className={`text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-text-dark transition-colors duration-300 ${
-                              isActive ? pillar.colorClass.split(' ')[0] : ''
-                            }`}>
-                              {pillar.title}
-                            </h3>
-                          </div>
+                          {/* Title & Tagline & Description */}
+                          <div className="space-y-2">
+                            <div>
+                              <span className="text-xs font-bold tracking-widest uppercase text-gray-400 block mb-1">
+                                {pillar.tagline}
+                              </span>
+                              <h3 className={`text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-text-dark transition-colors duration-300 ${
+                                isActive ? pillar.colorClass.split(' ')[0] : ''
+                              }`}>
+                                {pillar.title}
+                              </h3>
+                            </div>
 
-                          {/* Expandable Description */}
-                          <div 
-                            className={`grid transition-all duration-500 ease-in-out ${
-                              isActive ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
-                            }`}
-                          >
-                            <div className="overflow-hidden">
-                              <p className="text-gray-600 text-base md:text-lg leading-relaxed font-sans font-medium max-w-xl pb-1">
-                                {pillar.description}
-                              </p>
+                            {/* Expandable Description */}
+                            <div 
+                              className={`grid transition-all duration-500 ease-in-out ${
+                                isActive ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
+                              }`}
+                            >
+                              <div className="overflow-hidden">
+                                <p className="text-gray-600 text-base md:text-lg leading-relaxed font-sans font-medium max-w-xl pb-1">
+                                  {pillar.description}
+                                </p>
 
-                              {/* Mobile-only illustration inside the card */}
-                              <div className="lg:hidden w-full flex justify-center py-6">
-                                <img 
-                                  src={
-                                    idx === 0 
-                                      ? waterColourRickshawImg 
-                                      : idx === 1 
-                                        ? yellowTaxiImg 
-                                        : victoriaMemorialImg
-                                  }  
-                                  alt={pillar.title} 
-                                  className="w-[85%] max-w-[310px] h-auto object-contain mix-blend-multiply"
-                                />
+                                {/* Mobile-only illustration inside the card */}
+                                <div className="lg:hidden w-full flex justify-center py-6">
+                                  <img 
+                                    src={
+                                      idx === 0 
+                                        ? waterColourRickshawImg 
+                                        : idx === 1 
+                                          ? yellowTaxiImg 
+                                          : victoriaMemorialImg
+                                    }  
+                                    alt={pillar.title} 
+                                    className="w-[85%] max-w-[310px] h-auto object-contain mix-blend-multiply"
+                                  />
+                                </div>
+
+                                <Link 
+                                  to="/bookings"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="mt-6 flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-text-dark w-fit hover:text-primary transition-colors cursor-pointer relative z-30"
+                                >
+                                  <span>Explore experiences</span>
+                                  <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
+                                </Link>
                               </div>
-
-                              <Link 
-                                to="/bookings"
-                                onClick={(e) => e.stopPropagation()}
-                                className="mt-6 flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-text-dark w-fit hover:text-primary transition-colors cursor-pointer relative z-30"
-                              >
-                                <span>Explore experiences</span>
-                                <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
-                              </Link>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Arrow Indicator */}
-                      <div className={`w-10 h-10 rounded-full border border-text-dark/10 flex items-center justify-center transition-all duration-500 shrink-0 ${
-                        isActive ? 'bg-text-dark text-white border-text-dark -rotate-45' : 'text-text-dark/40 group-hover:text-text-dark rotate-0'
-                      }`}>
-                        <ArrowRight className="w-5 h-5" />
+                        {/* Arrow Indicator */}
+                        <div className={`w-10 h-10 rounded-full border border-text-dark/10 flex items-center justify-center transition-all duration-500 shrink-0 ${
+                          isActive ? 'bg-text-dark text-white border-text-dark -rotate-45' : 'text-text-dark/40 group-hover:text-text-dark rotate-0'
+                        }`}>
+                          <ArrowRight className="w-5 h-5" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
 
-              {/* Vintage Kolkata Stamp (Mobile Only) */}
-              <div className="flex lg:hidden justify-start pt-12 md:pt-20 select-none philosophy-header">
+              {/* Vintage Kolkata Stamp */}
+              <div className="flex justify-end pt-12 md:pt-20 select-none mr-2 md:mr-6 philosophy-header">
                 <div className="relative group/stamp">
                   <img 
                     src={kolkataStampImg} 
