@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import Magnetic from './Magnetic';
 
 const links = [
   { name: 'Home', path: '/' },
@@ -10,92 +11,82 @@ const links = [
   { name: 'Contact', path: '/#contact' },
 ];
 
+const menuVariants = {
+  initial: { y: "-100%" },
+  animate: { y: "0%", transition: { duration: 1, ease: [0.76, 0, 0.24, 1] } },
+  exit: { y: "-100%", transition: { duration: 1, ease: [0.76, 0, 0.24, 1], delay: 0.2 } }
+};
+
+const linkVariants = {
+  initial: { y: "100%", opacity: 0 },
+  animate: (i) => ({ y: "0%", opacity: 1, transition: { duration: 1, ease: [0.76, 0, 0.24, 1], delay: 0.3 + (i * 0.1) } }),
+  exit: { y: "100%", opacity: 0, transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] } }
+};
+
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
+    setIsOpen(false);
   }, [location]);
 
   return (
     <>
-      {/* Desktop Floating Island */}
-      <motion.nav 
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-        className={`fixed top-6 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 hidden md:block ${
-          isScrolled ? 'w-[80%] max-w-4xl' : 'w-[95%] max-w-6xl'
-        }`}
-      >
-        <div className={`bg-white/80 backdrop-blur-xl border border-gray-200 shadow-xl rounded-full px-8 py-4 flex justify-between items-center transition-all duration-500 ${
-          isScrolled ? 'shadow-2xl' : ''
-        }`}>
-          <Link to="/" className="text-xl font-serif font-bold text-text-dark shrink-0">
-            Art Rickshaw
-          </Link>
-          
-          <div className="flex gap-8 items-center">
-            {links.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.path}
-                className="text-sm font-medium tracking-widest uppercase text-gray-600 hover:text-primary transition-colors"
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
-        </div>
-      </motion.nav>
-
-      {/* Mobile Navbar */}
-      <nav className="fixed top-0 left-0 w-full z-[100] md:hidden px-6 py-6 flex justify-between items-center mix-blend-difference text-white">
-        <Link to="/" className="text-xl font-serif font-bold">Art Rickshaw</Link>
-        <button 
-          onClick={() => setIsMobileMenuOpen(true)}
-          className="text-sm tracking-widest uppercase font-bold"
-        >
-          Menu
-        </button>
+      <nav className="fixed top-0 left-0 w-full z-100 px-6 py-6 mix-blend-difference flex justify-between items-center pointer-events-none">
+        <Link to="/" className="text-2xl font-serif font-bold text-white pointer-events-auto">
+          Art Rickshaw
+        </Link>
+        <Magnetic>
+          <button 
+            onClick={() => setIsOpen(!isOpen)} 
+            className="text-white text-lg font-bold tracking-widest uppercase pointer-events-auto"
+          >
+            {isOpen ? 'Close' : 'Menu'}
+          </button>
+        </Magnetic>
       </nav>
 
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {isOpen && (
           <motion.div 
-            initial={{ opacity: 0, y: '-100%' }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: '-100%' }}
-            transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 bg-bg-base z-[150] flex flex-col justify-center px-10"
+            variants={menuVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="fixed inset-0 z-50 flex"
           >
-            <button 
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="absolute top-6 right-6 text-sm tracking-widest uppercase font-bold text-text-dark"
-            >
-              Close
-            </button>
-            <div className="flex flex-col gap-6">
-              {links.map((link) => (
-                <a 
-                  key={link.name} 
-                  href={link.path}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-5xl font-serif font-bold text-text-dark"
-                >
-                  {link.name}
-                </a>
-              ))}
+            {/* Left Side: Solid Background with Links */}
+            <div className="w-full md:w-2/3 h-full bg-text-dark flex flex-col justify-center px-10 md:px-32 relative">
+              <div className="flex flex-col gap-4">
+                {links.map((link, i) => (
+                  <div key={link.name} className="overflow-hidden">
+                    <motion.div custom={i} variants={linkVariants} initial="initial" animate="animate" exit="exit">
+                      <a 
+                        href={link.path}
+                        onClick={() => setIsOpen(false)}
+                        className="text-6xl md:text-[8vw] font-serif font-bold text-white hover:text-primary transition-colors leading-none uppercase"
+                      >
+                        {link.name}
+                      </a>
+                    </motion.div>
+                  </div>
+                ))}
+              </div>
+              
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { delay: 1 } }}
+                exit={{ opacity: 0 }}
+                className="absolute bottom-10 left-10 md:left-32 text-gray-400 font-medium font-serif italic"
+              >
+                Let's create something beautiful together.
+              </motion.div>
+            </div>
+
+            {/* Right Side: Massive Image Reveal */}
+            <div className="hidden md:block w-1/3 h-full bg-primary relative overflow-hidden">
+               <img src="/src/assets/images/bridge.png" className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-50 filter grayscale scale-110" alt="Menu Art" />
             </div>
           </motion.div>
         )}

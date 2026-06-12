@@ -236,39 +236,39 @@ const Home = () => {
       <div className="h-[10vh] bg-transparent"></div>
 
       {/* --- ABOUT SECTION --- */}
-      <section id="about" className="pt-32 pb-24 border-t border-gray-200">
+      <section id="about" className="pt-32 pb-24 bg-text-dark text-white">
         <div className="container mx-auto px-6 md:px-12">
           {/* Hero Content */}
           <div className="max-w-6xl mb-20">
             <span className="text-primary font-bold tracking-widest uppercase text-sm mb-10 block">Our Story</span>
-            <h1 className="text-6xl md:text-[8vw] font-serif font-black text-text-dark leading-none tracking-tighter mb-12">
+            <h1 className="text-6xl md:text-[8vw] font-serif font-black text-white leading-none tracking-tighter mb-12">
               COLORING <br/> KOLKATA.
             </h1>
-            <p className="text-2xl md:text-4xl text-gray-500 font-serif italic max-w-4xl leading-relaxed">
+            <p className="text-2xl md:text-4xl text-gray-400 font-serif italic max-w-4xl leading-relaxed">
               Founded with a passion for bringing people together through creativity, Art Rickshaw is more than just a studio. It's a sanctuary for imagination.
             </p>
           </div>
 
           {/* Stats Section */}
-          <div className="py-20 border-y border-gray-200">
+          <div className="py-20 border-y border-white/10">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-20">
               <div>
                 <div className="text-[15vw] md:text-[10vw] font-serif font-bold text-primary leading-none tracking-tighter">
                   <span className="stat-counter" data-target="50">0</span>+
                 </div>
-                <div className="text-xl font-bold uppercase tracking-widest text-text-dark mt-4">Workshops</div>
+                <div className="text-xl font-bold uppercase tracking-widest text-white mt-4">Workshops</div>
               </div>
               <div>
                 <div className="text-[15vw] md:text-[10vw] font-serif font-bold text-primary leading-none tracking-tighter">
                   <span className="stat-counter" data-target="10">0</span>k+
                 </div>
-                <div className="text-xl font-bold uppercase tracking-widest text-text-dark mt-4">Creators</div>
+                <div className="text-xl font-bold uppercase tracking-widest text-white mt-4">Creators</div>
               </div>
               <div>
                 <div className="text-[15vw] md:text-[10vw] font-serif font-bold text-primary leading-none tracking-tighter">
                   <span className="stat-counter" data-target="100">0</span>%
                 </div>
-                <div className="text-xl font-bold uppercase tracking-widest text-text-dark mt-4">Passion</div>
+                <div className="text-xl font-bold uppercase tracking-widest text-white mt-4">Passion</div>
               </div>
             </div>
           </div>
@@ -282,11 +282,11 @@ const Home = () => {
             </div>
 
             <div className="w-full md:w-1/2 md:pt-20">
-              <h2 className="text-5xl font-serif font-bold text-text-dark mb-10 tracking-tighter">OUR PHILOSOPHY</h2>
-              <p className="text-2xl text-gray-500 mb-8 leading-relaxed font-serif italic">
+              <h2 className="text-5xl font-serif font-bold text-white mb-10 tracking-tighter">OUR PHILOSOPHY</h2>
+              <p className="text-2xl text-gray-400 mb-8 leading-relaxed font-serif italic">
                 We believe that art is not just for the 'gifted'. It is a language, a form of therapy, and a way to connect. We provide a space where mistakes are welcomed as happy accidents.
               </p>
-              <p className="text-lg text-gray-600 leading-relaxed font-sans uppercase tracking-widest font-medium">
+              <p className="text-lg text-gray-400 leading-relaxed font-sans uppercase tracking-widest font-medium">
                 From traditional terracotta to modern fluid arts, our workshops are designed to help you disconnect from the hustle of the city and reconnect with your inner self.
               </p>
             </div>
@@ -295,8 +295,13 @@ const Home = () => {
       </section>
 
       {/* --- CONTACT SECTION --- */}
-      <section id="contact" className="py-32 bg-gray-100 border-t border-gray-200">
-        <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-20 items-start">
+      <section id="contact" className="py-32 relative overflow-hidden border-t border-gray-200">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+           <img src="/src/assets/images/bridge.png" className="w-full h-full object-cover opacity-5 filter grayscale" alt="Background" />
+        </div>
+        
+        <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-20 items-start relative z-10">
           {/* Left Side: Massive Text */}
           <div className="w-full lg:w-1/2">
             <h1 className="text-[15vw] lg:text-[10vw] font-serif font-black text-text-dark leading-none tracking-tighter mb-10">
@@ -332,8 +337,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      <div className="h-[20vh] bg-transparent"></div>
     </div>
   );
 };
