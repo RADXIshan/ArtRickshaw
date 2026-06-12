@@ -84,6 +84,7 @@ const Home = () => {
     gsap.to(scrollContainer, {
       x: () => -(scrollContainer.scrollWidth - window.innerWidth),
       ease: 'none',
+      force3D: true, // Hardware accelerate horizontal scroll
       scrollTrigger: {
         trigger: horizontalSectionRef.current,
         start: 'top top',
@@ -110,15 +111,130 @@ const Home = () => {
       });
     });
 
-    // About Image reveal
+    // About Image reveal (optimized)
     gsap.to('.about-img', {
-      clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+      clipPath: 'inset(0% 0% 0% 0%)',
       scale: 1,
       duration: 1.5,
-      ease: 'power4.out',
+      ease: 'power3.out',
+      force3D: true,
       scrollTrigger: {
         trigger: '.about-img-container',
         start: 'top 80%'
+      }
+    });
+
+    // Philosophy Text Parallax
+    gsap.from('.philosophy-text', {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.philosophy-container',
+        start: 'top 75%',
+      }
+    });
+
+    // Coloring Kolkata Reveal
+    gsap.from('.coloring-kolkata', {
+      y: 100,
+      opacity: 0,
+      duration: 1.2,
+      ease: 'power4.out',
+      scrollTrigger: {
+        trigger: '.coloring-kolkata',
+        start: 'top 80%',
+      }
+    });
+
+    // Team Header Reveal
+    gsap.from('.team-header', {
+      y: 50,
+      opacity: 0,
+      stagger: 0.2,
+      duration: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '#team',
+        start: 'top 75%',
+      }
+    });
+
+    // Team Members Stagger
+    gsap.from('.team-member', {
+      y: 100,
+      opacity: 0,
+      stagger: 0.15,
+      duration: 1.2,
+      ease: 'power4.out',
+      scrollTrigger: {
+        trigger: '#team',
+        start: 'top 80%',
+      }
+    });
+    
+    // Team Img Parallax inside cards
+    gsap.utils.toArray('.team-img-parallax').forEach((img) => {
+      gsap.to(img, {
+        yPercent: 15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: img.parentElement,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        }
+      });
+    });
+
+    // About Image inner parallax
+    gsap.to('.about-img-parallax', {
+      yPercent: 15,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.about-img-container',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      }
+    });
+
+    // Contact Background Parallax
+    gsap.to('.contact-bg-parallax', {
+      yPercent: 20,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#contact',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      }
+    });
+
+    // Contact Form Elements Stagger
+    gsap.from('.form-element', {
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '#contact form',
+        start: 'top 80%',
+      }
+    });
+
+    // Contact "LET'S CREATE." Parallax
+    gsap.to('.contact-title-parallax', {
+      y: -100,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#contact',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
       }
     });
 
@@ -179,12 +295,12 @@ const Home = () => {
           <p className="text-xl text-gray-400 mt-4 max-w-md font-medium">Scroll to explore the different ways you can express your creativity.</p>
         </div>
 
-        <div ref={horizontalScrollRef} className="flex h-[50vh] md:h-[60vh] items-center w-max pl-[10vw] pr-[20vw]">
+        <div ref={horizontalScrollRef} className="flex h-[50vh] md:h-[60vh] items-center w-max pl-[10vw] pr-[20vw] will-change-transform">
           {activities.map((activity) => (
             <div 
               key={activity.id} 
               data-cursor="explore"
-              className={`shrink-0 w-[80vw] md:w-[40vw] h-full mx-4 rounded-3xl p-10 flex flex-col justify-end ${activity.color} shadow-lg transform transition-transform duration-500 hover:scale-[1.02]`}
+              className={`shrink-0 w-[80vw] md:w-[40vw] h-full mx-4 rounded-3xl p-10 flex flex-col justify-end ${activity.color} shadow-lg transform transition-transform duration-500 md:hover:scale-[1.02]`}
             >
               <h3 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">{activity.title}</h3>
               <div className="flex justify-between items-center">
@@ -204,7 +320,7 @@ const Home = () => {
           {/* Hero Content */}
           <div className="max-w-6xl mb-20">
             <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-10 block">Our Story</span>
-            <h1 className="text-6xl md:text-[8vw] font-serif font-black text-white leading-none tracking-tighter mb-12">
+            <h1 className="coloring-kolkata text-6xl md:text-[8vw] font-serif font-black text-white leading-none tracking-tighter mb-12">
               COLORING <br/> KOLKATA.
             </h1>
             <p className="text-2xl md:text-4xl text-gray-400 font-serif italic max-w-4xl leading-relaxed">
@@ -240,19 +356,55 @@ const Home = () => {
           <div className="flex flex-col md:flex-row items-start gap-20 py-32">
             <div className="w-full md:w-1/2 about-img-container">
               <div className="aspect-4/5 bg-gray-200 rounded-2xl overflow-hidden relative about-img clip-path-reveal scale-125 shadow-2xl">
-                 <img src={rickshawImg} alt="Studio" className="w-full h-full object-cover object-center mix-blend-multiply opacity-80" />
+                 <img src={rickshawImg} alt="Studio" className="about-img-parallax absolute top-[-20%] w-full h-[140%] object-cover object-center brightness-75 contrast-125 opacity-90" />
               </div>
             </div>
 
-            <div className="w-full md:w-1/2 md:pt-20">
-              <h2 className="text-5xl font-serif font-bold text-white mb-10 tracking-tighter">OUR PHILOSOPHY</h2>
-              <p className="text-2xl text-gray-400 mb-8 leading-relaxed font-serif italic">
+            <div className="w-full md:w-1/2 md:pt-20 philosophy-container">
+              <h2 className="philosophy-text text-5xl font-serif font-bold text-white mb-10 tracking-tighter">OUR PHILOSOPHY</h2>
+              <p className="philosophy-text text-2xl text-gray-400 mb-8 leading-relaxed font-serif italic">
                 We believe that art is not just for the 'gifted'. It is a language, a form of therapy, and a way to connect. We provide a space where mistakes are welcomed as happy accidents.
               </p>
-              <p className="text-lg text-gray-400 leading-relaxed font-sans uppercase tracking-widest font-medium">
+              <p className="philosophy-text text-lg text-gray-400 leading-relaxed font-sans uppercase tracking-widest font-medium">
                 From traditional terracotta to modern fluid arts, our workshops are designed to help you disconnect from the hustle of the city and reconnect with your inner self.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- TEAM SECTION --- */}
+      <section id="team" className="py-32 bg-bg-base relative z-10 border-t border-gray-200">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-20">
+            <div>
+              <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-6 block">The People</span>
+              <h2 className="text-5xl md:text-7xl font-serif font-black text-text-dark leading-none tracking-tighter team-header">
+                MEET THE <br/> CREATIVES.
+              </h2>
+            </div>
+            <p className="text-xl text-gray-500 max-w-md mt-6 md:mt-0 font-serif italic team-header">
+              The artists, makers, and dreamers who bring Art Rickshaw to life every single day.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
+            {[
+              { id: 1, name: 'Devangana', role: 'Founder & Artist', color: 'bg-primary', delay: '0' },
+              { id: 2, name: 'Sidhant', role: 'Creative Director', color: 'bg-secondary', delay: '100' },
+              { id: 3, name: 'Priya', role: 'Workshop Lead', color: 'bg-teal-500', delay: '200' },
+            ].map((member, i) => (
+              <div key={member.id} className="team-member group cursor-pointer" data-cursor="explore">
+                <div className={`w-full aspect-square rounded-3xl mb-6 relative overflow-hidden ${member.color}`}>
+                  <div className="absolute inset-0 flex items-center justify-center opacity-60 md:group-hover:opacity-100 transition-opacity duration-500 mix-blend-overlay">
+                     <span className="text-[25vw] md:text-[15vw] font-black text-white">{member.name[0]}</span>
+                  </div>
+                  <img src={taxiImg} alt="Team" className="team-img-parallax absolute top-[-20%] w-full h-[140%] object-cover mix-blend-multiply opacity-0 md:group-hover:opacity-40 transition-opacity duration-500 grayscale" />
+                </div>
+                <h3 className="text-3xl font-serif font-bold text-text-dark">{member.name}</h3>
+                <p className="text-gray-500 font-sans uppercase tracking-widest text-sm font-bold mt-2">{member.role}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -261,12 +413,12 @@ const Home = () => {
       <section id="contact" className="py-32 relative overflow-hidden border-t border-gray-200">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-           <img src={bridgeImg} className="w-full h-full object-cover opacity-5 filter grayscale" alt="Background" />
+           <img src={bridgeImg} className="contact-bg-parallax absolute top-[-20%] w-full h-[140%] object-cover opacity-5 filter grayscale" alt="Background" />
         </div>
         
         <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-20 items-start relative z-10">
           {/* Left Side: Massive Text */}
-          <div className="w-full lg:w-1/2">
+          <div className="w-full lg:w-1/2 contact-title-parallax">
             <h1 className="text-[15vw] lg:text-[10vw] font-serif font-black text-text-dark leading-none tracking-tighter mb-10">
               LET'S <br/> CREATE.
             </h1>
@@ -280,22 +432,22 @@ const Home = () => {
           {/* Right Side: Ultra Minimal Form */}
           <div className="w-full lg:w-1/2 lg:pt-10">
             <form className="space-y-12" onSubmit={(e) => e.preventDefault()}>
-              <div className="relative z-0 w-full group">
+              <div className="form-element relative z-0 w-full group">
                 <input type="text" name="name" id="name" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer transition-colors" placeholder=" " required />
                 <label htmlFor="name" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Full Name</label>
               </div>
               
-              <div className="relative z-0 w-full group">
+              <div className="form-element relative z-0 w-full group">
                 <input type="email" name="email" id="email" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer transition-colors" placeholder=" " required />
                 <label htmlFor="email" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Email Address</label>
               </div>
 
-              <div className="relative z-0 w-full group">
+              <div className="form-element relative z-0 w-full group">
                 <textarea name="message" id="message" rows="4" className="block py-4 px-0 w-full text-2xl text-text-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer transition-colors resize-none" placeholder=" " required></textarea>
                 <label htmlFor="message" className="peer-focus:font-bold absolute text-gray-500 text-2xl duration-300 transform -translate-y-8 scale-75 top-4 -z-10 origin-left peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 uppercase tracking-widest">Your Message</label>
               </div>
 
-              <button type="submit" className="text-white border-2 border-text-dark bg-text-dark hover:bg-transparent hover:text-text-dark focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold uppercase tracking-widest rounded-full text-xl w-full sm:w-auto px-12 py-4 text-center transition-all duration-300" data-cursor="explore">Send Message</button>
+              <button type="submit" className="form-element text-white border-2 border-text-dark bg-text-dark hover:bg-transparent hover:text-text-dark focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold uppercase tracking-widest rounded-full text-xl w-full sm:w-auto px-12 py-4 text-center transition-all duration-300" data-cursor="explore">Send Message</button>
             </form>
           </div>
         </div>
