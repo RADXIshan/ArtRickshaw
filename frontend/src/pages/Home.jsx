@@ -11,6 +11,7 @@ import howrahBridgeImg from '../assets/images/howrah_bridge.png';
 import yellowTaxiImg from '../assets/images/yellow_taxi-removebg-preview.png';
 import waterColourRickshawImg from '../assets/images/water_colour_rickshaw-removebg-preview.png';
 import victoriaMemorialImg from '../assets/images/victoria_memorial-removebg-preview.png';
+import kolkataStampImg from '../assets/images/kolkata_stamp.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -722,6 +723,17 @@ const Home = () => {
                   </div>
                 );
               })}
+
+              {/* Vintage Kolkata Stamp */}
+              <div className="flex justify-end pt-12 md:pt-20 select-none mr-2 md:mr-6">
+                <div className="relative group/stamp">
+                  <img 
+                    src={kolkataStampImg} 
+                    alt="Vintage Kolkata Stamp" 
+                    className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-48 lg:h-48 object-contain transform -rotate-12 lg:rotate-[-15deg] group-hover/stamp:rotate-[-5deg] group-hover/stamp:scale-105 transition-all duration-500 ease-out mix-blend-multiply pointer-events-none drop-shadow-sm filter contrast-[1.02]"
+                  />
+                </div>
+              </div>
             </div>
 
           </div>
