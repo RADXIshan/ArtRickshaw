@@ -436,10 +436,10 @@ const Home = () => {
       <section ref={heroRef} className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-[#f4ece3]">
         
         {/* Hero Illustration Background — rickshaw in center, skyline at bottom */}
-        <div className="absolute inset-0 w-full h-full pointer-events-none -translate-y-10 md:translate-y-0">
+        <div className="absolute top-[-60%] left-0 w-full h-[160%] pointer-events-none md:top-0 md:h-full">
            <img 
              src={heroIllustrationImg} 
-             className="hero-illustration w-full h-full object-cover object-bottom opacity-40 mix-blend-multiply" 
+             className="hero-illustration w-full h-full object-cover object-center md:object-bottom opacity-40 mix-blend-multiply" 
              alt="Kolkata Illustration" 
            />
         </div>
