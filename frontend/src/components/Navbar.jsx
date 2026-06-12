@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Magnetic from './Magnetic';
-import bridgeImg from '../assets/images/bridge.png';
 import logoImg from '../assets/images/logo.png';
 
 const links = [
@@ -79,14 +78,14 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-100 px-6 py-6 mix-blend-difference flex justify-between items-center pointer-events-none">
+      <nav className="fixed top-0 left-0 w-full z-100 px-6 py-6 bg-transparent flex justify-between items-center pointer-events-none">
         <Link to="/" className="pointer-events-auto flex items-center">
-          <img src={logoImg} alt="Art Rickshaw" className="h-8 md:h-10 w-auto invert" />
+          <img src={logoImg} alt="Art Rickshaw" className="h-8 md:h-10 w-auto" />
         </Link>
         <Magnetic>
           <button 
             onClick={() => setIsOpen(!isOpen)} 
-            className="text-white text-lg font-bold tracking-widest uppercase pointer-events-auto"
+            className="text-text-dark text-lg font-bold tracking-widest uppercase pointer-events-auto"
           >
             {isOpen ? 'Close' : 'Menu'}
           </button>
@@ -103,15 +102,15 @@ const Navbar = () => {
             className="fixed inset-0 z-50 flex"
           >
             {/* Left Side: Solid Background with Links */}
-            <div className="w-full md:w-2/3 h-full bg-text-dark flex flex-col justify-center px-10 md:px-32 relative">
-              <div className="flex flex-col gap-4">
+            <div className="w-full h-full bg-[#f0ddd5] flex flex-col items-center justify-center px-10 relative">
+              <div className="flex flex-col items-center gap-4">
                 {links.map((link, i) => (
                   <div key={link.name} className="overflow-hidden">
                     <motion.div custom={i} variants={linkVariants} initial="initial" animate="animate" exit="exit">
                       <Link 
                         to={link.path}
                         onClick={(e) => handleLinkClick(e, link.path)}
-                        className="text-6xl md:text-[8vw] font-serif font-bold text-white hover:text-primary transition-colors leading-none uppercase"
+                        className="text-4xl md:text-5xl font-serif font-bold text-text-dark hover:text-primary transition-colors leading-none uppercase"
                       >
                         {link.name}
                       </Link>
@@ -124,15 +123,10 @@ const Navbar = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { delay: 1 } }}
                 exit={{ opacity: 0 }}
-                className="absolute bottom-10 left-10 md:left-32 text-gray-400 font-medium font-serif italic"
+                className="absolute bottom-10 text-gray-500 font-medium font-serif italic"
               >
                 Let's create something beautiful together.
               </motion.div>
-            </div>
-
-            {/* Right Side: Massive Image Reveal */}
-            <div className="hidden md:block w-1/3 h-full bg-primary relative overflow-hidden">
-               <img src={bridgeImg} className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-50 filter grayscale scale-110" alt="Menu Art" />
             </div>
           </motion.div>
         )}

@@ -5,11 +5,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { ArrowRight } from 'lucide-react';
 import taxiImg from '../assets/images/taxi.png';
-import rickshawImg from '../assets/images/rickshaw.png';
-import bridgeImg from '../assets/images/bridge.png';
-import heroBridgeImg from '../assets/images/hero_bridge.png';
-import taxiSketchImg from '../assets/images/taxi_sketch.png';
+import sketchedRickshawImg from '../assets/images/sketched rickshaw.png';
+import taxiSketchImg from '../assets/images/taxi_sketch_minimal.png';
 import logoImg from '../assets/images/logo.png';
+import heroIllustrationImg from '../assets/images/hero_illustration.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,23 +28,12 @@ const specials = [
   { id: 3, title: 'Weekend Art Bootcamp', image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80', desc: 'A rigorous but fun weekend bootcamp covering three distinct art mediums over two days.' },
 ];
 
-const WordSplitter = ({ text, className }) => {
-  return (
-    <span className={className}>
-      {text.split(' ').map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden align-bottom">
-          <span className="inline-block word-reveal translate-y-[120%]">{word}&nbsp;</span>
-        </span>
-      ))}
-    </span>
-  );
-};
 
 const Home = () => {
   const container = useRef(null);
   const [hoveredSpecial, setHoveredSpecial] = useState(0);
   const heroRef = useRef(null);
-  const introRef = useRef(null);
+
   const horizontalSectionRef = useRef(null);
   const horizontalScrollRef = useRef(null);
 
@@ -74,19 +62,6 @@ const Home = () => {
       delay: 0.2,
     });
 
-
-
-    // Intro Text Reveal
-    gsap.to(introRef.current.querySelectorAll('.word-reveal'), {
-      y: '0%',
-      duration: 1,
-      stagger: 0.02,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: introRef.current,
-        start: 'top 75%',
-      }
-    });
 
     // Horizontal Scroll for Activities
     const scrollContainer = horizontalScrollRef.current;
@@ -136,20 +111,7 @@ const Home = () => {
       }
     );
 
-    // About Stats Counters
-    const counters = gsap.utils.toArray('.stat-counter');
-    counters.forEach((counter) => {
-      const target = parseFloat(counter.getAttribute('data-target'));
-      gsap.to(counter, {
-        innerHTML: target,
-        duration: 2,
-        snap: { innerHTML: 1 },
-        scrollTrigger: {
-          trigger: counter,
-          start: 'top 80%',
-        }
-      });
-    });
+
 
     // About Image reveal (optimized)
     gsap.to('.about-img', {
@@ -177,17 +139,6 @@ const Home = () => {
       }
     });
 
-    // Coloring Kolkata Reveal
-    gsap.from('.coloring-kolkata', {
-      y: 100,
-      opacity: 0,
-      duration: 1.2,
-      ease: 'power4.out',
-      scrollTrigger: {
-        trigger: '.coloring-kolkata',
-        start: 'top 80%',
-      }
-    });
 
     // Team Header Reveal
     gsap.from('.team-header', {
@@ -285,60 +236,46 @@ const Home = () => {
   }, { scope: container });
 
   return (
-    <div ref={container} className="overflow-clip bg-bg-base text-text-dark">
+    <div ref={container} className="overflow-clip bg-[#f4ece3] text-text-dark">
       {/* Hero Section */}
-      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden bg-bg-base">
+      <section ref={heroRef} className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-[#f4ece3]">
         
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0 opacity-80 pointer-events-none mix-blend-multiply flex items-center justify-center">
-           <img src={heroBridgeImg} className="w-full h-full object-cover object-center" alt="Kolkata Sketch" />
-           <div className="absolute inset-0 bg-bg-base/40"></div>
+        {/* Hero Illustration Background — rickshaw in center, skyline at bottom */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none">
+           <img 
+             src={heroIllustrationImg} 
+             className="hero-illustration w-full h-full object-cover object-bottom opacity-40 mix-blend-multiply" 
+             alt="Kolkata Illustration" 
+           />
         </div>
 
-        <div className="relative z-40 text-center px-4 max-w-5xl mx-auto mt-[5vh] flex flex-col items-center">
-          <h1 className="hero-text text-xl md:text-2xl lg:text-3xl font-sans font-bold text-gray-500 tracking-widest uppercase mb-4 md:mb-6">
-            Welcome to
-          </h1>
-          <img src={logoImg} alt="Art Rickshaw" className="hero-text h-24 md:h-40 lg:h-56 w-auto mb-10 object-contain" />
-          <p className="hero-text text-xl md:text-3xl text-gray-500 font-sans mb-10 max-w-3xl mx-auto uppercase tracking-widest font-bold">
-            Immerse yourself in the vibrant art culture of the city of joy.
-          </p>
-        </div>
-      </section>
+        {/* Centered Content */}
+        <div className="relative z-40 text-center px-4 max-w-5xl mx-auto flex flex-col items-center justify-center">
+          <div className="hero-text mb-6 flex flex-col items-center">
+            <h2 className="text-lg md:text-xl font-serif italic text-[#657777] mb-3 tracking-wide">Since 2016, Hindustan Park</h2>
+            <div className="w-6 h-[2px] bg-[#e65a44] rounded-full"></div>
+          </div>
+          
+          <div className="hero-text mb-10 mt-4">
+            <img src={logoImg} alt="Art Rickshaw" className="h-20 md:h-28 lg:h-40 w-auto mx-auto object-contain" />
+          </div>
 
-      {/* Intro Section */}
-      <section ref={introRef} className="py-40 md:py-52 px-6 bg-bg-base relative z-10 border-t border-gray-200 overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0 opacity-[0.25] pointer-events-none">
-           <img src={taxiSketchImg} className="w-full h-full object-cover mix-blend-multiply" alt="Kolkata Taxi Sketch" />
-        </div>
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <h2 className="text-5xl md:text-7xl font-serif font-bold mb-12 text-text-dark uppercase tracking-tighter">
-            <WordSplitter text="More than just an art studio." />
-          </h2>
-          <p className="text-2xl md:text-4xl leading-relaxed text-gray-500 font-medium font-serif italic">
-            <WordSplitter text="Art Rickshaw is a place where creativity flows freely. Nestled in the heart of Kolkata, we bring people together through the power of expression, colors, and craftsmanship." />
-          </p>
-        </div>
-      </section>
-
-      {/* Infinite Marquee Section */}
-      <section className="py-6 bg-secondary text-white border-y-0">
-        <div className="animate-marquee cursor-pointer" data-cursor="explore">
-          <span className="text-5xl md:text-7xl font-serif font-bold mx-4 uppercase tracking-wider">
-            Art Rickshaw ✦ Express Yourself ✦ Kolkata's Creative Hub ✦ Workshops ✦ Private Events ✦ 
-          </span>
-          <span className="text-5xl md:text-7xl font-serif font-bold mx-4 uppercase tracking-wider">
-            Art Rickshaw ✦ Express Yourself ✦ Kolkata's Creative Hub ✦ Workshops ✦ Private Events ✦ 
-          </span>
+          <div className="hero-text flex flex-col items-center">
+            <h3 className="text-xl md:text-2xl font-serif text-[#657777] mb-3">Create. Learn. Belong.</h3>
+            <div className="w-6 h-[2px] bg-[#e65a44] rounded-full mb-5"></div>
+            <p className="text-sm md:text-base text-gray-600 font-sans max-w-md mx-auto font-medium leading-relaxed">
+              Workshops, pottery, events and<br/>creative experiences in <span className="text-[#e65a44] italic font-bold">Kolkata</span>.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Horizontal Scroll Activities Section */}
-      <section ref={horizontalSectionRef} className="h-screen bg-text-dark relative overflow-hidden flex flex-col justify-center">
-        <div className="w-full px-10 md:px-20 mb-8 pointer-events-none">
-          <h2 className="text-5xl md:text-7xl font-serif font-bold text-white">Our Activities</h2>
-          <p className="text-xl text-gray-400 mt-4 max-w-md font-medium">Scroll to explore the different ways you can express your creativity.</p>
+      <section ref={horizontalSectionRef} className="h-screen bg-[#f4ece3] relative overflow-hidden flex flex-col justify-center pt-24 pb-8 z-10">
+        <div className="w-full px-10 md:px-20 mb-8 pointer-events-none text-center">
+          <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-6 block">What We Do</span>
+          <h2 className="text-5xl md:text-7xl font-serif font-black text-text-dark leading-none tracking-tighter">OUR ACTIVITIES</h2>
+          <p className="text-xl text-gray-500 mt-6 max-w-md mx-auto font-serif italic">Scroll to explore the different ways you can express your creativity.</p>
         </div>
 
         <div ref={horizontalScrollRef} className="flex h-[50vh] md:h-[60vh] items-center w-max pl-[10vw] pr-[20vw] will-change-transform">
@@ -360,14 +297,15 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Spacer */}
+      <div className="h-32 bg-[#f4ece3] relative z-10"></div>
+
       {/* --- WEEKLY SPECIALS SECTION --- */}
-      <section className="specials-section bg-[#0a0a0a] text-white relative py-32 border-y border-white/5">
-        <div className="container mx-auto px-6 md:px-12 mb-16 md:mb-24 flex flex-col md:flex-row justify-between items-end specials-header">
-           <div className="max-w-2xl">
-             <span className="text-primary font-bold tracking-widest uppercase text-sm block mb-4">Curated Experiences</span>
-             <h2 className="text-5xl md:text-7xl font-serif font-black text-white tracking-tighter uppercase">Weekly Specials</h2>
-           </div>
-           <p className="text-xl text-gray-400 font-serif italic mt-6 md:mt-0 max-w-md">
+      <section className="specials-section bg-secondary text-white relative py-32 border-y border-white/10">
+        <div className="container mx-auto px-6 md:px-12 mb-16 md:mb-24 specials-header">
+           <span className="text-primary font-bold tracking-widest uppercase text-sm block mb-4">Curated Experiences</span>
+           <h2 className="text-5xl md:text-7xl font-serif font-black text-white tracking-tighter uppercase">Weekly Specials</h2>
+           <p className="text-xl text-gray-300 font-serif italic mt-6 max-w-xl">
              Exclusive, limited-capacity events designed to spark your creativity and connect you with like-minded individuals.
            </p>
         </div>
@@ -424,58 +362,36 @@ const Home = () => {
       </section>
 
       {/* --- ABOUT SECTION --- */}
-      <section id="about" className="pt-32 pb-24 bg-text-dark text-white">
+      <section id="about" className="pt-32 pb-8 bg-[#f4ece3] text-text-dark">
         <div className="container mx-auto px-6 md:px-12">
-          {/* Hero Content */}
-          <div className="max-w-6xl mb-20">
-            <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-10 block">Our Story</span>
-            <h1 className="coloring-kolkata text-6xl md:text-[8vw] font-serif font-black text-white leading-none tracking-tighter mb-12">
-              COLORING <br/> KOLKATA.
-            </h1>
-            <p className="text-2xl md:text-4xl text-gray-400 font-serif italic max-w-4xl leading-relaxed">
-              Founded with a passion for bringing people together through creativity, Art Rickshaw is more than just a studio. It's a sanctuary for imagination.
+          {/* Header — matches MEET THE CREATIVES style */}
+          <div className="flex flex-col md:flex-row justify-between items-end mb-20">
+            <div>
+              <span className="text-secondary font-bold tracking-widest uppercase text-sm mb-6 block">Our Story</span>
+              <h2 className="text-5xl md:text-7xl font-serif font-black text-text-dark leading-none tracking-tighter">
+                OUR <br/> PHILOSOPHY.
+              </h2>
+            </div>
+            <p className="text-xl text-gray-500 max-w-md mt-6 md:mt-0 font-serif italic">
+              Founded with a passion for bringing people together through creativity, Art Rickshaw is more than just a studio.
             </p>
           </div>
 
-          {/* Stats Section */}
-          <div className="py-20 border-y border-white/10">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-20">
-              <div>
-                <div className="text-[15vw] md:text-[10vw] font-serif font-bold text-primary leading-none tracking-tighter">
-                  <span className="stat-counter" data-target="50">0</span>+
-                </div>
-                <div className="text-xl font-bold uppercase tracking-widest text-white mt-4">Workshops</div>
-              </div>
-              <div>
-                <div className="text-[15vw] md:text-[10vw] font-serif font-bold text-primary leading-none tracking-tighter">
-                  <span className="stat-counter" data-target="10">0</span>k+
-                </div>
-                <div className="text-xl font-bold uppercase tracking-widest text-white mt-4">Creators</div>
-              </div>
-              <div>
-                <div className="text-[15vw] md:text-[10vw] font-serif font-bold text-primary leading-none tracking-tighter">
-                  <span className="stat-counter" data-target="100">0</span>%
-                </div>
-                <div className="text-xl font-bold uppercase tracking-widest text-white mt-4">Passion</div>
-              </div>
-            </div>
-          </div>
+
 
           {/* Image & Text Split */}
-          <div className="flex flex-col md:flex-row items-start gap-20 py-32">
+          <div className="flex flex-col md:flex-row items-start gap-20 py-16">
             <div className="w-full md:w-1/2 about-img-container">
-              <div className="aspect-4/5 bg-gray-200 rounded-2xl overflow-hidden relative about-img clip-path-reveal scale-125 shadow-2xl will-change-transform">
-                 <img src={rickshawImg} alt="Studio" className="about-img-parallax absolute top-[-20%] w-full h-[140%] object-cover object-center will-change-transform" />
-                 <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
+              <div className="aspect-4/5 bg-[#f4ece3] rounded-2xl overflow-hidden relative about-img clip-path-reveal scale-125 will-change-transform">
+                 <img src={sketchedRickshawImg} alt="Sketched Rickshaw" className="about-img-parallax absolute top-[-10%] w-full h-[120%] object-contain object-center will-change-transform mix-blend-multiply" />
               </div>
             </div>
 
             <div className="w-full md:w-1/2 md:pt-20 philosophy-container">
-              <h2 className="philosophy-text text-5xl font-serif font-bold text-white mb-10 tracking-tighter">OUR PHILOSOPHY</h2>
-              <p className="philosophy-text text-2xl text-gray-400 mb-8 leading-relaxed font-serif italic">
+              <p className="philosophy-text text-2xl text-gray-500 mb-8 leading-relaxed font-serif italic">
                 We believe that art is not just for the 'gifted'. It is a language, a form of therapy, and a way to connect. We provide a space where mistakes are welcomed as happy accidents.
               </p>
-              <p className="philosophy-text text-lg text-gray-400 leading-relaxed font-sans uppercase tracking-widest font-medium">
+              <p className="philosophy-text text-lg text-gray-500 leading-relaxed font-sans uppercase tracking-widest font-medium">
                 From traditional terracotta to modern fluid arts, our workshops are designed to help you disconnect from the hustle of the city and reconnect with your inner self.
               </p>
             </div>
@@ -484,7 +400,7 @@ const Home = () => {
       </section>
 
       {/* --- TEAM SECTION --- */}
-      <section id="team" className="py-32 bg-bg-base relative z-10 border-t border-gray-200">
+      <section id="team" className="py-32 bg-[#f0ddd5] relative z-10 border-t border-text-dark/10">
         <div className="container mx-auto px-6 md:px-12">
           <div className="flex flex-col md:flex-row justify-between items-end mb-20">
             <div>
@@ -520,10 +436,10 @@ const Home = () => {
       </section>
 
       {/* --- CONTACT SECTION --- */}
-      <section id="contact" className="py-32 relative overflow-hidden border-t border-gray-200">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0 bg-bg-base">
-           <img src={bridgeImg} className="contact-bg-parallax absolute top-[-20%] w-full h-[140%] object-cover opacity-10 will-change-transform" alt="Background" />
+      <section id="contact" className="py-32 relative overflow-hidden border-t border-text-dark/10 bg-[#f4ece3]">
+        {/* Background Sketch */}
+        <div className="absolute inset-0 z-0">
+           <img src={taxiSketchImg} className="contact-bg-parallax absolute top-[-10%] left-1/2 -translate-x-1/2 w-[80%] h-[120%] object-contain opacity-[0.08] mix-blend-multiply will-change-transform" alt="Background" />
         </div>
         
         <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-20 items-start relative z-10">
